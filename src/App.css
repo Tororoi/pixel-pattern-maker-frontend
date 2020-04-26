@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: rgb(199, 230, 213);
 }
 
 .App-logo {
@@ -35,4 +36,44 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: rgb(54, 30, 16);
+}
+
+.nav li {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav li a{
+  color: white;
+  text-decoration: none;
+}
+
+.nav li:hover {
+  background-color: rgb(56, 41, 33);
+}
+
+canvas {
+  background-color: white;
+}
+
+.draw-page {
+  display: flex;
+}
+
+.toolbox {
+  float: right;
+  width: 512px;
 }
