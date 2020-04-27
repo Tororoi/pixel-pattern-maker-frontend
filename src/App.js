@@ -3,6 +3,7 @@ import './App.css';
 import NavBar from './Components/NavBar'
 import Form from './Components/Form'
 import DrawContainer from './Components/DrawContainer'
+import PatternContainer from './Components/PatternContainer'
 
 import {connect} from 'react-redux'
 
@@ -85,18 +86,20 @@ class App extends React.Component {
 
 
   render(){
+    // console.log(this.props)
     return (
       <div className="App">
         <NavBar handleLogout={this.handleLogout}/>
-        {/* <h1>Welcome to the Pattern Maker</h1> */}
         <Switch>
           <Route path="/login" render={this.renderForm} />
           <Route path="/register" render={this.renderForm} />
-          <Route path="/draw" exact render={() => <div> <DrawContainer /> </div>} />
-          <Route path="/" exact render={() => <h1>Home</h1>} />
-          {/* <Route path="/patterns" render={() => {
-              return (<div> <ChipContainer /> </div>)
-          }} /> */}
+          <Route path="/draw" exact render={() => <div> 
+            <DrawContainer savePattern={this.props.savePattern}/> 
+            </div>} />
+          <Route path="/" exact render={() => <div> 
+            <PatternContainer /> 
+            </div>
+          } />
         </Switch>
 
       </div>
@@ -121,6 +124,20 @@ let persistUser = () => {
   }
 }
 
+let savePattern = (newPattern) => {
+  return (dispatch) => {
+    fetch("http://localhost:3000/patterns", {
+      method: "POST",
+      headers: {
+        'content-type': 'application/json',
+        "Authorization": `bearer ${localStorage.token}`
+      },
+      body: JSON.stringify(newPattern)
+    })
+      .then(r => r.json())
+  }
+}
+
 // regular Action Creators
 let setAllPatterns = (patternsArr) => {
   return {
@@ -136,7 +153,7 @@ let setUserInfo = (userInfo) => {
   }
 }
 
-let sendThisInformation = { setAllPatterns, setUserInfo, persistUser }
+let sendThisInformation = { setAllPatterns, setUserInfo, persistUser, savePattern }
 
 
 export default connect(null, sendThisInformation)(App);

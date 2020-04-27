@@ -12,7 +12,9 @@ import {BrowserRouter} from 'react-router-dom'
 
 import userReducer from './Redux/userReducer'
 import patternsReducer from './Redux/patternsReducer'
+import patternReducer from './Redux/patternReducer'
 import canvasReducer from './Redux/canvasReducer'
+import paletteReducer from './Redux/paletteReducer'
 
 // Thunky stuff
 import ReduxThunk from 'redux-thunk'
@@ -24,7 +26,9 @@ import {applyMiddleware, compose} from 'redux'
 let rootReducer = combineReducers({
   patternInfo: patternsReducer,
   userInfo: userReducer,
-  canvasInfo: canvasReducer
+  canvasInfo: canvasReducer,
+  paletteInfo: paletteReducer,
+  currentPatternInfo: patternReducer
   // any other reducers will go here
 })
 

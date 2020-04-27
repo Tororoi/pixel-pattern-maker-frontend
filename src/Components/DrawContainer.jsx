@@ -5,7 +5,6 @@ import ToolContainer from './ToolContainer';
 import {connect} from 'react-redux'
 
 const DrawContainer = (props) => {
-  // console.log("PROPS OF CONTAINER", props.mouseStatus.mouseDown )
 
   return (
     <>
@@ -13,14 +12,13 @@ const DrawContainer = (props) => {
         <div className="draw-container">
           <h2>Draw Container</h2>
           <Canvas
-              mouseDown={props.canvasInfo.mouseDown}
-              boxSize={props.canvasInfo.boxSize}
-              currentColor={props.canvasInfo.currentColor}
-              squares={props.canvasInfo.squares}
+              canvasInfo={props.canvasInfo}
+              currentPattern={props.currentPattern}
           />
         </div>
         <div className="toolbox">
           <ToolContainer
+              savePattern={props.savePattern}
           />
         </div>
       </div>
@@ -29,12 +27,11 @@ const DrawContainer = (props) => {
 };
 
 
-
-// the return value of mapStateToProps is an object that will be merged into DrawContainer's props
 let mapStateToProps = (reduxState) => {
   // console.log(reduxState.canvasInfo)
   return {
-    canvasInfo: reduxState.canvasInfo
+    canvasInfo: reduxState.canvasInfo,
+    currentPattern: reduxState.currentPatternInfo.pattern
   }
 }
 

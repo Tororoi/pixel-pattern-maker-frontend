@@ -1,62 +1,32 @@
 let paletteInitialState = {
-    currentColor: '#03396c',
-    colors: [
-        {
-            x: 0,
-            y: 0
-        },
-        {
-            x: 256,
-            y: 0
-        },
-        {
-            x: 512,
-            y: 0
-        },
-        {
-            x: 0,
-            y: 256
-        },
-        {
-            x: 256,
-            y: 256
-        },
-        {
-            x: 512,
-            y: 256
-        },
-        {
-            x: 0,
-            y: 512
-        },
-        {
-            x: 256,
-            y: 512
-        },
-        {
-            x: 512,
-            y: 512
-        }
-    ]
+    currentColor: '#FFFFFF',
+    colors: ['#FFFFFF','#FFFFFF','#FFFFFF']
 }
 
-let paletteReducer = (state = canvasInitialState, action) => {
+let paletteReducer = (state = paletteInitialState, action) => {
     
     switch (action.type) {
 
-        case "SET_MOUSE_STATE":
+        case "SET_PALETTE_COLORS":
 
-            let newMouseState = action.payload
+            let newPalette = action.payload
             return {
                 ...state,
-                mouseDown: newMouseState
+                colors: newPalette
             }
-        case "SET_COLOR":
+        case "ADD_COLOR":
 
             let newColor = action.payload
             return {
                 ...state,
-                color: newColor
+                colors: [...state.colors, newColor]
+            }
+        case "UPDATE_COLOR":
+            //don't change color but change which color belongs to palette
+            let updatedColor = action.payload
+            return {
+                ...state,
+                colors: [...state.colors, updatedColor]
             }
         default:
             return state

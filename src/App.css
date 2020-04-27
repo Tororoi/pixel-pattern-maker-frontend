@@ -38,6 +38,8 @@
   }
 }
 
+/* Navigation */
+
 .nav {
   list-style-type: none;
   margin: 0;
@@ -65,15 +67,45 @@
   background-color: rgb(56, 41, 33);
 }
 
-canvas {
-  background-color: white;
-}
+/* Draw Page */
 
 .draw-page {
   display: flex;
 }
 
+canvas {
+  background-color: white;
+}
+
 .toolbox {
   float: right;
   width: 512px;
+}
+
+/* Color Palette */
+
+.palette {
+  display: flex;
+}
+
+.color {
+  padding: 4px;
+}
+
+.swatch {
+  width: 32px;
+  height: 32px;
+}
+
+.swatch:hover {
+  border-radius: 20px;
+  border-color: red;
+}
+
+/* Pattern Thumbnails */
+
+.pattern {
+  width: 256px;
+  height: 256px;
+  background-color: white;
 }

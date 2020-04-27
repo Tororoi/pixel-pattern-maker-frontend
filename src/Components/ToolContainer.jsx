@@ -1,27 +1,43 @@
 import React from 'react';
+import ColorPicker from './ColorPicker'
+import Palette from './Palette'
 
 import {connect} from 'react-redux'
 
 
-const DrawContainer = (props) => {
-  // console.log("PROPS OF CONTAINER", props.mouseStatus.mouseDown )
+const ToolContainer = (props) => {
+//   console.log("PROPS OF CONTAINER", props )
 
-  return (
-    <>
-        <h2>Toolbox</h2>
+    const handleClick = (e) => {
+        let newPatternPOJO = {name: props.canvasInfo.currentName, image: props.canvasInfo.currentImage}
+        props.savePattern(newPatternPOJO)
+    }
 
-    </>
-  )
+    return (
+        <>
+            <h2>Toolbox</h2>
+            <h3 onClick={handleClick}>Save</h3>
+            <Palette 
+                currentColor={props.canvasInfo.currentColor}
+                paletteInfo={props.paletteInfo}
+
+            />
+            <ColorPicker
+                currentColor={props.canvasInfo.currentColor}
+            />
+        </>
+    )
 };
 
 
 
 // the return value of mapStateToProps is an object that will be merged into DrawContainer's props
 let mapStateToProps = (reduxState) => {
-  console.log(reduxState)
   return {
-    canvasInfo: reduxState.canvasInfo
+    canvasInfo: reduxState.canvasInfo,
+    paletteInfo: reduxState.paletteInfo,
+    currentPattern: reduxState.currentPatternInfo.pattern
   }
 }
 
-export default connect(mapStateToProps)(DrawContainer)
+export default connect(mapStateToProps)(ToolContainer)

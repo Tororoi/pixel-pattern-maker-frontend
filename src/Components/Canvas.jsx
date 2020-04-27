@@ -1,31 +1,34 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {connect} from 'react-redux'
 
 const Canvas = (props) => {
     const canvasRef = React.useRef(null)
-    
-    
-    // const drawNine = () => {
-    //     const canvas = canvasRef.current        
-    //     const ctx = canvas.getContext('2d')
-    //     const b = props.boxSize
-    //     ctx.fillStyle = "white";
-    //     ctx.fillRect(0,0,b,b) 
-    //     ctx.fillRect(b*2,0,b,b) 
-    //     ctx.fillRect(b,b,b,b) 
-    //     ctx.fillRect(0,b*2,b,b) 
-    //     ctx.fillRect(b*2,b*2,b,b) 
-    //     ctx.fillStyle = 'gray';
-    //     ctx.fillRect(b,0,b,b) 
-    //     ctx.fillRect(0,b,b,b) 
-    //     ctx.fillRect(b*2,b,b,b) 
-    //     ctx.fillRect(b,b*2,b,b) 
-    // }
 
-    // const handleClick = (e) => {
+    const renderPattern = (e) => {
+        console.log("rendered Pattern")
+        const canvas = canvasRef.current        
+        const ctx = canvas.getContext('2d') 
+        const image = new Image();
+        image.src = props.currentPattern.image
 
-    //     // implement draw on ctx here
-    // }
+        if (props.currentPattern.image) {
+            props.canvasInfo.squares.forEach((s) => {
+                ctx.drawImage(image,s.x,s.y)
+            })
+        }
+        // ctx.drawImage(props.canvasInfo.currentImage,0,0)
+    }
+
+    const handleClick = (e) => {
+        var cvs = document.createElement('canvas');
+        cvs.width = 256;
+        cvs.height = 256;
+        cvs.getContext('2d').drawImage(canvasRef.current,0,0,256,256,0,0,256, 256); // first four coords are the cropping area
+        props.currentImageDispatch(cvs.toDataURL())
+
+        // props.savePattern(canvasRef.current.toDataURL())
+        // implement draw on ctx here
+    }
 
     const handleCoords = (e) => {
         const mouseX=e.nativeEvent.offsetX;
@@ -37,11 +40,11 @@ const Canvas = (props) => {
         const x1 = Math.floor(mouseX/w)*w
         const y1 = Math.floor(mouseY/h)*h
 
-        if (props.mouseDown === true) {
-            ctx.fillStyle=props.currentColor
+        if (props.canvasInfo.mouseDown === true) {
+            ctx.fillStyle=props.canvasInfo.currentColor
             // ctx.fillRect(x1,y1,w,h) 
 
-            props.squares.forEach(square => {
+            props.canvasInfo.squares.forEach(square => {
                 ctx.fillRect(x1+square.x,y1+square.y,w,h) 
                 ctx.fillRect(x1-square.x,y1-square.y,w,h) 
                 ctx.fillRect(x1-square.x,y1+square.y,w,h)
@@ -63,8 +66,8 @@ const Canvas = (props) => {
             ref={canvasRef}
             width={768}
             height={768}
-            // onMouseEnter={drawNine}
-            // onClick={handleClick}
+            onMouseEnter={renderPattern}
+            onClick={handleClick}
             onMouseMove={handleCoords}
             onMouseDown={downClick}
             onMouseUp={upClick}
@@ -80,16 +83,16 @@ const setMouseState = (mouseState) => {
     }
 }
 
-const setColor = (color) => {
+const setImage = (image) => {
     return {
-        type: "SET_COLOR",
-        payload: color
+        type: "SET_IMAGE",
+        payload: image
     }
 }
 
 const mapDispatchToProps = {
     mouseDownDispatch: setMouseState,
-    colorDispatch: setColor
+    currentImageDispatch: setImage
   }
 
 export default connect(null, mapDispatchToProps)(Canvas);
