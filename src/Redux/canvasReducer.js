@@ -3,7 +3,7 @@ let canvasInitialState = {
     currentImage: '',
     mouseDown: false,
     boxSize: 256,
-    currentColor: '#03396c',
+    currentColor: '#FFFFFF',
     squares: [
         {
             x: 0,

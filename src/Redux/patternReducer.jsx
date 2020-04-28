@@ -9,7 +9,7 @@ let patternInitialState = {
     switch (action.type) {
   
       case "SET_CURRENT_PATTERN":
-          
+ 
         let newPattern = action.payload
         return {
           ...state,

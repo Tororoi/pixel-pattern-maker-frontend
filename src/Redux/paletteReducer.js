@@ -1,6 +1,5 @@
 let paletteInitialState = {
-    currentColor: '#FFFFFF',
-    colors: ['#FFFFFF','#FFFFFF','#FFFFFF']
+    colors: ['#FFFFFF']
 }
 
 let paletteReducer = (state = paletteInitialState, action) => {

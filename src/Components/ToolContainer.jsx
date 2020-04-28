@@ -9,7 +9,13 @@ const ToolContainer = (props) => {
 //   console.log("PROPS OF CONTAINER", props )
 
     const handleClick = (e) => {
-        let newPatternPOJO = {name: props.canvasInfo.currentName, image: props.canvasInfo.currentImage}
+        let newPatternPOJO = {
+            pattern: {
+                name: props.canvasInfo.currentName, 
+                image: props.canvasInfo.currentImage
+            },
+            colors: props.paletteInfo.colors
+        }
         props.savePattern(newPatternPOJO)
     }
 

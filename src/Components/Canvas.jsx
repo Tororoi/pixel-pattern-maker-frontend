@@ -1,50 +1,50 @@
 import React from 'react';
 import {connect} from 'react-redux'
 
-const Canvas = (props) => {
-    const canvasRef = React.useRef(null)
+class Canvas extends React.Component {
+    canvasRef = React.createRef();
 
-    const renderPattern = (e) => {
+    componentDidMount() {
         console.log("rendered Pattern")
-        const canvas = canvasRef.current        
+        const canvas = this.canvasRef.current        
         const ctx = canvas.getContext('2d') 
         const image = new Image();
-        image.src = props.currentPattern.image
+        image.src = this.props.currentPattern.image
 
-        if (props.currentPattern.image) {
-            props.canvasInfo.squares.forEach((s) => {
+        if (this.props.currentPattern.image) {
+            this.props.canvasInfo.squares.forEach((s) => {
                 ctx.drawImage(image,s.x,s.y)
             })
+            this.props.paletteDispatch(this.props.currentPattern.palettes[0].colors)
         }
-        // ctx.drawImage(props.canvasInfo.currentImage,0,0)
     }
 
-    const handleClick = (e) => {
+    handleClick = (e) => {
         var cvs = document.createElement('canvas');
         cvs.width = 256;
         cvs.height = 256;
-        cvs.getContext('2d').drawImage(canvasRef.current,0,0,256,256,0,0,256, 256); // first four coords are the cropping area
-        props.currentImageDispatch(cvs.toDataURL())
+        cvs.getContext('2d').drawImage(this.canvasRef.current,0,0,256,256,0,0,256, 256); // first four coords are the cropping area
+        this.props.currentImageDispatch(cvs.toDataURL())
 
         // props.savePattern(canvasRef.current.toDataURL())
         // implement draw on ctx here
     }
 
-    const handleCoords = (e) => {
+    handleCoords = (e) => {
         const mouseX=e.nativeEvent.offsetX;
         const mouseY=e.nativeEvent.offsetY;
-        const canvas = canvasRef.current        
+        const canvas = this.canvasRef.current        
         const ctx = canvas.getContext('2d') 
         const w = 4
         const h = 4
         const x1 = Math.floor(mouseX/w)*w
         const y1 = Math.floor(mouseY/h)*h
 
-        if (props.canvasInfo.mouseDown === true) {
-            ctx.fillStyle=props.canvasInfo.currentColor
+        if (this.props.canvasInfo.mouseDown === true) {
+            ctx.fillStyle=this.props.canvasInfo.currentColor
             // ctx.fillRect(x1,y1,w,h) 
 
-            props.canvasInfo.squares.forEach(square => {
+            this.props.canvasInfo.squares.forEach(square => {
                 ctx.fillRect(x1+square.x,y1+square.y,w,h) 
                 ctx.fillRect(x1-square.x,y1-square.y,w,h) 
                 ctx.fillRect(x1-square.x,y1+square.y,w,h)
@@ -53,27 +53,29 @@ const Canvas = (props) => {
         }
     }
 
-    const downClick = (e) => {
-        props.mouseDownDispatch(true)
+    downClick = (e) => {
+        this.props.mouseDownDispatch(true)
     }
 
-    const upClick = (e) => {
-        props.mouseDownDispatch(false)
+    upClick = (e) => {
+        this.props.mouseDownDispatch(false)
     }
 
-    return (
-        <canvas
-            ref={canvasRef}
-            width={768}
-            height={768}
-            onMouseEnter={renderPattern}
-            onClick={handleClick}
-            onMouseMove={handleCoords}
-            onMouseDown={downClick}
-            onMouseUp={upClick}
-            onMouseOut={upClick}
-        />
-    )
+    render() {
+        return (
+            <canvas
+                ref={this.canvasRef}
+                width={768}
+                height={768}
+                // onMouseEnter={renderPattern}
+                onClick={this.handleClick}
+                onMouseMove={this.handleCoords}
+                onMouseDown={this.downClick}
+                onMouseUp={this.upClick}
+                onMouseOut={this.upClick}
+            />
+        )
+    }
 }
 
 const setMouseState = (mouseState) => {
@@ -90,9 +92,17 @@ const setImage = (image) => {
     }
 }
 
+const setPalette = (colorArray) => {
+    return {
+        type: "SET_PALETTE_COLORS",
+        payload: colorArray
+    }
+}
+
 const mapDispatchToProps = {
     mouseDownDispatch: setMouseState,
-    currentImageDispatch: setImage
+    currentImageDispatch: setImage,
+    paletteDispatch: setPalette
   }
 
 export default connect(null, mapDispatchToProps)(Canvas);
