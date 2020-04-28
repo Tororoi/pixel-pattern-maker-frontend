@@ -4,6 +4,7 @@ import NavBar from './Components/NavBar'
 import Form from './Components/Form'
 import DrawContainer from './Components/DrawContainer'
 import PatternContainer from './Components/PatternContainer'
+import ProfileContainer from './Components/ProfileContainer'
 
 import {connect} from 'react-redux'
 
@@ -13,11 +14,7 @@ import {Switch, Route} from 'react-router-dom'
 class App extends React.Component {
 
   componentDidMount() {
-    fetch("http://localhost:3000/patterns")
-    .then(r => r.json())
-    .then((arrayOfPatterns) => {
-      this.props.setAllPatterns(arrayOfPatterns);
-    })
+    this.props.getPatterns()
 
     if (localStorage.token) {
       this.props.persistUser()
@@ -55,7 +52,7 @@ class App extends React.Component {
 
   handleLogout = () => {
     localStorage.clear();
-    this.props.setUser({
+    this.props.setUserInfo({
       user: {
         id: 0,
         username: "",
@@ -64,8 +61,6 @@ class App extends React.Component {
       },
       token: ""
     })
-    this.props.history.push("/");
-  
   }
 
   handleResponse = (resp) => {  
@@ -96,10 +91,12 @@ class App extends React.Component {
           <Route path="/draw" exact render={() => <div> 
             <DrawContainer savePattern={this.props.savePattern}/> 
             </div>} />
+          <Route path="/profile" exact render={() => <div> 
+            <ProfileContainer /> 
+            </div>} />
           <Route path="/" exact render={() => <div> 
             <PatternContainer /> 
-            </div>
-          } />
+            </div>} />
         </Switch>
 
       </div>
@@ -124,6 +121,16 @@ let persistUser = () => {
   }
 }
 
+let getPatterns = () => {
+  return (dispatch) => {
+    fetch("http://localhost:3000/patterns")
+    .then(r => r.json())
+    .then((arrayOfPatterns) => {
+      dispatch(setAllPatterns(arrayOfPatterns));
+    })
+  }
+}
+
 let savePattern = (newPattern) => {
   return (dispatch) => {
     fetch("http://localhost:3000/patterns", {
@@ -134,7 +141,12 @@ let savePattern = (newPattern) => {
       },
       body: JSON.stringify(newPattern)
     })
-      .then(r => r.json())
+    .then(r => r.json())
+    .then((obj) => {
+      if (obj.pattern) {
+        dispatch(addOnePattern(obj.pattern))
+      }
+    })
   }
 }
 
@@ -146,6 +158,13 @@ let setAllPatterns = (patternsArr) => {
   }
 }
 
+let addOnePattern = (pattern) => {
+  return {
+    type: "ADD_ONE_PATTERN",
+    payload: pattern
+  }
+}
+
 let setUserInfo = (userInfo) => {
   return {
     type: "SET_USER_INFORMATION",
@@ -153,7 +172,7 @@ let setUserInfo = (userInfo) => {
   }
 }
 
-let sendThisInformation = { setAllPatterns, setUserInfo, persistUser, savePattern }
+let sendThisInformation = { setAllPatterns, setUserInfo, persistUser, savePattern, getPatterns }
 
 
 export default connect(null, sendThisInformation)(App);

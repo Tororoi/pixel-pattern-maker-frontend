@@ -22,7 +22,7 @@ let patternsInitialState = {
         let thePatternIwantToAdd = action.payload
         let copyOfPatterns = [...state.patterns, thePatternIwantToAdd]
   
-  
+        console.log(copyOfPatterns)
         return {
           ...state,
           patterns: copyOfPatterns

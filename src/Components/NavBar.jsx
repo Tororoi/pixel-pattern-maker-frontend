@@ -3,6 +3,7 @@ import {NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 const NavBar = (props) => {
+
   return(
     <ul className="nav">
       <li>
@@ -21,7 +22,7 @@ const NavBar = (props) => {
         <NavLink to="/profile">Profile</NavLink>
       </li> 
       <li>
-        <NavLink to="/" onClick={props.handleLogOut}>Log Out</NavLink>
+        <NavLink onClick={props.handleLogout} to="/">Log Out</NavLink>
       </li>
     </ul>
   )
