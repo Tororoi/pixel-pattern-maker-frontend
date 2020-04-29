@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {connect} from 'react-redux'
+//Parents: Palette
 
 const Color = (props) => {
 
@@ -20,23 +20,4 @@ const Color = (props) => {
     )
 }
 
-const setColor = (color) => {
-    return {
-        type: "SET_COLOR",
-        payload: color
-    }
-}
-
-const addColor = (color) => {
-    return {
-        type: "ADD_COLOR",
-        payload: color
-    }
-}
-
-const mapDispatchToProps = {
-    setColorDispatch: setColor,
-    addColorDispatch: addColor
-  }
-
-export default connect(null, mapDispatchToProps)(Color);
+export default Color;

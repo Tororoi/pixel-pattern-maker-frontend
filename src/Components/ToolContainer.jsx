@@ -4,6 +4,7 @@ import Palette from './Palette'
 
 import {connect} from 'react-redux'
 
+//Parents: DrawContainer
 
 const ToolContainer = (props) => {
 //   console.log("PROPS OF CONTAINER", props.dispatchSetName )
@@ -55,10 +56,12 @@ const ToolContainer = (props) => {
             <Palette 
                 currentColor={props.canvasInfo.currentColor}
                 paletteInfo={props.paletteInfo}
-
+                setColorDispatch={props.setColorDispatch}
             />
             <ColorPicker
                 currentColor={props.canvasInfo.currentColor}
+                setColorDispatch={props.setColorDispatch}
+                addColorDispatch={props.addColorDispatch}
             />
         </>
     )
@@ -71,8 +74,24 @@ const setName = (name) => {
     }
 }
 
+const setColor = (color) => {
+    return {
+        type: "SET_COLOR",
+        payload: color
+    }
+}
+
+const addColor = (color) => {
+    return {
+        type: "ADD_COLOR",
+        payload: color
+    }
+}
+
 const mapDispatchToProps = {
-    dispatchSetName: setName
+    dispatchSetName: setName,
+    setColorDispatch: setColor,
+    addColorDispatch: addColor
 }
 
 // the return value of mapStateToProps is an object that will be merged into DrawContainer's props

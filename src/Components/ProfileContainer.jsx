@@ -3,6 +3,8 @@ import Pattern from './Pattern'
 
 import {connect} from 'react-redux'
 
+//Parents: App
+
 const ProfileContainer = (props) => {
     console.log(props.user)
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux'
 
+//Parents: DrawContainer
+
 class Canvas extends React.Component {
     canvasRef = React.createRef();
 

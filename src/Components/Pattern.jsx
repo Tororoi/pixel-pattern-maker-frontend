@@ -3,6 +3,8 @@ import {NavLink} from 'react-router-dom'
 
 import {connect} from 'react-redux'
 
+//Parents: PatternContainer, ProfileContainer
+
 const Pattern = (props) => {
 
 

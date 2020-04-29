@@ -3,6 +3,8 @@ import Pattern from './Pattern'
 
 import {connect} from 'react-redux'
 
+//Parents: App
+
 const PatternContainer = (props) => {
 
     const patternsArray = props.patterns.map((pattern) => {

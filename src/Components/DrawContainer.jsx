@@ -4,6 +4,8 @@ import ToolContainer from './ToolContainer';
 
 import {connect} from 'react-redux'
 
+//Parents: App
+
 const DrawContainer = (props) => {
 
   return (

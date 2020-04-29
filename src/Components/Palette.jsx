@@ -1,15 +1,18 @@
 import React from 'react';
-// import iro from '@jaames/iro';
 import Color from './Color'
 
-import {connect} from 'react-redux'
-
+//Parents: ToolContainer
 
 const Palette = (props) => {
     // console.log(props)
 
     const paletteArray = props.paletteInfo.colors.map((color) => {
-            return <Color key={props.paletteInfo.colors.indexOf(color)} color={color} currentColor={props.currentColor}/>
+            return <Color 
+                key={props.paletteInfo.colors.indexOf(color)} 
+                color={color} 
+                currentColor={props.currentColor}
+                setColorDispatch={props.setColorDispatch}
+                />
         })
     
 
@@ -22,23 +25,4 @@ const Palette = (props) => {
     )
 }
 
-const setColor = (color) => {
-    return {
-        type: "SET_COLOR",
-        payload: color
-    }
-}
-
-const addColor = (color) => {
-    return {
-        type: "ADD_COLOR",
-        payload: color
-    }
-}
-
-const mapDispatchToProps = {
-    colorDispatch: setColor,
-    addColorDispatch: addColor
-  }
-
-export default connect(null, mapDispatchToProps)(Palette);
+export default Palette;

@@ -1,8 +1,7 @@
 import React from 'react';
 import iro from '@jaames/iro';
 
-import {connect} from 'react-redux'
-
+//Parents: ToolContainer
 
 class ColorPicker extends React.Component {
 
@@ -47,23 +46,4 @@ class ColorPicker extends React.Component {
     }
 }
 
-const setColor = (color) => {
-    return {
-        type: "SET_COLOR",
-        payload: color
-    }
-}
-
-const addColor = (color) => {
-    return {
-        type: "ADD_COLOR",
-        payload: color
-    }
-}
-
-const mapDispatchToProps = {
-    setColorDispatch: setColor,
-    addColorDispatch: addColor
-  }
-
-export default connect(null, mapDispatchToProps)(ColorPicker);
+export default ColorPicker;
