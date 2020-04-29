@@ -16,14 +16,16 @@ const DrawContainer = (props) => {
           <Canvas
               canvasInfo={props.canvasInfo}
               currentPattern={props.currentPattern}
+              currentPalette={props.currentPalette}
+              setPaletteColorsDispatch={props.setPaletteColorsDispatch}
           />
         </div>
         <div className="toolbox">
           <ToolContainer
-              savePattern={props.savePattern}
+              createPattern={props.createPattern}
               deletePattern={props.deletePattern}
-              setCurrentPattern={props.setCurrentPattern}
-              setPaletteColors={props.setPaletteColors}
+              resetPatternStateDispatch={props.resetPatternStateDispatch}
+              setPaletteColorsDispatch={props.setPaletteColorsDispatch}
           />
         </div>
       </div>
@@ -31,13 +33,31 @@ const DrawContainer = (props) => {
   )
 };
 
+let resetPatternState = (pattern) => {
+  return {
+    type: "RESET_PATTERN_STATE"
+  }
+}
+
+let setPaletteColors = (palette) => {
+  return {
+    type: "SET_PALETTE_COLORS",
+    payload: palette
+  }
+}
+
+const mapDispatchToProps = {
+  resetPatternStateDispatch: resetPatternState,
+  setPaletteColorsDispatch: setPaletteColors
+}
 
 let mapStateToProps = (reduxState) => {
   // console.log(reduxState.canvasInfo)
   return {
     canvasInfo: reduxState.canvasInfo,
-    currentPattern: reduxState.currentPatternInfo.pattern
+    currentPattern: reduxState.currentPatternInfo.pattern,
+    currentPalette: reduxState.currentPatternInfo.currentPalette
   }
 }
 
-export default connect(mapStateToProps)(DrawContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(DrawContainer)

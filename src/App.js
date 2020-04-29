@@ -90,10 +90,8 @@ class App extends React.Component {
           <Route path="/register" render={this.renderForm} />
           <Route path="/draw" exact render={() => 
             <div> <DrawContainer 
-              savePattern={this.props.savePattern}
+              createPattern={this.props.createPattern}
               deletePattern={this.props.deletePattern}
-              setCurrentPattern={this.props.setCurrentPattern}  
-              setPaletteColors={this.props.setPaletteColors}
             /> </div>
             } />
           <Route path="/profile" exact render={() => 
@@ -136,7 +134,7 @@ let getPatterns = () => {
   }
 }
 
-let savePattern = (newPattern) => {
+let createPattern = (newPattern) => {
   return (dispatch) => {
     fetch("http://localhost:3000/patterns", {
       method: "POST",
@@ -204,21 +202,7 @@ let setUserInfo = (userInfo) => {
   }
 }
 
-let setCurrentPattern = (pattern) => {
-  return {
-    type: "SET_CURRENT_PATTERN",
-    payload: pattern
-  }
-}
-
-let setPaletteColors = (palette) => {
-  return {
-    type: "SET_PALETTE_COLORS",
-    payload: palette
-  }
-}
-
-let sendThisInformation = { setAllPatterns, setUserInfo, persistUser, setCurrentPattern, setPaletteColors, savePattern, deletePattern, getPatterns }
+let sendThisInformation = { setAllPatterns, setUserInfo, persistUser, createPattern, deletePattern, getPatterns }
 
 
 export default connect(null, sendThisInformation)(App);

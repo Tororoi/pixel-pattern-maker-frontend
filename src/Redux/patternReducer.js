@@ -1,6 +1,7 @@
 let patternInitialState = {
     // Change the key-value pairs here
-    pattern: {}
+    pattern: {},
+    currentPalette: {}
   }
   
   // whatever gets returned from the reducer BECOMES the state
@@ -15,10 +16,22 @@ let patternInitialState = {
           ...state,
           pattern: newPattern
         }
+      case "SET_CURRENT_PALETTE":
+
+        let newPalette = action.payload
+        return {
+          ...state,
+          currentPalette: newPalette
+        }
+      case "RESET_PATTERN_STATE":
+        return {
+          pattern: {},
+          currentPalette: {}
+        }
       default:
         return state
     }
-  
+
   }
 
   export default patternReducer

@@ -10,7 +10,8 @@ const Pattern = (props) => {
 
     const handleClick = (e) => {
         return (
-            props.patternDispatch(props.pattern)
+            props.patternDispatch(props.pattern),
+            props.paletteDispatch(props.pattern.palettes[0])
         )
     }
 
@@ -35,8 +36,16 @@ const setCurrentPattern = (pattern) => {
     }
 }
 
+const setCurrentPalette = (palette) => {
+    return {
+        type: "SET_CURRENT_PALETTE",
+        payload: palette
+    }
+}
+
 const mapDispatchToProps = {
-    patternDispatch: setCurrentPattern
+    patternDispatch: setCurrentPattern,
+    paletteDispatch: setCurrentPalette
   }
 
 export default connect(null, mapDispatchToProps)(Pattern);

@@ -14,7 +14,6 @@ const ToolContainer = (props) => {
     }
 
     const createPattern = (e) => {
-        e.preventDefault()
         let newPatternPOJO = {
             pattern: {
                 name: props.canvasInfo.currentName, 
@@ -22,12 +21,17 @@ const ToolContainer = (props) => {
             },
             colors: props.paletteInfo.colors
         }
-        props.savePattern(newPatternPOJO)
+        props.createPattern(newPatternPOJO)
+    }
+
+    const updatePattern = (e) => {
+        console.log(props.currentPattern)
+        // props.updatePattern(updatedPatternPOJO)
     }
 
     const startNew = (e) => {
-        props.setCurrentPattern({})
-        props.setPaletteColors(["#FFFFFF"])
+        props.resetPatternStateDispatch()
+        props.setPaletteColorsDispatch(["#FFFFFF"])
     }
 
     const exportImage = (e) => {
@@ -49,7 +53,8 @@ const ToolContainer = (props) => {
                     <input type="text" value={props.canvasInfo.currentName} onChange={setName} />
                 </label>
             </form>
-            <h3 onClick={createPattern}>Save</h3>
+            <h3 onClick={createPattern}>Create</h3>
+            <h3 onClick={updatePattern}>Update</h3>
             <h3 onClick={deletePattern}>Delete</h3>
             <h3 onClick={startNew}>New</h3>
             <h3 onClick={exportImage}>Export</h3>

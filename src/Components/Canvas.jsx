@@ -7,7 +7,7 @@ class Canvas extends React.Component {
     canvasRef = React.createRef();
 
     componentDidMount() {
-        console.log("rendered Pattern")
+        // console.log("rendered Pattern")
         const canvas = this.canvasRef.current        
         const ctx = canvas.getContext('2d') 
         const image = new Image();
@@ -17,7 +17,7 @@ class Canvas extends React.Component {
             this.props.canvasInfo.squares.forEach((s) => {
                 ctx.drawImage(image,s.x,s.y)
             })
-            this.props.paletteDispatch(this.props.currentPattern.palettes[0].colors)
+            this.props.setPaletteColorsDispatch(this.props.currentPalette.colors)
         }
         this.props.currentImageDispatch(this.props.currentPattern.image)
     }
@@ -92,17 +92,9 @@ const setImage = (image) => {
     }
 }
 
-const setPalette = (colorArray) => {
-    return {
-        type: "SET_PALETTE_COLORS",
-        payload: colorArray
-    }
-}
-
 const mapDispatchToProps = {
     mouseDownDispatch: setMouseState,
-    currentImageDispatch: setImage,
-    paletteDispatch: setPalette
+    currentImageDispatch: setImage
   }
 
 export default connect(null, mapDispatchToProps)(Canvas);
