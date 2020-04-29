@@ -4,6 +4,8 @@ import {connect} from 'react-redux'
 
 const NavBar = (props) => {
 
+
+
   return(
     <ul className="nav">
       <li>
@@ -18,10 +20,10 @@ const NavBar = (props) => {
       <li>
         <NavLink to="/register">Register</NavLink>
       </li>
-      <li>
+      <li style={localStorage.token ? {display: "block"} : {display: "none"}}>
         <NavLink to="/profile">Profile</NavLink>
-      </li> 
-      <li>
+      </li>
+      <li style={localStorage.token ? {display: "block"} : {display: "none"}}>
         <NavLink onClick={props.handleLogout} to="/">Log Out</NavLink>
       </li>
     </ul>

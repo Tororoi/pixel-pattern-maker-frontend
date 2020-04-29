@@ -88,15 +88,15 @@ class App extends React.Component {
         <Switch>
           <Route path="/login" render={this.renderForm} />
           <Route path="/register" render={this.renderForm} />
-          <Route path="/draw" exact render={() => <div> 
-            <DrawContainer savePattern={this.props.savePattern}/> 
-            </div>} />
-          <Route path="/profile" exact render={() => <div> 
-            <ProfileContainer /> 
-            </div>} />
-          <Route path="/" exact render={() => <div> 
-            <PatternContainer /> 
-            </div>} />
+          <Route path="/draw" exact render={() => 
+            <div> <DrawContainer savePattern={this.props.savePattern}/> </div>
+            } />
+          <Route path="/profile" exact render={() => 
+            <div> <ProfileContainer /> </div>
+          } />
+          <Route path="/" exact render={() => 
+            <div> <PatternContainer /> </div>
+          } />
         </Switch>
 
       </div>
