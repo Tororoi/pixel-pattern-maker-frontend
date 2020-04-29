@@ -9,7 +9,6 @@ let patternsInitialState = {
     switch (action.type) {
   
       case "SET_ALL_PATTERNS":
-  
         let theArrayOfPatterns = action.payload
         return {
           ...state,
@@ -18,11 +17,9 @@ let patternsInitialState = {
   
   
       case "ADD_ONE_PATTERN":
-  
         let thePatternIwantToAdd = action.payload
         let copyOfPatterns = [...state.patterns, thePatternIwantToAdd]
   
-        console.log(copyOfPatterns)
         return {
           ...state,
           patterns: copyOfPatterns
@@ -34,12 +31,13 @@ let patternsInitialState = {
         let filteredPatterns = state.patterns.filter((pattern) => {
           return pattern.id !== thePatternID
         })
-  
+
         return {
           ...state,
           patterns: filteredPatterns
         }
   
+
       default:
         return state
     }

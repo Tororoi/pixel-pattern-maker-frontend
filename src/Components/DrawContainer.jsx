@@ -19,6 +19,7 @@ const DrawContainer = (props) => {
         <div className="toolbox">
           <ToolContainer
               savePattern={props.savePattern}
+              deletePattern={props.deletePattern}
               setCurrentPattern={props.setCurrentPattern}
               setPaletteColors={props.setPaletteColors}
           />

@@ -4,7 +4,6 @@ import Pattern from './Pattern'
 import {connect} from 'react-redux'
 
 const PatternContainer = (props) => {
-    // console.log(props.patterns)
 
     const patternsArray = props.patterns.map((pattern) => {
             return <Pattern key={pattern.id} pattern={pattern}/>
@@ -22,7 +21,6 @@ const PatternContainer = (props) => {
 
 
 let mapStateToProps = (reduxState) => {
-    // console.log(reduxState.canvasInfo)
     return {
       patterns: reduxState.patternInfo.patterns
     }

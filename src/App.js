@@ -91,6 +91,7 @@ class App extends React.Component {
           <Route path="/draw" exact render={() => 
             <div> <DrawContainer 
               savePattern={this.props.savePattern}
+              deletePattern={this.props.deletePattern}
               setCurrentPattern={this.props.setCurrentPattern}  
               setPaletteColors={this.props.setPaletteColors}
             /> </div>
@@ -154,18 +155,45 @@ let savePattern = (newPattern) => {
   }
 }
 
-// regular Action Creators
-let setAllPatterns = (patternsArr) => {
-  return {
-    type: "SET_ALL_PATTERNS",
-    payload: patternsArr
+let deletePattern = (newPattern) => {
+  return (dispatch) => {
+    dispatch(removePattern(newPattern.id))
+    fetch(`http://localhost:3000/patterns/${newPattern.id}`, {
+      method: "DELETE",
+      headers: {
+        'content-type': 'application/json',
+        "Authorization": `bearer ${localStorage.token}`
+      }
+    })
+    .then(r => {
+      console.log(r)
+      // r.json()
+    })
+    // .then((obj) => {
+    //   console.log(obj)
+    // })
   }
 }
 
+// regular Action Creators
 let addOnePattern = (pattern) => {
   return {
     type: "ADD_ONE_PATTERN",
     payload: pattern
+  }
+}
+
+let removePattern = (pattern) => {
+  return {
+    type: "REMOVE_PATTERN",
+    payload: pattern
+  }
+}
+
+let setAllPatterns = (patternsArr) => {
+  return {
+    type: "SET_ALL_PATTERNS",
+    payload: patternsArr
   }
 }
 
@@ -190,7 +218,7 @@ let setPaletteColors = (palette) => {
   }
 }
 
-let sendThisInformation = { setAllPatterns, setUserInfo, persistUser, setCurrentPattern, setPaletteColors, savePattern, getPatterns }
+let sendThisInformation = { setAllPatterns, setUserInfo, persistUser, setCurrentPattern, setPaletteColors, savePattern, deletePattern, getPatterns }
 
 
 export default connect(null, sendThisInformation)(App);

@@ -17,6 +17,7 @@ class Canvas extends React.Component {
             })
             this.props.paletteDispatch(this.props.currentPattern.palettes[0].colors)
         }
+        this.props.currentImageDispatch(this.props.currentPattern.image)
     }
 
     handleClick = (e) => {
@@ -24,10 +25,7 @@ class Canvas extends React.Component {
         cvs.width = 256;
         cvs.height = 256;
         cvs.getContext('2d').drawImage(this.canvasRef.current,0,0,256,256,0,0,256, 256); // first four coords are the cropping area
-        this.props.currentImageDispatch(cvs.toDataURL())
-
-        // props.savePattern(canvasRef.current.toDataURL())
-        // implement draw on ctx here
+        this.props.currentImageDispatch(cvs.toDataURL()) //gets canceled out by componentDidMount
     }
 
     handleCoords = (e) => {
