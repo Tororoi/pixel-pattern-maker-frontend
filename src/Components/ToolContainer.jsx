@@ -19,10 +19,17 @@ const ToolContainer = (props) => {
         props.savePattern(newPatternPOJO)
     }
 
+    const startNew = (e) => {
+        props.setCurrentPattern({})
+        props.setPaletteColors(["#FFFFFF"])
+        // console.log(props.setCurrentPattern())
+    }
+
     return (
         <>
             <h2>Toolbox</h2>
             <h3 onClick={handleClick}>Save</h3>
+            <h3 onClick={startNew}>New</h3>
             <Palette 
                 currentColor={props.canvasInfo.currentColor}
                 paletteInfo={props.paletteInfo}
@@ -34,8 +41,6 @@ const ToolContainer = (props) => {
         </>
     )
 };
-
-
 
 // the return value of mapStateToProps is an object that will be merged into DrawContainer's props
 let mapStateToProps = (reduxState) => {

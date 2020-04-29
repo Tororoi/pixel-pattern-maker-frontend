@@ -89,7 +89,11 @@ class App extends React.Component {
           <Route path="/login" render={this.renderForm} />
           <Route path="/register" render={this.renderForm} />
           <Route path="/draw" exact render={() => 
-            <div> <DrawContainer savePattern={this.props.savePattern}/> </div>
+            <div> <DrawContainer 
+              savePattern={this.props.savePattern}
+              setCurrentPattern={this.props.setCurrentPattern}  
+              setPaletteColors={this.props.setPaletteColors}
+            /> </div>
             } />
           <Route path="/profile" exact render={() => 
             <div> <ProfileContainer /> </div>
@@ -172,7 +176,21 @@ let setUserInfo = (userInfo) => {
   }
 }
 
-let sendThisInformation = { setAllPatterns, setUserInfo, persistUser, savePattern, getPatterns }
+let setCurrentPattern = (pattern) => {
+  return {
+    type: "SET_CURRENT_PATTERN",
+    payload: pattern
+  }
+}
+
+let setPaletteColors = (palette) => {
+  return {
+    type: "SET_PALETTE_COLORS",
+    payload: palette
+  }
+}
+
+let sendThisInformation = { setAllPatterns, setUserInfo, persistUser, setCurrentPattern, setPaletteColors, savePattern, getPatterns }
 
 
 export default connect(null, sendThisInformation)(App);

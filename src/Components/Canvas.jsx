@@ -20,7 +20,7 @@ class Canvas extends React.Component {
     }
 
     handleClick = (e) => {
-        var cvs = document.createElement('canvas');
+        let cvs = document.createElement('canvas');
         cvs.width = 256;
         cvs.height = 256;
         cvs.getContext('2d').drawImage(this.canvasRef.current,0,0,256,256,0,0,256, 256); // first four coords are the cropping area

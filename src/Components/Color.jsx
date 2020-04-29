@@ -4,11 +4,16 @@ import {connect} from 'react-redux'
 
 const Color = (props) => {
 
+    const handleClick = (e) => {
+        props.setColorDispatch(props.color)
+    }
+
     return (
         <>
-            <div className="color">
+            <div className="color" style={props.currentColor===props.color ? {border: "4px solid black", } : {border: "none"}}>
                 <div className="swatch"
                     style={{backgroundColor: props.color}}
+                    onClick={handleClick}
                 />
             </div>
         </>
@@ -30,7 +35,7 @@ const addColor = (color) => {
 }
 
 const mapDispatchToProps = {
-    colorDispatch: setColor,
+    setColorDispatch: setColor,
     addColorDispatch: addColor
   }
 
