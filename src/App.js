@@ -91,6 +91,7 @@ class App extends React.Component {
           <Route path="/draw" exact render={() => 
             <div> <DrawContainer 
               createPattern={this.props.createPattern}
+              updatePattern={this.props.updatePattern}
               deletePattern={this.props.deletePattern}
             /> </div>
             } />
@@ -153,6 +154,25 @@ let createPattern = (newPattern) => {
   }
 }
 
+let updatePattern = (newPattern) => {
+  return (dispatch) => {
+    fetch(`http://localhost:3000/patterns/${newPattern.pattern.id}`, {
+      method: "PATCH",
+      headers: {
+        'content-type': 'application/json',
+        "Authorization": `bearer ${localStorage.token}`
+      },
+      body: JSON.stringify(newPattern)
+    })
+    .then(r => r.json())
+    .then((obj) => {
+      if (obj.pattern) {
+        dispatch(replacePattern(obj.pattern))
+      }
+    })
+  }
+}
+
 let deletePattern = (newPattern) => {
   return (dispatch) => {
     dispatch(removePattern(newPattern.id))
@@ -181,6 +201,13 @@ let addOnePattern = (pattern) => {
   }
 }
 
+let replacePattern = (pattern) => {
+  return {
+    type: "REPLACE_PATTERN",
+    payload: pattern
+  }
+}
+
 let removePattern = (pattern) => {
   return {
     type: "REMOVE_PATTERN",
@@ -202,7 +229,7 @@ let setUserInfo = (userInfo) => {
   }
 }
 
-let sendThisInformation = { setAllPatterns, setUserInfo, persistUser, createPattern, deletePattern, getPatterns }
+let sendThisInformation = { setAllPatterns, setUserInfo, persistUser, createPattern, updatePattern, deletePattern, getPatterns }
 
 
 export default connect(null, sendThisInformation)(App);

@@ -11,7 +11,10 @@ const Pattern = (props) => {
     const handleClick = (e) => {
         return (
             props.patternDispatch(props.pattern),
-            props.paletteDispatch(props.pattern.palettes[0])
+            props.paletteDispatch(props.pattern.palettes[0]),
+            props.setImageDispatch(props.pattern.image),
+            props.setNameDispatch(props.pattern.name),
+            props.setPaletteColorsDispatch(props.pattern.palettes[0].colors)
         )
     }
 
@@ -43,9 +46,34 @@ const setCurrentPalette = (palette) => {
     }
 }
 
+const setImage = (image) => {
+    return {
+        type: "SET_IMAGE",
+        payload: image
+    }
+}
+
+const setName = (name) => {
+    return {
+        type: "SET_NAME",
+        payload: name
+    }
+}
+
+let setPaletteColors = (palette) => {
+    return {
+      type: "SET_PALETTE_COLORS",
+      payload: palette
+    }
+  }
+
 const mapDispatchToProps = {
     patternDispatch: setCurrentPattern,
-    paletteDispatch: setCurrentPalette
+    paletteDispatch: setCurrentPalette,
+    setImageDispatch: setImage,
+    setNameDispatch: setName,
+    setPaletteColorsDispatch: setPaletteColors
+
   }
 
 export default connect(null, mapDispatchToProps)(Pattern);

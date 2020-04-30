@@ -9,6 +9,10 @@ import {connect} from 'react-redux'
 const ToolContainer = (props) => {
 //   console.log("PROPS OF CONTAINER", props.dispatchSetName )
 
+    // const initName = (e) => {
+    //     props.dispatchSetName(props.currentPattern.name)
+    // }
+
     const setName = (e) => {
         props.dispatchSetName(e.target.value)
     }
@@ -25,13 +29,22 @@ const ToolContainer = (props) => {
     }
 
     const updatePattern = (e) => {
-        console.log(props.currentPattern)
-        // props.updatePattern(updatedPatternPOJO)
+        let newPatternPOJO = {
+            pattern: {
+                id: props.currentPattern.id,
+                name: props.canvasInfo.currentName, 
+                image: props.canvasInfo.currentImage,
+            },
+            colors: props.paletteInfo.colors,
+            paletteID: props.currentPalette.id
+        }
+        props.updatePattern(newPatternPOJO)
     }
 
     const startNew = (e) => {
         props.resetPatternStateDispatch()
         props.setPaletteColorsDispatch(["#FFFFFF"])
+        //To do: Set canvas ref to state so this function can clear canvas
     }
 
     const exportImage = (e) => {
@@ -104,7 +117,8 @@ let mapStateToProps = (reduxState) => {
   return {
     canvasInfo: reduxState.canvasInfo,
     paletteInfo: reduxState.paletteInfo,
-    currentPattern: reduxState.currentPatternInfo.pattern
+    currentPattern: reduxState.currentPatternInfo.pattern,
+    currentPalette: reduxState.currentPatternInfo.currentPalette
   }
 }
 

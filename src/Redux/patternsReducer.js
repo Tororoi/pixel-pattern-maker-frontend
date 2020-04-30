@@ -25,6 +25,21 @@ let patternsInitialState = {
           patterns: copyOfPatterns
         }
   
+
+      case "REPLACE_PATTERN":
+        let updatedPattern = action.payload
+        function checkID(pattern) {
+          return pattern.id === updatedPattern.id
+        }
+        let oldPattern = state.patterns.find(checkID)
+        let patternIndex = state.patterns.indexOf(oldPattern)
+        let updatedPatternsArray = [...state.patterns]
+        updatedPatternsArray[patternIndex] = updatedPattern
+
+        return {
+          ...state,
+          patterns: updatedPatternsArray
+        }        
   
       case "REMOVE_PATTERN":
         let thePatternID = action.payload

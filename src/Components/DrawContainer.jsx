@@ -15,6 +15,7 @@ const DrawContainer = (props) => {
           <h2>Draw Container</h2>
           <Canvas
               canvasInfo={props.canvasInfo}
+              paletteInfo={props.paletteInfo}
               currentPattern={props.currentPattern}
               currentPalette={props.currentPalette}
               setPaletteColorsDispatch={props.setPaletteColorsDispatch}
@@ -23,6 +24,7 @@ const DrawContainer = (props) => {
         <div className="toolbox">
           <ToolContainer
               createPattern={props.createPattern}
+              updatePattern={props.updatePattern}
               deletePattern={props.deletePattern}
               resetPatternStateDispatch={props.resetPatternStateDispatch}
               setPaletteColorsDispatch={props.setPaletteColorsDispatch}
@@ -55,6 +57,7 @@ let mapStateToProps = (reduxState) => {
   // console.log(reduxState.canvasInfo)
   return {
     canvasInfo: reduxState.canvasInfo,
+    paletteInfo: reduxState.paletteInfo,
     currentPattern: reduxState.currentPatternInfo.pattern,
     currentPalette: reduxState.currentPatternInfo.currentPalette
   }

@@ -7,19 +7,24 @@ class Canvas extends React.Component {
     canvasRef = React.createRef();
 
     componentDidMount() {
-        // console.log("rendered Pattern")
+        this.renderCanvas()
+    }
+
+    renderCanvas = () => {
+        console.log("rendered Pattern")
         const canvas = this.canvasRef.current        
         const ctx = canvas.getContext('2d') 
         const image = new Image();
-        image.src = this.props.currentPattern.image
-
-        if (this.props.currentPattern.image) {
+        image.src = this.props.canvasInfo.currentImage //This one has trouble, must go back twice to get it to load
+        // image.src = this.props.currentPattern.image
+        // console.log(this.props.canvasInfo.currentImage)
+        if (this.props.canvasInfo.currentImage) {
             this.props.canvasInfo.squares.forEach((s) => {
                 ctx.drawImage(image,s.x,s.y)
             })
-            this.props.setPaletteColorsDispatch(this.props.currentPalette.colors)
+            this.props.setPaletteColorsDispatch(this.props.paletteInfo.colors)
         }
-        this.props.currentImageDispatch(this.props.currentPattern.image)
+        this.props.currentImageDispatch(this.props.canvasInfo.currentImage)
     }
 
     handleClick = (e) => {
