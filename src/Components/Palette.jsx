@@ -15,11 +15,15 @@ const Palette = (props) => {
                 />
         })
     
+    const handleClick = (e) => {
+        props.addColorDispatch("#FFFFFF")
+    }
 
      return(
         <>
             <div className="palette">
                 {paletteArray}
+                <div className="add-color-button" onClick={handleClick}>+</div>
             </div>
         </>
     )

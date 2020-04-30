@@ -85,6 +85,7 @@ const ToolContainer = (props) => {
                 currentColor={props.canvasInfo.currentColor}
                 paletteInfo={props.paletteInfo}
                 setColorDispatch={props.setColorDispatch}
+                addColorDispatch={props.addColorDispatch}
             />
             <ColorPicker
                 currentColor={props.canvasInfo.currentColor}
