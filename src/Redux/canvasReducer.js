@@ -1,6 +1,7 @@
 let canvasInitialState = {
     currentName: '',
     currentImage: '',
+    tool: 'pencil',
     mouseDown: false,
     boxSize: 256,
     currentColor: '#FFFFFF',
@@ -72,6 +73,12 @@ let canvasReducer = (state = canvasInitialState, action) => {
             return {
                 ...state,
                 currentColor: newColor
+            }
+        case "SET_TOOL":
+            let newTool = action.payload
+            return {
+                ...state,
+                tool: newTool
             }
         default:
             return state

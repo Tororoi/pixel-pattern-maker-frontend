@@ -22,10 +22,20 @@ let paletteReducer = (state = paletteInitialState, action) => {
             }
         case "UPDATE_COLOR":
             //don't change color but change which color belongs to palette
-            let updatedColor = action.payload
+            let colorInfoPOJO = action.payload
+            function checkColor(color) {
+              return color === colorInfoPOJO['oldColor']
+            }
+            let oldColor = state.colors.find(checkColor)
+            let colorIndex = state.colors.indexOf(oldColor)
+            let updatedColorsArray = [...state.colors]
+            updatedColorsArray[colorIndex] = colorInfoPOJO['newColor']
+
+            // console.log(colorInfoPOJO['oldColor'])
+            // return state
             return {
                 ...state,
-                colors: [...state.colors, updatedColor]
+                colors: updatedColorsArray
             }
         default:
             return state

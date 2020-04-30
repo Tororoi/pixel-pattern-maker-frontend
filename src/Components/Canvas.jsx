@@ -15,16 +15,16 @@ class Canvas extends React.Component {
         const canvas = this.canvasRef.current        
         const ctx = canvas.getContext('2d') 
         const image = new Image();
-        image.src = this.props.canvasInfo.currentImage //This one has trouble, must go back twice to get it to load
-        // image.src = this.props.currentPattern.image
+        // image.src = this.props.canvasInfo.currentImage //This one has trouble, must go back twice to get it to load
+        image.src = this.props.currentPattern.image
         // console.log(this.props.canvasInfo.currentImage)
-        if (this.props.canvasInfo.currentImage) {
+        if (this.props.currentPattern.image) {
             this.props.canvasInfo.squares.forEach((s) => {
                 ctx.drawImage(image,s.x,s.y)
             })
             this.props.setPaletteColorsDispatch(this.props.paletteInfo.colors)
         }
-        this.props.currentImageDispatch(this.props.canvasInfo.currentImage)
+        this.props.currentImageDispatch(this.props.currentPattern.image)
     }
 
     handleClick = (e) => {
@@ -47,14 +47,29 @@ class Canvas extends React.Component {
 
         if (this.props.canvasInfo.mouseDown === true) {
             ctx.fillStyle=this.props.canvasInfo.currentColor
-            // ctx.fillRect(x1,y1,w,h) 
+            
+            switch(this.props.canvasInfo.tool) {
+                case 'pencil':
+                    this.props.canvasInfo.squares.forEach(square => {
+                        ctx.fillRect(x1+square.x,y1+square.y,w,h) 
+                        ctx.fillRect(x1-square.x,y1-square.y,w,h) 
+                        ctx.fillRect(x1-square.x,y1+square.y,w,h)
+                        ctx.fillRect(x1+square.x,y1-square.y,w,h) 
+                    })
+                    break;
+                case 'eraser':
+                    this.props.canvasInfo.squares.forEach(square => {
+                        ctx.clearRect(x1+square.x,y1+square.y,w,h) 
+                        ctx.clearRect(x1-square.x,y1-square.y,w,h) 
+                        ctx.clearRect(x1-square.x,y1+square.y,w,h)
+                        ctx.clearRect(x1+square.x,y1-square.y,w,h) 
+                    })
+                    break;
+                default:
+                    break;
+            }
 
-            this.props.canvasInfo.squares.forEach(square => {
-                ctx.fillRect(x1+square.x,y1+square.y,w,h) 
-                ctx.fillRect(x1-square.x,y1-square.y,w,h) 
-                ctx.fillRect(x1-square.x,y1+square.y,w,h)
-                ctx.fillRect(x1+square.x,y1-square.y,w,h) 
-            })
+
         }
     }
 

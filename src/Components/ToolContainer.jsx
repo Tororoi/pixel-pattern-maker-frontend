@@ -57,6 +57,12 @@ const ToolContainer = (props) => {
         props.deletePattern(props.currentPattern)
     }
 
+    const changeTool = (e) => {
+        props.toolDispatch(e.target.innerText)
+        Array.from(e.target.parentNode.children).forEach((c) => {c.style.color = "black"}) //temporary
+        e.target.style.color="red"
+    }
+
     return (
         <>
             <h2>Toolbox</h2>
@@ -71,6 +77,10 @@ const ToolContainer = (props) => {
             <h3 onClick={deletePattern}>Delete</h3>
             <h3 onClick={startNew}>New</h3>
             <h3 onClick={exportImage}>Export</h3>
+            <div className="tools" onClick={changeTool}>
+                <div>pencil</div>
+                <div>eraser</div>
+            </div>
             <Palette 
                 currentColor={props.canvasInfo.currentColor}
                 paletteInfo={props.paletteInfo}
@@ -78,8 +88,10 @@ const ToolContainer = (props) => {
             />
             <ColorPicker
                 currentColor={props.canvasInfo.currentColor}
+                paletteInfo={props.paletteInfo}
                 setColorDispatch={props.setColorDispatch}
                 addColorDispatch={props.addColorDispatch}
+                updateColorDispatch={props.updateColorDispatch}
             />
         </>
     )
@@ -106,10 +118,26 @@ const addColor = (color) => {
     }
 }
 
+const updateColor = (color) => {
+    return {
+        type: "UPDATE_COLOR",
+        payload: color
+    }
+}
+
+const setTool = (tool) => {
+    return {
+        type: "SET_TOOL",
+        payload: tool
+    }
+}
+
 const mapDispatchToProps = {
     dispatchSetName: setName,
     setColorDispatch: setColor,
-    addColorDispatch: addColor
+    addColorDispatch: addColor,
+    updateColorDispatch: updateColor,
+    toolDispatch: setTool
 }
 
 // the return value of mapStateToProps is an object that will be merged into DrawContainer's props

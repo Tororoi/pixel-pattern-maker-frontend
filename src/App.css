@@ -77,6 +77,10 @@ canvas {
   background-color: white;
 }
 
+canvas:hover {
+  cursor: url("https://i.ibb.co/8728h8K/cursor-crosshair.png") 15 15,crosshair;
+}
+
 .toolbox {
   float: right;
   width: 512px;
@@ -99,13 +103,56 @@ canvas {
 
 .swatch:hover {
   border-radius: 20px;
-  border-color: red;
 }
 
 /* Pattern Thumbnails */
 
+.pattern-container {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.pattern-card {
+  margin: 24px;
+  width: 284px;
+  height: 348px;
+  background-color: white;
+  border: 2px solid black;
+  display: flex;
+  flex-flow: column;
+  /* overflow: hidden; */
+}
+
+.pattern-card p {
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+}
+
+.fav-button {
+  font-size: 48px;
+  position: absolute;
+  margin-left: 216px;
+  margin-top: 280px;
+  color: rgb(255, 217, 0);
+  transition: 0.1s ease-out;
+}
+
+.fav-button:hover {
+  font-size: 56px;
+  margin-left: 212px;
+  margin-top: 276px;
+}
+
 .pattern {
+  margin: 12px;
   width: 256px;
   height: 256px;
   background-color: white;
+  border: 2px solid black;
+  transition: 0.1s ease-out;
+}
+
+.pattern:hover {
+  margin: 10px;
+  border: 4px solid black;
 }

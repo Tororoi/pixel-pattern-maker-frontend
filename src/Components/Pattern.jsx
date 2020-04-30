@@ -18,16 +18,26 @@ const Pattern = (props) => {
         )
     }
 
+    const handleFaved = (e) => {
+        console.log("faved")
+    }
+
     return (
         <>
-        <NavLink to="/draw">
-            <div className="pattern" onClick={handleClick}>
-                <img className="thumbnail"
+
+        <div className="pattern-card">
+            <NavLink to="/draw">
+                <img className="pattern"
                     src={props.pattern.image}
                     alt={props.pattern.name}
+                    onClick={handleClick}
                 />
-            </div>
-        </NavLink>
+            </NavLink>
+                <p>{props.pattern.name}</p>
+                <p>By {props.pattern.creator}</p>
+                <div className="fav-button" onClick={handleFaved}>★</div>
+        </div>
+
         </>
     )
 }

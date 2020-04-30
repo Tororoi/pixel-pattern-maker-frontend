@@ -24,12 +24,18 @@ class ColorPicker extends React.Component {
     // }
 
     colorChangeCB = () => { 
-        this.props.setColorDispatch(this.wheelPicker.color.hexString) 
+        const colorToChange = this.props.paletteInfo.colors.find((c) => {return c === this.props.currentColor})
+        if (colorToChange) {
+            this.props.updateColorDispatch({oldColor: this.props.currentColor, newColor: this.wheelPicker.color.hexString})
+            }
+        
 
+        this.props.setColorDispatch(this.wheelPicker.color.hexString) 
     }
 
     handleClick = (e) => {
-        this.props.addColorDispatch(this.wheelPicker.color.hexString)
+
+        // this.props.addColorDispatch(this.wheelPicker.color.hexString)
     }
 
     render() {
