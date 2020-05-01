@@ -1,5 +1,6 @@
 let paletteInitialState = {
-    colors: ['#FFFFFF']
+    colors: ['#ffffff'],
+    insidePicker: false
 }
 
 let paletteReducer = (state = paletteInitialState, action) => {
@@ -36,6 +37,13 @@ let paletteReducer = (state = paletteInitialState, action) => {
             return {
                 ...state,
                 colors: updatedColorsArray
+            }
+        case "HOVER_PICKER":
+
+            let hoverPicker = action.payload
+            return {
+                ...state,
+                insidePicker: hoverPicker
             }
         default:
             return state

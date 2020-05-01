@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import ColorPicker from './ColorPicker'
 import Palette from './Palette'
 
@@ -44,6 +44,7 @@ const ToolContainer = (props) => {
     const startNew = (e) => {
         props.resetPatternStateDispatch()
         props.setPaletteColorsDispatch(["#FFFFFF"])
+        props.clearCTXDispatch(true)
         //To do: Set canvas ref to state so this function can clear canvas
     }
 
@@ -93,6 +94,7 @@ const ToolContainer = (props) => {
                 setColorDispatch={props.setColorDispatch}
                 addColorDispatch={props.addColorDispatch}
                 updateColorDispatch={props.updateColorDispatch}
+                pickerDispatch={props.pickerDispatch}
             />
         </>
     )
@@ -133,12 +135,20 @@ const setTool = (tool) => {
     }
 }
 
+const hoverPicker = (bool) => {
+    return {
+        type: "HOVER_PICKER",
+        payload: bool
+    }
+}
+
 const mapDispatchToProps = {
     dispatchSetName: setName,
     setColorDispatch: setColor,
     addColorDispatch: addColor,
     updateColorDispatch: updateColor,
-    toolDispatch: setTool
+    toolDispatch: setTool,
+    pickerDispatch: hoverPicker
 }
 
 // the return value of mapStateToProps is an object that will be merged into DrawContainer's props

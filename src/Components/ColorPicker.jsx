@@ -7,6 +7,14 @@ class ColorPicker extends React.Component {
 
     colorPicker = React.createRef();
 
+    enter = (e) => {
+        this.props.pickerDispatch(true)
+    }
+
+    leave = (e) => {
+        this.props.pickerDispatch(false)
+    }
+
     componentDidMount() { 
         this.wheelPicker = new iro.ColorPicker(this.colorPicker.current, {
             width: 350,
@@ -19,8 +27,19 @@ class ColorPicker extends React.Component {
         this.wheelPicker.on('color:change', this.colorChangeCB )
     }
     
-    // componentWillUnmount() {
-    //     this.wheelPicker.off('color:change', this.colorChangeCB)
+    componentWillUnmount() {
+        this.wheelPicker.color = "#ffffff"
+        this.props.setColorDispatch("#ffffff")
+    }
+
+    componentDidUpdate() {
+        if (this.props.paletteInfo.insidePicker === false) {this.wheelPicker.color.hexString = this.props.currentColor}
+    }
+
+    // mouseEnter = (e) => {
+    //     console.log(`before: ${this.wheelPicker.color.hexString}`)
+    //     this.wheelPicker.color.hexString = this.props.currentColor
+    //     console.log(`after: ${this.wheelPicker.color.hexString}`)
     // }
 
     colorChangeCB = () => { 
@@ -39,12 +58,15 @@ class ColorPicker extends React.Component {
     }
 
     render() {
+        // if (this.wheelPicker) {this.wheelPicker.color.hexString = this.props.currentColor}
 
         return(
             <div className="color-picker-wrapper">
                 <div 
                     ref={this.colorPicker} 
                     onClick={this.handleClick}
+                    onMouseEnter={this.enter}
+                    onMouseLeave={this.leave}
                 />
             </div>
         )

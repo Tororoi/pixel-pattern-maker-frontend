@@ -10,10 +10,17 @@ class Canvas extends React.Component {
         this.renderCanvas()
     }
 
+    componentDidUpdate() {
+        if (this.props.canvasInfo.ctxClear === true) {
+            this.canvasRef.current.getContext('2d').clearRect(0,0,768,768)
+            this.props.clearCTXDispatch(false)
+        }
+    }
+
     renderCanvas = () => {
         console.log("rendered Pattern")
         const canvas = this.canvasRef.current        
-        const ctx = canvas.getContext('2d') 
+        const ctx = canvas.getContext('2d')
         const image = new Image();
         // image.src = this.props.canvasInfo.currentImage //This one has trouble, must go back twice to get it to load
         image.src = this.props.currentPattern.image

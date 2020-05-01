@@ -2,9 +2,10 @@ let canvasInitialState = {
     currentName: '',
     currentImage: '',
     tool: 'pencil',
+    ctxClear: false,
     mouseDown: false,
     boxSize: 256,
-    currentColor: '#FFFFFF',
+    currentColor: '#ffffff',
     squares: [
         {
             x: 0,
@@ -79,6 +80,12 @@ let canvasReducer = (state = canvasInitialState, action) => {
             return {
                 ...state,
                 tool: newTool
+            }
+        case "CLEAR_CONTEXT":
+            let clearBoolean = action.payload
+            return {
+                ...state,
+                ctxClear: clearBoolean
             }
         default:
             return state
