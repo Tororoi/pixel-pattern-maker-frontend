@@ -11,14 +11,55 @@ class Canvas extends React.Component {
     }
 
     componentDidUpdate() {
+        const ctx = this.canvasRef.current.getContext('2d')
         if (this.props.canvasInfo.ctxClear === true) {
-            this.canvasRef.current.getContext('2d').clearRect(0,0,768,768)
+            ctx.clearRect(0,0,768,768)
             this.props.clearCTXDispatch(false)
         }
+        // change old color to new color
+        const replaceColor = () => {
+            //get array of pixel data
+            const imageData = ctx.getImageData(0,0,64,64)
+
+            //helper functions
+            const componentToHex = (c) => {
+                var hex = c.toString(16);
+                return hex.length == 1 ? "0" + hex : hex;
+              }
+
+            const rgbToHex = (r,g,b) => {
+                return `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`
+            }
+
+            const hexToRgb = (hex) => {
+                var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+                return result ? {
+                  r: parseInt(result[1], 16),
+                  g: parseInt(result[2], 16),
+                  b: parseInt(result[3], 16)
+                } : null;
+              }
+
+            const currentRGB = hexToRgb(this.props.canvasInfo.currentColor)
+
+            for (let i=0;i<imageData.data.length;i+=4) {
+                if (rgbToHex(imageData.data[i],imageData.data[i+1],imageData.data[i+2]) === this.props.canvasInfo.oldColor) {
+                   imageData.data[i]=currentRGB.r;
+                    imageData.data[i+1]=currentRGB.g;
+                    imageData.data[i+2]=currentRGB.b;
+                }
+            }
+
+            // put the altered data back on the canvas  
+            ctx.putImageData(imageData,0,0);
+        }
+        // if (this.props.paletteInfo.insidePicker) {replaceColor()}
+        //Make object that allows access to indexes of pixels that need to be changed --- how?
+        // const imageData = ctx.getImageData(0,0,64,64)
+        // console.log(imageData)
     }
 
     renderCanvas = () => {
-        console.log("rendered Pattern")
         const canvas = this.canvasRef.current        
         const ctx = canvas.getContext('2d')
         const image = new Image();

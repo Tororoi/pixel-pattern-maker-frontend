@@ -6,6 +6,7 @@ let canvasInitialState = {
     mouseDown: false,
     boxSize: 256,
     currentColor: '#ffffff',
+    oldColor: '#ffffff',
     squares: [
         {
             x: 0,
@@ -73,6 +74,7 @@ let canvasReducer = (state = canvasInitialState, action) => {
             let newColor = action.payload
             return {
                 ...state,
+                oldColor: state.currentColor,
                 currentColor: newColor
             }
         case "SET_TOOL":
