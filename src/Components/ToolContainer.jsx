@@ -46,10 +46,12 @@ const ToolContainer = (props) => {
     const startNew = (e) => {
         e.preventDefault()
         props.resetPatternStateDispatch()
-        props.setPaletteColorsDispatch(["#ffffff"])
         props.clearCTXDispatch(true)
-        props.setColorDispatch("#ffffff")
         props.setImageSizeDispatch(props.canvasInfo.newSize)
+        if (!props.paletteInfo.keep) {
+            props.setPaletteColorsDispatch(["#ffffff"])
+            props.setColorDispatch("#ffffff")
+        }
     }
 
     const exportImage = (e) => {
@@ -101,6 +103,10 @@ const ToolContainer = (props) => {
         props.setNewSizeDispatch(parseInt(e.target.value))
     }
 
+    const changeKeepPalette = (e) => {
+        props.keepPaletteDispatch()
+    }
+
     return (
         <>
             <h2>Toolbox</h2>
@@ -137,6 +143,9 @@ const ToolContainer = (props) => {
             </div>
             <div className="start-new">
                 <label htmlFor="new-pattern" >Start New</label>
+                <label htmlFor="keep-palette" >
+                        <input type="checkbox" value={props.paletteInfo.keep} checked={props.paletteInfo.keep} onChange={changeKeepPalette}/>Keep Palette?
+                    </label>
                 <div value={props.canvasInfo.newSize} onChange={changeSize} className="form-control">
                     <label htmlFor="64x64" >
                         <input type="radio" value="64" checked={props.canvasInfo.newSize === 64}/>64x64
@@ -241,6 +250,12 @@ const pickerMouseDown = (bool) => {
     }
 }
 
+const keepPalette = () => {
+    return {
+        type: "KEEP_PALETTE"
+    }
+}
+
 const mapDispatchToProps = {
     dispatchSetName: setName,
     setImageSizeDispatch: setImageSize,
@@ -251,7 +266,8 @@ const mapDispatchToProps = {
     toolDispatch: setTool,
     setBGDispatch: setBG,
     pickerDispatch: hoverPicker,
-    pickerClickDispatch: pickerMouseDown
+    pickerClickDispatch: pickerMouseDown,
+    keepPaletteDispatch: keepPalette
 }
 
 // the return value of mapStateToProps is an object that will be merged into DrawContainer's props

@@ -1,7 +1,8 @@
 let paletteInitialState = {
     colors: ['#ffffff'],
     insidePicker: false,
-    pickerMouseDown: false
+    pickerMouseDown: false,
+    keep: false
 }
 
 let paletteReducer = (state = paletteInitialState, action) => {
@@ -50,6 +51,11 @@ let paletteReducer = (state = paletteInitialState, action) => {
             return {
                 ...state,
                 pickerMouseDown: newPickerMouseDown
+            }
+        case "KEEP_PALETTE":
+            return {
+                ...state,
+                keep: !state.keep
             }
         default:
             return state
