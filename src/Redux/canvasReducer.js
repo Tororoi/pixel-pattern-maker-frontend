@@ -4,47 +4,13 @@ let canvasInitialState = {
     tool: 'pencil',
     ctxClear: false,
     mouseDown: false,
+    pixelScale: 1,
+    imageSize: 64,
+    newSize: 64,
     boxSize: 256,
+    background: "white",
     currentColor: '#ffffff',
-    oldColor: '#ffffff',
-    squares: [
-        {
-            x: 0,
-            y: 0
-        },
-        {
-            x: 256,
-            y: 0
-        },
-        {
-            x: 512,
-            y: 0
-        },
-        {
-            x: 0,
-            y: 256
-        },
-        {
-            x: 256,
-            y: 256
-        },
-        {
-            x: 512,
-            y: 256
-        },
-        {
-            x: 0,
-            y: 512
-        },
-        {
-            x: 256,
-            y: 512
-        },
-        {
-            x: 512,
-            y: 512
-        }
-    ]
+    oldColor: '#ffffff'
 }
 
 let canvasReducer = (state = canvasInitialState, action) => {
@@ -64,6 +30,21 @@ let canvasReducer = (state = canvasInitialState, action) => {
                 currentImage: newImage
             }
 
+        case "SET_IMAGE_SIZE":
+            let newImageSize = action.payload
+            return {
+                ...state,
+                imageSize: newImageSize,
+                newSize: newImageSize
+            }
+
+        case "SET_NEW_SIZE":
+            let newNewSize = action.payload
+            return {
+                ...state,
+                newSize: newNewSize
+            }
+
         case "SET_MOUSE_STATE":
             let newMouseState = action.payload
             return {
@@ -76,6 +57,12 @@ let canvasReducer = (state = canvasInitialState, action) => {
                 ...state,
                 oldColor: state.currentColor,
                 currentColor: newColor
+            }
+        case "SET_BACKGROUND":
+            let newBackground = action.payload
+            return {
+                ...state,
+                background: newBackground
             }
         case "SET_TOOL":
             let newTool = action.payload

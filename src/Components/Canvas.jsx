@@ -11,7 +11,25 @@ class Canvas extends React.Component {
     }
 
     componentDidUpdate() {
-        const ctx = this.canvasRef.current.getContext('2d')
+        const canvas = this.canvasRef.current  
+        const ctx = canvas.getContext('2d')
+        switch(this.props.canvasInfo.background) {
+            case "white":
+                canvas.style.backgroundColor = "white"
+                break;
+            case "gray":
+                canvas.style.backgroundColor = "gray"
+                break;
+            case "black":
+                canvas.style.backgroundColor = "black"
+                break;
+            case "transparent":
+                canvas.style.backgroundColor = "transparent"
+                break;
+            default:
+                canvas.style.backgroundColor = "white"
+        }
+
         if (this.props.canvasInfo.ctxClear === true) {
             ctx.clearRect(0,0,768,768)
             this.props.clearCTXDispatch(false)
@@ -54,7 +72,10 @@ class Canvas extends React.Component {
             ctx.putImageData(imageData,0,0);
         }
         // if (this.props.paletteInfo.insidePicker) {replaceColor()}
+
         //Make object that allows access to indexes of pixels that need to be changed --- how?
+        //iterate through image data of a version of canvas at pixel scale 1 to reduce strain from function
+
         // const imageData = ctx.getImageData(0,0,64,64)
         // console.log(imageData)
     }
@@ -62,55 +83,60 @@ class Canvas extends React.Component {
     renderCanvas = () => {
         const canvas = this.canvasRef.current        
         const ctx = canvas.getContext('2d')
+        ctx.imageSmoothingEnabled = false;
+        const b = this.props.canvasInfo.boxSize
+        const squares = [{x: 0,y: 0},{x: b,y: 0},{x: b*2,y: 0},{x: 0,y: b},{x: b,y: b},{x: b*2,y: b},{x: 0,y: b*2},{x: b,y: b*2},{x: b*2,y: b*2}]
         const image = new Image();
-        // image.src = this.props.canvasInfo.currentImage //This one has trouble, must go back twice to get it to load
         image.src = this.props.currentPattern.image
+        // image.src = this.props.canvasInfo.currentImage //This one has trouble, must go back twice to get it to load
+
         // console.log(this.props.canvasInfo.currentImage)
         if (this.props.currentPattern.image) {
-            this.props.canvasInfo.squares.forEach((s) => {
-                ctx.drawImage(image,s.x,s.y)
+            squares.forEach((s) => {
+                ctx.drawImage(image,s.x,s.y,256,256)
             })
             this.props.setPaletteColorsDispatch(this.props.paletteInfo.colors)
         }
         this.props.currentImageDispatch(this.props.currentPattern.image)
     }
 
-    handleClick = (e) => {
+    imageToReduxState = (e) => {
         let cvs = document.createElement('canvas');
-        cvs.width = 256;
-        cvs.height = 256;
-        cvs.getContext('2d').drawImage(this.canvasRef.current,0,0,256,256,0,0,256, 256); // first four coords are the cropping area
+        cvs.width = this.props.canvasInfo.imageSize; //pixel scale 1. Add a multiplier to export form.
+        cvs.height = this.props.canvasInfo.imageSize;
+        cvs.getContext('2d').drawImage(this.canvasRef.current,0,0,256,256,0,0,this.props.canvasInfo.imageSize,this.props.canvasInfo.imageSize); // first four coords are the cropping area
         this.props.currentImageDispatch(cvs.toDataURL()) //gets canceled out by componentDidMount
     }
 
-    handleCoords = (e) => {
+    draw = (e) => {
         const mouseX=e.nativeEvent.offsetX;
         const mouseY=e.nativeEvent.offsetY;
         const canvas = this.canvasRef.current        
         const ctx = canvas.getContext('2d') 
-        const w = 4
-        const h = 4
-        const x1 = Math.floor(mouseX/w)*w
-        const y1 = Math.floor(mouseY/h)*h
+        const pixelSize = this.props.canvasInfo.boxSize/this.props.canvasInfo.imageSize
+        const x1 = Math.floor(mouseX/pixelSize)*pixelSize
+        const y1 = Math.floor(mouseY/pixelSize)*pixelSize
+        const b = this.props.canvasInfo.boxSize
+        const squares = [{x: 0,y: 0},{x: b,y: 0},{x: b*2,y: 0},{x: 0,y: b},{x: b,y: b},{x: b*2,y: b},{x: 0,y: b*2},{x: b,y: b*2},{x: b*2,y: b*2}]
 
         if (this.props.canvasInfo.mouseDown === true) {
             ctx.fillStyle=this.props.canvasInfo.currentColor
             
             switch(this.props.canvasInfo.tool) {
                 case 'pencil':
-                    this.props.canvasInfo.squares.forEach(square => {
-                        ctx.fillRect(x1+square.x,y1+square.y,w,h) 
-                        ctx.fillRect(x1-square.x,y1-square.y,w,h) 
-                        ctx.fillRect(x1-square.x,y1+square.y,w,h)
-                        ctx.fillRect(x1+square.x,y1-square.y,w,h) 
+                    squares.forEach(square => {
+                        ctx.fillRect(x1+square.x,y1+square.y,pixelSize,pixelSize) 
+                        ctx.fillRect(x1-square.x,y1-square.y,pixelSize,pixelSize) 
+                        ctx.fillRect(x1-square.x,y1+square.y,pixelSize,pixelSize)
+                        ctx.fillRect(x1+square.x,y1-square.y,pixelSize,pixelSize) 
                     })
                     break;
                 case 'eraser':
-                    this.props.canvasInfo.squares.forEach(square => {
-                        ctx.clearRect(x1+square.x,y1+square.y,w,h) 
-                        ctx.clearRect(x1-square.x,y1-square.y,w,h) 
-                        ctx.clearRect(x1-square.x,y1+square.y,w,h)
-                        ctx.clearRect(x1+square.x,y1-square.y,w,h) 
+                    squares.forEach(square => {
+                        ctx.clearRect(x1+square.x,y1+square.y,pixelSize,pixelSize) 
+                        ctx.clearRect(x1-square.x,y1-square.y,pixelSize,pixelSize) 
+                        ctx.clearRect(x1-square.x,y1+square.y,pixelSize,pixelSize)
+                        ctx.clearRect(x1+square.x,y1-square.y,pixelSize,pixelSize) 
                     })
                     break;
                 default:
@@ -121,11 +147,45 @@ class Canvas extends React.Component {
         }
     }
 
-    downClick = (e) => {
+    mouseDown = (e) => {
         this.props.mouseDownDispatch(true)
+
+        //repeat of draw function. needed here to get pixel drawn even if mouse doesn't move
+        const mouseX=e.nativeEvent.offsetX;
+        const mouseY=e.nativeEvent.offsetY;
+        const canvas = this.canvasRef.current        
+        const ctx = canvas.getContext('2d') 
+        const pixelSize = this.props.canvasInfo.boxSize/this.props.canvasInfo.imageSize
+        const x1 = Math.floor(mouseX/pixelSize)*pixelSize
+        const y1 = Math.floor(mouseY/pixelSize)*pixelSize
+        const b = this.props.canvasInfo.boxSize
+        const squares = [{x: 0,y: 0},{x: b,y: 0},{x: b*2,y: 0},{x: 0,y: b},{x: b,y: b},{x: b*2,y: b},{x: 0,y: b*2},{x: b,y: b*2},{x: b*2,y: b*2}]
+
+            ctx.fillStyle=this.props.canvasInfo.currentColor
+            
+            switch(this.props.canvasInfo.tool) {
+                case 'pencil':
+                    squares.forEach(square => {
+                        ctx.fillRect(x1+square.x,y1+square.y,pixelSize,pixelSize) 
+                        ctx.fillRect(x1-square.x,y1-square.y,pixelSize,pixelSize) 
+                        ctx.fillRect(x1-square.x,y1+square.y,pixelSize,pixelSize)
+                        ctx.fillRect(x1+square.x,y1-square.y,pixelSize,pixelSize) 
+                    })
+                    break;
+                case 'eraser':
+                    squares.forEach(square => {
+                        ctx.clearRect(x1+square.x,y1+square.y,pixelSize,pixelSize) 
+                        ctx.clearRect(x1-square.x,y1-square.y,pixelSize,pixelSize) 
+                        ctx.clearRect(x1-square.x,y1+square.y,pixelSize,pixelSize)
+                        ctx.clearRect(x1+square.x,y1-square.y,pixelSize,pixelSize) 
+                    })
+                    break;
+                default:
+                    break;
+            }
     }
 
-    upClick = (e) => {
+    mouseUp = (e) => {
         this.props.mouseDownDispatch(false)
     }
 
@@ -136,11 +196,11 @@ class Canvas extends React.Component {
                 width={768}
                 height={768}
                 // onMouseEnter={renderPattern}
-                onClick={this.handleClick}
-                onMouseMove={this.handleCoords}
-                onMouseDown={this.downClick}
-                onMouseUp={this.upClick}
-                onMouseOut={this.upClick}
+                onClick={this.imageToReduxState}
+                onMouseMove={this.draw}
+                onMouseDown={this.mouseDown}
+                onMouseUp={this.mouseUp}
+                onMouseOut={this.mouseUp}
             />
         )
     }

@@ -13,6 +13,7 @@ const Pattern = (props) => {
             props.patternDispatch(props.pattern),
             props.paletteDispatch(props.pattern.palettes[0]),
             props.setImageDispatch(props.pattern.image),
+            props.setImageSizeDispatch(props.pattern.size),
             props.setNameDispatch(props.pattern.name),
             props.setPaletteColorsDispatch(props.pattern.palettes[0].colors)
         )
@@ -63,6 +64,13 @@ const setImage = (image) => {
     }
 }
 
+const setImageSize = (size) => {
+    return {
+        type: "SET_IMAGE_SIZE",
+        payload: size
+    }
+}
+
 const setName = (name) => {
     return {
         type: "SET_NAME",
@@ -81,6 +89,7 @@ const mapDispatchToProps = {
     patternDispatch: setCurrentPattern,
     paletteDispatch: setCurrentPalette,
     setImageDispatch: setImage,
+    setImageSizeDispatch: setImageSize,
     setNameDispatch: setName,
     setPaletteColorsDispatch: setPaletteColors
 
