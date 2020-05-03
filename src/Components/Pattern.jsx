@@ -15,7 +15,8 @@ const Pattern = (props) => {
             props.setImageDispatch(props.pattern.image),
             props.setImageSizeDispatch(props.pattern.size),
             props.setNameDispatch(props.pattern.name),
-            props.setPaletteColorsDispatch(props.pattern.palettes[0].colors)
+            props.setPaletteColorsDispatch(props.pattern.palettes[0].colors),
+            props.setColorDispatch(props.pattern.palettes[0].colors[0])
         )
     }
 
@@ -83,7 +84,14 @@ let setPaletteColors = (palette) => {
       type: "SET_PALETTE_COLORS",
       payload: palette
     }
-  }
+}
+
+const setColor = (color) => {
+    return {
+        type: "SET_COLOR",
+        payload: color
+    }
+}
 
 const mapDispatchToProps = {
     patternDispatch: setCurrentPattern,
@@ -91,8 +99,8 @@ const mapDispatchToProps = {
     setImageDispatch: setImage,
     setImageSizeDispatch: setImageSize,
     setNameDispatch: setName,
-    setPaletteColorsDispatch: setPaletteColors
-
+    setPaletteColorsDispatch: setPaletteColors,
+    setColorDispatch: setColor
   }
 
 export default connect(null, mapDispatchToProps)(Pattern);

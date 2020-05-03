@@ -2,6 +2,7 @@ let canvasInitialState = {
     currentName: '',
     currentImage: '',
     tool: 'pencil',
+    canvas: '',
     ctxClear: false,
     mouseDown: false,
     pixelScale: 1,
@@ -75,6 +76,12 @@ let canvasReducer = (state = canvasInitialState, action) => {
             return {
                 ...state,
                 ctxClear: clearBoolean
+            }
+        case "SET_CANVAS":
+            let newCanvas = action.payload
+            return {
+                ...state,
+                canvas: newCanvas
             }
         default:
             return state

@@ -1,6 +1,7 @@
 let paletteInitialState = {
     colors: ['#ffffff'],
-    insidePicker: false
+    insidePicker: false,
+    pickerMouseDown: false
 }
 
 let paletteReducer = (state = paletteInitialState, action) => {
@@ -32,8 +33,6 @@ let paletteReducer = (state = paletteInitialState, action) => {
             let updatedColorsArray = [...state.colors]
             updatedColorsArray[colorIndex] = colorInfoPOJO['newColor']
 
-            // console.log(colorInfoPOJO['oldColor'])
-            // return state
             return {
                 ...state,
                 colors: updatedColorsArray
@@ -44,6 +43,13 @@ let paletteReducer = (state = paletteInitialState, action) => {
             return {
                 ...state,
                 insidePicker: hoverPicker
+            }
+        case "PICKER_MOUSE_DOWN":
+
+            let newPickerMouseDown = action.payload
+            return {
+                ...state,
+                pickerMouseDown: newPickerMouseDown
             }
         default:
             return state

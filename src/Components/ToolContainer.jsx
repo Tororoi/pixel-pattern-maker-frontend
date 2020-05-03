@@ -158,12 +158,14 @@ const ToolContainer = (props) => {
                 addColorDispatch={props.addColorDispatch}
             />
             <ColorPicker
-                currentColor={props.canvasInfo.currentColor}
+                canvasInfo={props.canvasInfo}
                 paletteInfo={props.paletteInfo}
                 setColorDispatch={props.setColorDispatch}
                 addColorDispatch={props.addColorDispatch}
                 updateColorDispatch={props.updateColorDispatch}
                 pickerDispatch={props.pickerDispatch}
+                pickerClickDispatch={props.pickerClickDispatch}
+                currentImageDispatch={props.currentImageDispatch}
             />
         </>
     )
@@ -232,6 +234,13 @@ const hoverPicker = (bool) => {
     }
 }
 
+const pickerMouseDown = (bool) => {
+    return {
+        type: "PICKER_MOUSE_DOWN",
+        payload: bool
+    }
+}
+
 const mapDispatchToProps = {
     dispatchSetName: setName,
     setImageSizeDispatch: setImageSize,
@@ -241,7 +250,8 @@ const mapDispatchToProps = {
     updateColorDispatch: updateColor,
     toolDispatch: setTool,
     setBGDispatch: setBG,
-    pickerDispatch: hoverPicker
+    pickerDispatch: hoverPicker,
+    pickerClickDispatch: pickerMouseDown
 }
 
 // the return value of mapStateToProps is an object that will be merged into DrawContainer's props

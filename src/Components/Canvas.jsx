@@ -8,6 +8,7 @@ class Canvas extends React.Component {
 
     componentDidMount() {
         this.renderCanvas()
+        this.props.setCanvasDispatch(this.canvasRef.current)
     }
 
     componentDidUpdate() {
@@ -36,13 +37,19 @@ class Canvas extends React.Component {
         }
         // change old color to new color
         const replaceColor = () => {
-            //get array of pixel data
-            const imageData = ctx.getImageData(0,0,64,64)
+            //crate offscreen canvas with image to reduce size of array to iterate over.
+            let cvs = document.createElement('canvas');
+            cvs.width = this.props.canvasInfo.imageSize;
+            cvs.height = this.props.canvasInfo.imageSize;
+            const context = cvs.getContext('2d')
+            context.drawImage(this.canvasRef.current,0,0,256,256,0,0,this.props.canvasInfo.imageSize,this.props.canvasInfo.imageSize); // first four coords are the cropping area
+
+            const imageData = context.getImageData(0,0,this.props.canvasInfo.imageSize,this.props.canvasInfo.imageSize)
 
             //helper functions
             const componentToHex = (c) => {
                 var hex = c.toString(16);
-                return hex.length == 1 ? "0" + hex : hex;
+                return hex.length === 1 ? "0" + hex : hex;
               }
 
             const rgbToHex = (r,g,b) => {
@@ -69,10 +76,18 @@ class Canvas extends React.Component {
             }
 
             // put the altered data back on the canvas  
-            ctx.putImageData(imageData,0,0);
+            context.putImageData(imageData,0,0);
+            // clear main canvas
+            ctx.clearRect(0,0,768,768)
+            //draw onto the main canvas
+            const b = this.props.canvasInfo.boxSize
+            const squares = [{x: 0,y: 0},{x: b,y: 0},{x: b*2,y: 0},{x: 0,y: b},{x: b,y: b},{x: b*2,y: b},{x: 0,y: b*2},{x: b,y: b*2},{x: b*2,y: b*2}]
+            squares.forEach(square => {
+                ctx.drawImage(cvs,square.x,square.y,b,b)
+            })
         }
-        // if (this.props.paletteInfo.insidePicker) {replaceColor()}
 
+        if (this.props.paletteInfo.pickerMouseDown) {replaceColor()}
         //Make object that allows access to indexes of pixels that need to be changed --- how?
         //iterate through image data of a version of canvas at pixel scale 1 to reduce strain from function
 
@@ -108,7 +123,7 @@ class Canvas extends React.Component {
         this.props.currentImageDispatch(cvs.toDataURL()) //gets canceled out by componentDidMount
     }
 
-    draw = (e) => {
+    handleMouseMove = (e) => {
         const mouseX=e.nativeEvent.offsetX;
         const mouseY=e.nativeEvent.offsetY;
         const canvas = this.canvasRef.current        
@@ -147,7 +162,7 @@ class Canvas extends React.Component {
         }
     }
 
-    mouseDown = (e) => {
+    handleMouseDown = (e) => {
         this.props.mouseDownDispatch(true)
 
         //repeat of draw function. needed here to get pixel drawn even if mouse doesn't move
@@ -161,31 +176,31 @@ class Canvas extends React.Component {
         const b = this.props.canvasInfo.boxSize
         const squares = [{x: 0,y: 0},{x: b,y: 0},{x: b*2,y: 0},{x: 0,y: b},{x: b,y: b},{x: b*2,y: b},{x: 0,y: b*2},{x: b,y: b*2},{x: b*2,y: b*2}]
 
-            ctx.fillStyle=this.props.canvasInfo.currentColor
-            
-            switch(this.props.canvasInfo.tool) {
-                case 'pencil':
-                    squares.forEach(square => {
-                        ctx.fillRect(x1+square.x,y1+square.y,pixelSize,pixelSize) 
-                        ctx.fillRect(x1-square.x,y1-square.y,pixelSize,pixelSize) 
-                        ctx.fillRect(x1-square.x,y1+square.y,pixelSize,pixelSize)
-                        ctx.fillRect(x1+square.x,y1-square.y,pixelSize,pixelSize) 
-                    })
-                    break;
-                case 'eraser':
-                    squares.forEach(square => {
-                        ctx.clearRect(x1+square.x,y1+square.y,pixelSize,pixelSize) 
-                        ctx.clearRect(x1-square.x,y1-square.y,pixelSize,pixelSize) 
-                        ctx.clearRect(x1-square.x,y1+square.y,pixelSize,pixelSize)
-                        ctx.clearRect(x1+square.x,y1-square.y,pixelSize,pixelSize) 
-                    })
-                    break;
-                default:
-                    break;
-            }
+        ctx.fillStyle=this.props.canvasInfo.currentColor
+        //only thing different is lack of conditional here
+        switch(this.props.canvasInfo.tool) {
+            case 'pencil':
+                squares.forEach(square => {
+                    ctx.fillRect(x1+square.x,y1+square.y,pixelSize,pixelSize) 
+                    ctx.fillRect(x1-square.x,y1-square.y,pixelSize,pixelSize) 
+                    ctx.fillRect(x1-square.x,y1+square.y,pixelSize,pixelSize)
+                    ctx.fillRect(x1+square.x,y1-square.y,pixelSize,pixelSize) 
+                })
+                break;
+            case 'eraser':
+                squares.forEach(square => {
+                    ctx.clearRect(x1+square.x,y1+square.y,pixelSize,pixelSize) 
+                    ctx.clearRect(x1-square.x,y1-square.y,pixelSize,pixelSize) 
+                    ctx.clearRect(x1-square.x,y1+square.y,pixelSize,pixelSize)
+                    ctx.clearRect(x1+square.x,y1-square.y,pixelSize,pixelSize) 
+                })
+                break;
+            default:
+                break;
+        }
     }
 
-    mouseUp = (e) => {
+    handleMouseUp = (e) => {
         this.props.mouseDownDispatch(false)
     }
 
@@ -197,10 +212,10 @@ class Canvas extends React.Component {
                 height={768}
                 // onMouseEnter={renderPattern}
                 onClick={this.imageToReduxState}
-                onMouseMove={this.draw}
-                onMouseDown={this.mouseDown}
-                onMouseUp={this.mouseUp}
-                onMouseOut={this.mouseUp}
+                onMouseMove={this.handleMouseMove}
+                onMouseDown={this.handleMouseDown}
+                onMouseUp={this.handleMouseUp}
+                onMouseOut={this.handleMouseUp}
             />
         )
     }
@@ -213,16 +228,16 @@ const setMouseState = (mouseState) => {
     }
 }
 
-const setImage = (image) => {
+const setCanvas = (canvas) => {
     return {
-        type: "SET_IMAGE",
-        payload: image
+        type: "SET_CANVAS",
+        payload: canvas
     }
 }
 
 const mapDispatchToProps = {
     mouseDownDispatch: setMouseState,
-    currentImageDispatch: setImage
+    setCanvasDispatch: setCanvas
   }
 
 export default connect(null, mapDispatchToProps)(Canvas);
