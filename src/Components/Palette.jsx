@@ -17,6 +17,7 @@ const Palette = (props) => {
     
     const handleClick = (e) => {
         props.addColorDispatch("#ffffff")
+        props.setColorDispatch("#ffffff")
     }
 
      return(
