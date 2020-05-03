@@ -22,6 +22,7 @@ const Pattern = (props) => {
 
     const handleFaved = (e) => {
         console.log("faved")
+        e.target.style.color = "rgb(255, 217, 0)"
     }
 
     return (

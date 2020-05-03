@@ -85,6 +85,7 @@ canvas:hover {
 .toolbox {
   float: right;
   width: 512px;
+  background-color: rgb(168, 168, 168);
 }
 
 /* Color Palette */
@@ -154,8 +155,10 @@ canvas:hover {
   position: absolute;
   margin-left: 216px;
   margin-top: 280px;
-  color: rgb(255, 217, 0);
-  transition: 0.1s ease-out;
+  color: white;
+  transition: 0.1s ease-out, color 0.5s ease-in;
+  -webkit-text-stroke-width: 2px; 
+  -webkit-text-stroke-color: black;
 }
 
 .fav-button:hover {
