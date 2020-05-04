@@ -149,6 +149,7 @@ let createPattern = (newPattern) => {
     .then((obj) => {
       if (obj.pattern) {
         dispatch(addOnePattern(obj.pattern))
+        dispatch(setCurrentPattern(obj.pattern))
       }
     })
   }
@@ -175,7 +176,6 @@ let updatePattern = (newPattern) => {
 
 let deletePattern = (newPattern) => {
   return (dispatch) => {
-    dispatch(removePattern(newPattern.id))
     fetch(`http://localhost:3000/patterns/${newPattern.id}`, {
       method: "DELETE",
       headers: {
@@ -184,16 +184,21 @@ let deletePattern = (newPattern) => {
       }
     })
     .then(r => {
-      console.log(r)
-      // r.json()
+      if (r.ok) {
+        dispatch(removePattern(newPattern.id))
+      }
     })
-    // .then((obj) => {
-    //   console.log(obj)
-    // })
   }
 }
 
 // regular Action Creators
+let setCurrentPattern = (pattern) => {
+  return {
+      type: "SET_CURRENT_PATTERN",
+      payload: pattern
+  }
+}
+
 let addOnePattern = (pattern) => {
   return {
     type: "ADD_ONE_PATTERN",

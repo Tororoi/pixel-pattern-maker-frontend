@@ -47,6 +47,7 @@ const ToolContainer = (props) => {
         e.preventDefault()
         props.resetPatternStateDispatch()
         props.clearCTXDispatch(true)
+        props.dispatchSetName("")
         props.setImageSizeDispatch(props.canvasInfo.newSize)
         if (!props.paletteInfo.keep) {
             props.setPaletteColorsDispatch(["#ffffff"])
@@ -96,6 +97,8 @@ const ToolContainer = (props) => {
     }
 
     const changeTool = (e) => {
+        console.log(props.userInfo.user.id)
+        console.log(props.currentPattern.user_id)
         props.toolDispatch(e.target.value)
     }
 
@@ -116,22 +119,30 @@ const ToolContainer = (props) => {
                     <input type="text" value={props.canvasInfo.currentName} onChange={setName} />
                 </label>
             </form>
-            <h3 onClick={createPattern}>Create</h3>
-            <h3 onClick={updatePattern}>Update</h3>
-            <h3 onClick={deletePattern}>Delete</h3>
-            <div className="setBG" onChange={changeBG}>
-                <label htmlFor="white" >
-                    <input type="radio" value="white" checked={props.canvasInfo.background === "white"}/>White
-                </label>
-                <label htmlFor="gray" >
-                    <input type="radio" value="gray" checked={props.canvasInfo.background === "gray"}/>Gray
-                </label>
-                <label htmlFor="black" >
-                    <input type="radio" value="black" checked={props.canvasInfo.background === "black"}/>Black
-                </label>
-                <label htmlFor="transparent" >
-                    <input type="radio" value="transparent" checked={props.canvasInfo.background === "transparent"}/>Transparent
-                </label>
+            <span className="crud-container" >
+                <h3 onClick={createPattern} style={localStorage.token ? {display: "block"} : {display: "none"}}>Create</h3>
+                <h3 onClick={updatePattern} style={props.userInfo.user.id === props.currentPattern.user_id ? {display: "block"} : {display: "none"}}>Update</h3>
+                <h3 onClick={deletePattern} style={props.userInfo.user.id === props.currentPattern.user_id ? {display: "block"} : {display: "none"}}>Delete</h3>
+            </span>
+            <span className="export-container">
+                <h3 onClick={exportImage}>Export Image</h3>
+            </span>
+            <div className="BG-container">
+                <label htmlFor="backgrounds">Background</label>
+                <div className="setBG" onChange={changeBG}>
+                    <label htmlFor="white" >
+                        <input type="radio" value="white" checked={props.canvasInfo.background === "white"}/>White
+                    </label>
+                    <label htmlFor="gray" >
+                        <input type="radio" value="gray" checked={props.canvasInfo.background === "gray"}/>Gray
+                    </label>
+                    <label htmlFor="black" >
+                        <input type="radio" value="black" checked={props.canvasInfo.background === "black"}/>Black
+                    </label>
+                    <label htmlFor="transparent" >
+                        <input type="radio" value="transparent" checked={props.canvasInfo.background === "transparent"}/>Transparent
+                    </label>
+                </div>
             </div>
             <div className="tools" onChange={changeTool}>
                 <label htmlFor="pencil" >
@@ -142,7 +153,6 @@ const ToolContainer = (props) => {
                 </label>
             </div>
             <div className="start-new">
-                <label htmlFor="new-pattern" >Start New</label>
                 <label htmlFor="keep-palette" >
                         <input type="checkbox" value={props.paletteInfo.keep} checked={props.paletteInfo.keep} onChange={changeKeepPalette}/>Keep Palette?
                     </label>
@@ -157,9 +167,8 @@ const ToolContainer = (props) => {
                         <input type="radio" value="16" checked={props.canvasInfo.newSize === 16}/>16x16
                     </label>
                 </div>
-                <input type="submit" value="Submit" onClick={startNew}/>
+                <input type="submit" value="Start New" onClick={startNew}/>
             </div>
-            <h3 onClick={exportImage}>Export</h3>
             <Palette 
                 currentColor={props.canvasInfo.currentColor}
                 paletteInfo={props.paletteInfo}
@@ -276,7 +285,8 @@ let mapStateToProps = (reduxState) => {
     canvasInfo: reduxState.canvasInfo,
     paletteInfo: reduxState.paletteInfo,
     currentPattern: reduxState.currentPatternInfo.pattern,
-    currentPalette: reduxState.currentPatternInfo.currentPalette
+    currentPalette: reduxState.currentPatternInfo.currentPalette,
+    userInfo: reduxState.userInfo
   }
 }
 

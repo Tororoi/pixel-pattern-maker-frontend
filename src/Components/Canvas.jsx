@@ -103,9 +103,7 @@ class Canvas extends React.Component {
         const squares = [{x: 0,y: 0},{x: b,y: 0},{x: b*2,y: 0},{x: 0,y: b},{x: b,y: b},{x: b*2,y: b},{x: 0,y: b*2},{x: b,y: b*2},{x: b*2,y: b*2}]
         const image = new Image();
         image.src = this.props.currentPattern.image
-        // image.src = this.props.canvasInfo.currentImage //This one has trouble, must go back twice to get it to load
 
-        // console.log(this.props.canvasInfo.currentImage)
         if (this.props.currentPattern.image) {
             squares.forEach((s) => {
                 ctx.drawImage(image,s.x,s.y,256,256)
@@ -121,6 +119,8 @@ class Canvas extends React.Component {
         cvs.height = this.props.canvasInfo.imageSize;
         cvs.getContext('2d').drawImage(this.canvasRef.current,0,0,256,256,0,0,this.props.canvasInfo.imageSize,this.props.canvasInfo.imageSize); // first four coords are the cropping area
         this.props.currentImageDispatch(cvs.toDataURL()) //gets canceled out by componentDidMount
+
+        // if (!localStorage.token) {localStorage.image = cvs.toDataURL()}
     }
 
     handleMouseMove = (e) => {

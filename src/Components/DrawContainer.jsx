@@ -12,7 +12,7 @@ const DrawContainer = (props) => {
     <>
       <div className="draw-page">
         <div className="draw-container">
-          <h2>Draw Container</h2>
+          <h3>{props.canvasInfo.currentName} {localStorage.token ? "by" : ""} { props.currentPattern.creator ? props.currentPattern.creator : props.userInfo.user.username}</h3>
           <Canvas
               canvasInfo={props.canvasInfo}
               paletteInfo={props.paletteInfo}
@@ -79,7 +79,8 @@ let mapStateToProps = (reduxState) => {
     canvasInfo: reduxState.canvasInfo,
     paletteInfo: reduxState.paletteInfo,
     currentPattern: reduxState.currentPatternInfo.pattern,
-    currentPalette: reduxState.currentPatternInfo.currentPalette
+    currentPalette: reduxState.currentPatternInfo.currentPalette,
+    userInfo: reduxState.userInfo
   }
 }
 

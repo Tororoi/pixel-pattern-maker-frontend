@@ -18,32 +18,29 @@ class ColorPicker extends React.Component {
 
     componentDidMount() { 
         this.wheelPicker = new iro.ColorPicker(this.colorPicker.current, {
-            width: 350,
+            width: 260,
             color: this.props.canvasInfo.currentColor,
-            borderWidth: 1,
-            borderColor: "#fff",
+            borderWidth: 4,
+            borderColor: "#000000",
             sliderSize: 20
           });
         
         this.wheelPicker.on('color:change', this.colorChangeCB )
+
     }
     
     componentWillUnmount() {
-        this.wheelPicker.color = "#ffffff"
-        this.props.setColorDispatch("#ffffff")
+        // const c = this.props.paletteInfo.colors[0]
+        // this.wheelPicker.color = c
+        // this.props.setColorDispatch(c)
     }
 
     componentDidUpdate() {
         if (this.props.paletteInfo.insidePicker === false) {this.wheelPicker.color.hexString = this.props.canvasInfo.currentColor}
     }
 
-    // mouseEnter = (e) => {
-    //     console.log(`before: ${this.wheelPicker.color.hexString}`)
-    //     this.wheelPicker.color.hexString = this.props.currentColor
-    //     console.log(`after: ${this.wheelPicker.color.hexString}`)
-    // }
-
     colorChangeCB = () => { 
+        // this.props.pickerClickDispatch(true)
         const colorToChange = this.props.paletteInfo.colors.find((c) => {return c === this.props.canvasInfo.currentColor})
 
         if (colorToChange) {
@@ -52,11 +49,6 @@ class ColorPicker extends React.Component {
         
 
         this.props.setColorDispatch(this.wheelPicker.color.hexString) 
-    }
-
-    handleClick = (e) => {
-
-        // this.props.addColorDispatch(this.wheelPicker.color.hexString)
     }
 
     mouseDown = (e) => {
@@ -80,7 +72,6 @@ class ColorPicker extends React.Component {
             <div className="color-picker-wrapper">
                 <div 
                     ref={this.colorPicker} 
-                    onClick={this.handleClick}
                     onMouseDown={this.mouseDown}
                     onMouseUp={this.mouseUp}
                     onMouseEnter={this.enter}
