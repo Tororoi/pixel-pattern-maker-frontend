@@ -228,6 +228,11 @@ canvas:hover {
   margin: 24px;
 }
 
+.crud-container h3:hover {
+  border: 4px solid black;
+  margin: 22px;
+}
+
 .export-container {
   border: 2px solid black;
   display: flex;
@@ -237,6 +242,11 @@ canvas:hover {
 .export-container h3 {
   border: 2px solid black;
   margin: 24px;
+}
+
+.export-container h3:hover {
+  border: 4px solid black;
+  margin: 22px;
 }
 
 /* Other Tools */
@@ -251,8 +261,13 @@ canvas:hover {
   flex-flow: row wrap;
 }
 
-.tools {
+.tool-container {
   border: 2px solid black;
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.tools {
   display: flex;
   flex-flow: row wrap;
 }

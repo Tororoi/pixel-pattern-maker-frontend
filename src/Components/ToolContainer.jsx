@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import React from 'react';
 import ColorPicker from './ColorPicker'
 import Palette from './Palette'
 
@@ -144,14 +144,17 @@ const ToolContainer = (props) => {
                     </label>
                 </div>
             </div>
-            <div className="tools" onChange={changeTool}>
-                <label htmlFor="pencil" >
-                    <input type="radio" value="pencil" checked={props.canvasInfo.tool === "pencil"}/>Pencil
-                </label>
-                <label htmlFor="eraser" >
-                    <input type="radio" value="eraser" checked={props.canvasInfo.tool === "eraser"}/>Eraser
-                </label>
-            </div>
+            <span className="tool-container">
+                <label htmlFor="tools">Tools</label>
+                <div className="tools" onChange={changeTool}>
+                    <label htmlFor="pencil" >
+                        <input type="radio" value="pencil" checked={props.canvasInfo.tool === "pencil"}/>Pencil
+                    </label>
+                    <label htmlFor="eraser" >
+                        <input type="radio" value="eraser" checked={props.canvasInfo.tool === "eraser"}/>Eraser
+                    </label>
+                </div>
+            </span>
             <div className="start-new">
                 <label htmlFor="keep-palette" >
                         <input type="checkbox" value={props.paletteInfo.keep} checked={props.paletteInfo.keep} onChange={changeKeepPalette}/>Keep Palette?

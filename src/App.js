@@ -80,7 +80,6 @@ class App extends React.Component {
   }
 
   pickerClickHandler = (e) => {
-    console.log("clicking off")
     //necessary to stop getImageData function from color replace method
     this.props.pickerMouseDown(false)
   }
