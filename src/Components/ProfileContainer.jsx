@@ -6,16 +6,20 @@ import {connect} from 'react-redux'
 //Parents: App
 
 const ProfileContainer = (props) => {
-    console.log(props.user)
+    // console.log(props.user)
 
-    const patternsArray = props.patterns.map((pattern) => {
+    const myPatternsArray = props.patterns.filter((pattern) => {
+        return pattern.user_id === props.user.user.id
+    })
+
+    const patternsArray = myPatternsArray.map((pattern) => {
             return <Pattern key={pattern.id} pattern={pattern}/>
         })
     
 
      return(
         <>
-            <div className="pattern-container">
+            <div className="pattern-container" onClick={() => {console.log(myPatternsArray)}}>
                 {patternsArray}
             </div>
         </>
