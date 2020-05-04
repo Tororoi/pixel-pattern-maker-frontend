@@ -13,7 +13,7 @@ class ColorPicker extends React.Component {
 
     leave = (e) => {
         this.props.pickerDispatch(false)
-        this.props.pickerClickDispatch(false)
+        // this.props.pickerClickDispatch(false)
     }
 
     componentDidMount() { 
@@ -36,11 +36,11 @@ class ColorPicker extends React.Component {
     }
 
     componentDidUpdate() {
-        if (this.props.paletteInfo.insidePicker === false) {this.wheelPicker.color.hexString = this.props.canvasInfo.currentColor}
+        if (this.props.paletteInfo.insidePicker === false && !this.props.paletteInfo.pickerMouseDown) {this.wheelPicker.color.hexString = this.props.canvasInfo.currentColor}
     }
 
     colorChangeCB = () => { 
-        // this.props.pickerClickDispatch(true)
+
         const colorToChange = this.props.paletteInfo.colors.find((c) => {return c === this.props.canvasInfo.currentColor})
 
         if (colorToChange) {
@@ -56,7 +56,7 @@ class ColorPicker extends React.Component {
     }
 
     mouseUp = (e) => {
-        this.props.pickerClickDispatch(false)
+        // this.props.pickerClickDispatch(false)
 
         let cvs = document.createElement('canvas');
         cvs.width = this.props.canvasInfo.imageSize; //pixel scale 1. Add a multiplier to export form.
@@ -66,7 +66,6 @@ class ColorPicker extends React.Component {
     }
 
     render() {
-        // if (this.wheelPicker) {this.wheelPicker.color.hexString = this.props.currentColor}
 
         return(
             <div className="color-picker-wrapper">

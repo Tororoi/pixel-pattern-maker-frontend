@@ -79,11 +79,16 @@ class App extends React.Component {
     }
   }
 
+  pickerClickHandler = (e) => {
+    console.log("clicking off")
+    //necessary to stop getImageData function from color replace method
+    this.props.pickerMouseDown(false)
+  }
 
   render(){
     // console.log(this.props)
     return (
-      <div className="App">
+      <div className="App" onMouseUp={this.pickerClickHandler}>
         <NavBar handleLogout={this.handleLogout}/>
         <Switch>
           <Route path="/login" render={this.renderForm} />
@@ -192,6 +197,13 @@ let deletePattern = (newPattern) => {
 }
 
 // regular Action Creators
+let pickerMouseDown = (bool) => {
+  return {
+      type: "PICKER_MOUSE_DOWN",
+      payload: bool
+  }
+}
+
 let setCurrentPattern = (pattern) => {
   return {
       type: "SET_CURRENT_PATTERN",
@@ -234,7 +246,7 @@ let setUserInfo = (userInfo) => {
   }
 }
 
-let sendThisInformation = { setAllPatterns, setUserInfo, persistUser, createPattern, updatePattern, deletePattern, getPatterns }
+let sendThisInformation = { pickerMouseDown, setAllPatterns, setUserInfo, persistUser, createPattern, updatePattern, deletePattern, getPatterns }
 
 
 export default connect(null, sendThisInformation)(App);
