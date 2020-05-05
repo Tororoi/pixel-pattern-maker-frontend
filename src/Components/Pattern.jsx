@@ -21,9 +21,19 @@ const Pattern = (props) => {
     }
 
     const handleFaved = (e) => {
-        console.log("faved")
-        e.target.style.color = "rgb(255, 217, 0)"
+        if (!userFavorites.includes(props.pattern.id)) {
+            props.favePattern(props.pattern.id)
+        } else {
+            const badFave = props.userFaves.find(fave => {
+                return fave.pattern.id === props.pattern.id
+            })
+            props.unFavePattern(badFave)
+        }
     }
+
+    const userFavorites = props.userFaves.map(fave => {
+        return fave.pattern.id
+    })
 
     return (
         <>
@@ -38,7 +48,7 @@ const Pattern = (props) => {
             </NavLink>
                 <p>{props.pattern.name}</p>
                 <p>By {props.pattern.creator}</p>
-                <div className="fav-button" onClick={handleFaved}>★</div>
+                <div className="fav-button" style={ userFavorites.includes(props.pattern.id) ? {color: "rgb(255, 217, 0)", WebkitTextStrokeColor: "rgb(255, 217, 0)"} : {color: "white"}} onClick={handleFaved}>★</div>
         </div>
 
         </>

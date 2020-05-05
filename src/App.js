@@ -100,10 +100,17 @@ class App extends React.Component {
             /> </div>
             } />
           <Route path="/profile" exact render={() => 
-            <div> <ProfileContainer /> </div>
+            <div> <ProfileContainer 
+              favePattern={this.props.favePattern}
+              unFavePattern={this.props.unFavePattern}
+              profileSwitch={this.props.profileSwitch}
+            /> </div>
           } />
           <Route path="/" exact render={() => 
-            <div> <PatternContainer /> </div>
+            <div> <PatternContainer 
+              favePattern={this.props.favePattern}
+              unFavePattern={this.props.unFavePattern}
+            /> </div>
           } />
         </Switch>
 
@@ -178,9 +185,9 @@ let updatePattern = (newPattern) => {
   }
 }
 
-let deletePattern = (newPattern) => {
+let deletePattern = (pattern) => {
   return (dispatch) => {
-    fetch(`http://localhost:3000/patterns/${newPattern.id}`, {
+    fetch(`http://localhost:3000/patterns/${pattern.id}`, {
       method: "DELETE",
       headers: {
         'content-type': 'application/json',
@@ -189,7 +196,45 @@ let deletePattern = (newPattern) => {
     })
     .then(r => {
       if (r.ok) {
-        dispatch(removePattern(newPattern.id))
+        dispatch(removePattern(pattern.id))
+      }
+    })
+  }
+}
+
+let favePattern = (pat_id) => {
+  return (dispatch) => {
+    fetch("http://localhost:3000/favorite", {
+      method: "POST",
+      headers: {
+        'content-type': 'application/json',
+        "Authorization": `bearer ${localStorage.token}`
+      },
+      body: JSON.stringify({pattern_id: pat_id})
+    })
+    .then(r => r.json())
+    .then((obj) => {
+      // console.log(obj)
+      if (obj.favorite) {
+        dispatch(addFavorite(obj.favorite))
+      }
+    })
+  }
+}
+
+let unFavePattern = (favorite) => {
+  return (dispatch) => {
+    fetch("http://localhost:3000/favorite", {
+      method: "DELETE",
+      headers: {
+        'content-type': 'application/json',
+        "Authorization": `bearer ${localStorage.token}`
+      },
+      body: JSON.stringify({favorite_id: favorite.id})
+    })
+    .then((r) => {
+      if (r.ok) {
+        dispatch(removeFavorite(favorite))
       }
     })
   }
@@ -200,6 +245,27 @@ let pickerMouseDown = (bool) => {
   return {
       type: "PICKER_MOUSE_DOWN",
       payload: bool
+  }
+}
+
+let profileSwitch = (string) => {
+  return {
+      type: "PROFILE_SWITCH",
+      payload: string
+  }
+}
+
+let addFavorite = (pattern) => {
+  return {
+      type: "ADD_FAVORITE",
+      payload: pattern
+  }
+}
+
+let removeFavorite = (favorite) => {
+  return {
+      type: "REMOVE_FAVORITE",
+      payload: favorite
   }
 }
 
@@ -245,7 +311,7 @@ let setUserInfo = (userInfo) => {
   }
 }
 
-let sendThisInformation = { pickerMouseDown, setAllPatterns, setUserInfo, persistUser, createPattern, updatePattern, deletePattern, getPatterns }
+let sendThisInformation = { pickerMouseDown, setAllPatterns, setUserInfo, persistUser, createPattern, updatePattern, deletePattern, profileSwitch, favePattern, unFavePattern, getPatterns }
 
 
 export default connect(null, sendThisInformation)(App);

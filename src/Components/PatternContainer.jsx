@@ -8,7 +8,13 @@ import {connect} from 'react-redux'
 const PatternContainer = (props) => {
 
     const patternsArray = props.patterns.map((pattern) => {
-            return <Pattern key={pattern.id} pattern={pattern}/>
+            return <Pattern 
+                key={pattern.id} 
+                pattern={pattern} 
+                favePattern={props.favePattern} 
+                unFavePattern={props.unFavePattern} 
+                userFaves={props.userFaves}
+                />
         })
     
 
@@ -24,7 +30,8 @@ const PatternContainer = (props) => {
 
 let mapStateToProps = (reduxState) => {
     return {
-      patterns: reduxState.patternInfo.patterns
+      patterns: reduxState.patternInfo.patterns,
+      userFaves: reduxState.userInfo.user.favorites
     }
   }
   

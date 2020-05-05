@@ -187,7 +187,7 @@ canvas:hover {
   margin-left: 216px;
   margin-top: 280px;
   color: white;
-  transition: 0.1s ease-out, color 0.2s ease-in;
+  transition: 0.1s ease-out, color 0.2s ease-in, -webkit-text-stroke-color 0.3s ease-in;
   -webkit-text-stroke-width: 2px; 
   -webkit-text-stroke-color: black;
 }
@@ -278,3 +278,15 @@ canvas:hover {
   flex-flow: column wrap;
 }
 
+/* Profile */
+
+.profile-switch {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.profile-switch h3 {
+  margin-left: 32px;
+  margin-right: 32px;
+}
