@@ -56,8 +56,8 @@ class App extends React.Component {
       user: {
         id: 0,
         username: "",
-        user_patterns: [],
-        favorite_patterns: []
+        patterns: [],
+        favorites: []
       },
       token: ""
     })

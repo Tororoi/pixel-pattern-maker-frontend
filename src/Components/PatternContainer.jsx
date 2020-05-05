@@ -20,6 +20,7 @@ const PatternContainer = (props) => {
 
      return(
         <>
+            <h3>Pixel Pattern Maker</h3>
             <div className="pattern-container">
                 {patternsArray}
             </div>
