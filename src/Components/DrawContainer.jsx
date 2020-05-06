@@ -11,6 +11,7 @@ const DrawContainer = (props) => {
   return (
     <>
       <div className="draw-page">
+        <div></div>
         <div className="draw-container">
           <h3>{props.canvasInfo.currentName} {localStorage.token ? "by" : ""} { props.currentPattern.creator ? props.currentPattern.creator : props.userInfo.user.username}</h3>
           <Canvas
