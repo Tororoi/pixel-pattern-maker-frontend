@@ -33,7 +33,6 @@ const ProfileContainer = (props) => {
     
     const handleSwitch = (e) => {
         props.profileSwitch(e.target.innerText)
-        console.log(props.user.profile)
     }
 
      return(
@@ -43,7 +42,7 @@ const ProfileContainer = (props) => {
                 <h3>/</h3>
                 <h3 onClick={handleSwitch} style={props.user.profile === "My Favorites" ? {color: "black"} : {color: "gray"}}>My Favorites</h3>
             </div>
-            <div className="pattern-container" onClick={() => {console.log(myPatternsArray)}}>
+            <div className="pattern-container">
                 {patternsArray}
             </div>
         </>

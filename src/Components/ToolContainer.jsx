@@ -165,7 +165,7 @@ const ToolContainer = (props) => {
                         <label className="bg-swatch" style={props.canvasInfo.background === "black" ? {border: "4px solid black", margin: "0px", backgroundColor: "black"} : {backgroundColor: "black"}}>
                             <input type="radio" value="black" checked={props.canvasInfo.background === "black"}/>
                         </label>
-                        <label className="bg-swatch" style={props.canvasInfo.background === "transparent" ? {border: "4px solid black", margin: "0px", backgroundColor: "rgb(199, 207, 230)"} : {backgroundColor: "rgb(199, 207, 230)"}}>
+                        <label className="bg-swatch" style={props.canvasInfo.background === "transparent" ? {border: "4px solid black", margin: "0px", background: "url(https://i.imgur.com/Veq5bJY.png), rgb(199, 207, 230)"} : {background: "url(https://i.imgur.com/Veq5bJY.png), rgb(199, 207, 230)"}}>
                             <input type="radio" value="transparent" checked={props.canvasInfo.background === "transparent"}/>
                         </label>
                     </div>
