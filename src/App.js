@@ -89,30 +89,30 @@ class App extends React.Component {
     return (
       <div className="App" onMouseUp={this.pickerClickHandler}>
         <NavBar handleLogout={this.handleLogout}/>
-        <Switch>
-          <Route path="/login" render={this.renderForm} />
-          <Route path="/register" render={this.renderForm} />
-          <Route path="/draw" exact render={() => 
-            <div> <DrawContainer 
-              createPattern={this.props.createPattern}
-              updatePattern={this.props.updatePattern}
-              deletePattern={this.props.deletePattern}
-            /> </div>
+          <Switch>
+            <Route path="/login" render={this.renderForm} />
+            <Route path="/register" render={this.renderForm} />
+            <Route path="/draw" exact render={() => 
+              <div> <DrawContainer 
+                createPattern={this.props.createPattern}
+                updatePattern={this.props.updatePattern}
+                deletePattern={this.props.deletePattern}
+              /> </div>
+              } />
+            <Route path="/profile" exact render={() => 
+              <div> <ProfileContainer 
+                favePattern={this.props.favePattern}
+                unFavePattern={this.props.unFavePattern}
+                profileSwitch={this.props.profileSwitch}
+              /> </div>
             } />
-          <Route path="/profile" exact render={() => 
-            <div> <ProfileContainer 
-              favePattern={this.props.favePattern}
-              unFavePattern={this.props.unFavePattern}
-              profileSwitch={this.props.profileSwitch}
-            /> </div>
-          } />
-          <Route path="/" exact render={() => 
-            <div> <PatternContainer 
-              favePattern={this.props.favePattern}
-              unFavePattern={this.props.unFavePattern}
-            /> </div>
-          } />
-        </Switch>
+            <Route path="/" exact render={() => 
+              <div> <PatternContainer 
+                favePattern={this.props.favePattern}
+                unFavePattern={this.props.unFavePattern}
+              /> </div>
+            } />
+          </Switch>
 
       </div>
     );

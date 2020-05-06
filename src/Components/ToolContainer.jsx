@@ -112,66 +112,31 @@ const ToolContainer = (props) => {
 
     return (
         <>
-            <h2>Toolbox</h2>
-            <form >
+            <form className="title-input">
                 <label>
-                    Name:
+                    Title:
                     <input type="text" value={props.canvasInfo.currentName} onChange={setName} />
                 </label>
             </form>
             <span className="crud-container" >
-                <h3 onClick={createPattern} style={localStorage.token ? {display: "block"} : {display: "none"}}>Create</h3>
-                <h3 onClick={updatePattern} style={props.userInfo.user.id === props.currentPattern.user_id ? {display: "block"} : {display: "none"}}>Update</h3>
-                <h3 onClick={deletePattern} style={props.userInfo.user.id === props.currentPattern.user_id ? {display: "block"} : {display: "none"}}>Delete</h3>
+                <h3 className="create" onClick={createPattern} style={localStorage.token ? {display: "block"} : {display: "none"}}>Create</h3>
+                <h3 className="update" onClick={updatePattern} style={props.userInfo.user.id === props.currentPattern.user_id ? {display: "block"} : {display: "none"}}>Update</h3>
+                <h3 className="delete" onClick={deletePattern} style={props.userInfo.user.id === props.currentPattern.user_id ? {display: "block"} : {display: "none"}}>Delete</h3>
             </span>
             <span className="export-container">
                 <h3 onClick={exportImage}>Export Image</h3>
             </span>
-            <div className="BG-container">
-                <label htmlFor="backgrounds">Background</label>
-                <div className="setBG" onChange={changeBG}>
-                    <label htmlFor="white" >
-                        <input type="radio" value="white" checked={props.canvasInfo.background === "white"}/>White
-                    </label>
-                    <label htmlFor="gray" >
-                        <input type="radio" value="gray" checked={props.canvasInfo.background === "gray"}/>Gray
-                    </label>
-                    <label htmlFor="black" >
-                        <input type="radio" value="black" checked={props.canvasInfo.background === "black"}/>Black
-                    </label>
-                    <label htmlFor="transparent" >
-                        <input type="radio" value="transparent" checked={props.canvasInfo.background === "transparent"}/>Transparent
-                    </label>
-                </div>
-            </div>
             <span className="tool-container">
                 <label htmlFor="tools">Tools</label>
                 <div className="tools" onChange={changeTool}>
-                    <label htmlFor="pencil" >
-                        <input type="radio" value="pencil" checked={props.canvasInfo.tool === "pencil"}/>Pencil
+                    <label className="tool" style={props.canvasInfo.tool === "pencil" ? {border: "4px solid black", margin: "0px", background: "url(https://i.imgur.com/dqP3kPw.png), rgb(143, 207, 145)", WebkitFilter: "grayscale(0%)"} : {background: "url(https://i.imgur.com/dqP3kPw.png), gray"}}>
+                        <input type="radio" value="pencil" checked={props.canvasInfo.tool === "pencil"}/>
                     </label>
-                    <label htmlFor="eraser" >
-                        <input type="radio" value="eraser" checked={props.canvasInfo.tool === "eraser"}/>Eraser
+                    <label className="tool" style={props.canvasInfo.tool === "eraser" ? {border: "4px solid black", margin: "0px", background: "url(https://i.imgur.com/0FJeZYK.png), rgb(143, 207, 145)", WebkitFilter: "grayscale(0%)"} : {background: "url(https://i.imgur.com/0FJeZYK.png), gray"}}>
+                        <input type="radio" value="eraser" checked={props.canvasInfo.tool === "eraser"}/>
                     </label>
                 </div>
             </span>
-            <div className="start-new">
-                <label htmlFor="keep-palette" >
-                        <input type="checkbox" value={props.paletteInfo.keep} checked={props.paletteInfo.keep} onChange={changeKeepPalette}/>Keep Palette?
-                    </label>
-                <div value={props.canvasInfo.newSize} onChange={changeSize} className="form-control">
-                    <label htmlFor="64x64" >
-                        <input type="radio" value="64" checked={props.canvasInfo.newSize === 64}/>64x64
-                    </label>
-                    <label htmlFor="32x32" >
-                        <input type="radio" value="32" checked={props.canvasInfo.newSize === 32}/>32x32
-                    </label>
-                    <label htmlFor="16x16" >
-                        <input type="radio" value="16" checked={props.canvasInfo.newSize === 16}/>16x16
-                    </label>
-                </div>
-                <input type="submit" value="Start New" onClick={startNew}/>
-            </div>
             <Palette 
                 currentColor={props.canvasInfo.currentColor}
                 paletteInfo={props.paletteInfo}
@@ -188,6 +153,51 @@ const ToolContainer = (props) => {
                 pickerClickDispatch={props.pickerClickDispatch}
                 currentImageDispatch={props.currentImageDispatch}
             />
+            <div className="settings">
+                <div className="BG-container">
+                    <label htmlFor="backgrounds">Background</label>
+                    <div className="setBG" onChange={changeBG}>
+                        <label className="bg-swatch" style={props.canvasInfo.background === "white" ? {border: "4px solid black", margin: "0px", backgroundColor: "white"} : {backgroundColor: "white"}}>
+                            <input type="radio" value="white" checked={props.canvasInfo.background === "white"}/>
+                        </label>
+                        <label className="bg-swatch" style={props.canvasInfo.background === "gray" ? {border: "4px solid black", margin: "0px", backgroundColor: "gray"} : {backgroundColor: "gray"}}>
+                            <input type="radio" value="gray" checked={props.canvasInfo.background === "gray"}/>
+                        </label>
+                        <label className="bg-swatch" style={props.canvasInfo.background === "black" ? {border: "4px solid black", margin: "0px", backgroundColor: "black"} : {backgroundColor: "black"}}>
+                            <input type="radio" value="black" checked={props.canvasInfo.background === "black"}/>
+                        </label>
+                        <label className="bg-swatch" style={props.canvasInfo.background === "transparent" ? {border: "4px solid black", margin: "0px", backgroundColor: "rgb(199, 207, 230)"} : {backgroundColor: "rgb(199, 207, 230)"}}>
+                            <input type="radio" value="transparent" checked={props.canvasInfo.background === "transparent"}/>
+                        </label>
+                    </div>
+                </div>
+                <div className="start-new">
+                    <label htmlFor="keep-palette" >
+                        <input type="checkbox" value={props.paletteInfo.keep} checked={props.paletteInfo.keep} onChange={changeKeepPalette}/>Keep Palette?
+                    </label>
+                    <div value={props.canvasInfo.newSize} onChange={changeSize} className="sizes">
+                        <div className="size-card">
+                        <label className="sixty-four" style={props.canvasInfo.newSize === 64 ? {border: "4px solid black", margin: "-2px", backgroundColor: "rgb(143, 207, 145)"} : {}}>
+                            <input type="radio" value="64" checked={props.canvasInfo.newSize === 64}/>
+                        </label>
+                        <p>64x64</p>
+                        </div>
+                        <div className="size-card">
+                        <label className="thirty-two" style={props.canvasInfo.newSize === 32 ? {border: "4px solid black", margin: "-2px", backgroundColor: "rgb(143, 207, 145)"} : {}}>
+                            <input type="radio" value="32" checked={props.canvasInfo.newSize === 32}/>
+                        </label>
+                        <p>32x32</p>
+                        </div>
+                        <div className="size-card">
+                        <label className="sixteen" style={props.canvasInfo.newSize === 16 ? {border: "4px solid black", margin: "-2px", backgroundColor: "rgb(143, 207, 145)"} : {}}>
+                            <input type="radio" value="16" checked={props.canvasInfo.newSize === 16}/>
+                        </label>
+                        <p>16x16</p>
+                        </div>
+                    </div>
+                    <input type="submit" value="Start New" onClick={startNew}/>
+                </div>
+            </div>
         </>
     )
 };

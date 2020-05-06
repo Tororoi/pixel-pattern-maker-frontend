@@ -10,9 +10,9 @@ const Color = (props) => {
 
     return (
         <>
-            <div className="color" style={props.currentColor===props.color ? {backgroundColor: "black", } : {border: "none"}}>
+            <div className="color" >
                 <div className="swatch"
-                    style={{backgroundColor: props.color}}
+                    style={props.currentColor===props.color ? {backgroundColor: props.color, border: "4px solid black", margin: "0px"} : {backgroundColor: props.color}}
                     onClick={handleClick}
                 />
             </div>
