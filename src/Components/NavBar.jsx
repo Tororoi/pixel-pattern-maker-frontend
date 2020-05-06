@@ -9,22 +9,22 @@ const NavBar = (props) => {
   return(
     <ul className="nav">
       <li>
-        <NavLink to="/">Browse</NavLink>
+        <NavLink className="navlink" to="/">Browse</NavLink>
       </li>
       <li>
-        <NavLink to="/draw">Draw</NavLink>
+        <NavLink className="navlink" to="/draw">Draw</NavLink>
       </li>
       <li>
-        <NavLink to="/login">Login</NavLink>
+        <NavLink className="navlink" to="/login">Login</NavLink>
       </li>
       <li>
-        <NavLink to="/register">Register</NavLink>
+        <NavLink className="navlink" to="/register">Register</NavLink>
       </li>
       <li style={localStorage.token ? {display: "block"} : {display: "none"}}>
-        <NavLink to="/profile">Profile</NavLink>
+        <NavLink className="navlink" to="/profile">Profile</NavLink>
       </li>
       <li style={localStorage.token ? {display: "block"} : {display: "none"}}>
-        <NavLink onClick={props.handleLogout} to="/">Log Out</NavLink>
+        <NavLink className="navlink" onClick={props.handleLogout} to="/">Log Out</NavLink>
       </li>
     </ul>
   )

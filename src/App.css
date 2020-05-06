@@ -54,7 +54,7 @@ html, body {
   background-color: rgb(35, 0, 131);
 }
 
-.nav li {
+.nav .navlink {
   float: left;
   display: block;
   color: white;
@@ -65,12 +65,12 @@ html, body {
   transition: 0.2s ease-out;
 }
 
-.nav li a{
+/* .nav li a{
   color: white;
   text-decoration: none;
-}
+} */
 
-.nav li:hover {
+.nav .navlink:hover {
   background-color: rgb(185, 169, 224);
 }
 
