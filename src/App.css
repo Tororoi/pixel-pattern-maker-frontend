@@ -85,6 +85,7 @@ html, body {
   /* flex-flow: column wrap; */
   align-items: center;
   flex-flow: column wrap;
+  height: calc(100vh - 46px);
 }
 
 .draw-container h3 {
@@ -106,7 +107,8 @@ canvas:hover {
 
 .toolbox {
   float: right;
-  width: 512px;
+  padding-left: 16px;
+  padding-right: 16px;
   background-color: rgb(168, 168, 168);
   display: flex;
   flex-flow: column wrap;
@@ -118,6 +120,7 @@ canvas:hover {
 
 .palette {
   display: flex;
+  flex-flow: row wrap;
   margin: 8px;
 }
 /* 
@@ -137,7 +140,7 @@ canvas:hover {
 }
 
 .swatch:hover {
-  border: 4px solid #ff7675;
+  border: 4px solid rgb(143, 207, 145);
   margin: 0px;
 }
 
@@ -145,12 +148,14 @@ canvas:hover {
   position: relative;
   display: block;
   color: black;
+  height: 32px;
+  width: 32px;
   font-size: 24px;
   font-style: bold;
   text-decoration: none;
-  padding: 0px 9px;
-  border: 4px solid black;
-  border-radius: 20px;
+  border: 2px solid black;
+  margin: 2px;
+  border-radius: 24px;
   background-color: white;
   text-transform: uppercase;
   overflow: hidden;
@@ -158,6 +163,7 @@ canvas:hover {
 
 .add-color-button:hover {
   color: #ff7675;
+  margin: 0px;
   border: 4px solid #ff7675;
 }
 
@@ -170,6 +176,7 @@ canvas:hover {
 .pattern-container {
   display: flex;
   flex-flow: row wrap;
+  justify-content: center;
 }
 
 .pattern-card {
@@ -397,7 +404,7 @@ input[type=radio] {
 
 .bg-swatch:hover {
   margin: 0px;
-  border: 4px solid #ff7675;
+  border: 4px solid rgb(143, 207, 145);
 }
 
 .start-new {
@@ -409,6 +416,62 @@ input[type=radio] {
   flex-flow: column wrap;
   background-color: rgb(83, 83, 83);
 }
+
+.keep-palette {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  height: 16px;
+}
+
+.keep-palette p {
+  margin-left: 8px;
+  margin-top: -1px;
+}
+
+input[type=checkbox]:before {
+  position: relative;
+  margin: -5px;
+  display: block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid black;
+  content: "";
+  background: gray;
+}
+
+input[type=checkbox]:after {
+  position: relative;
+  display: block;
+  left: -5px;
+  top: -15px;
+  width: 16px;
+  height: 16px;
+  border: 2px solid black;
+  content: "";
+  background-image: linear-gradient(135deg, gray 0%, gray 100%);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+input[type=checkbox]:checked:after {
+  background-image: url('https://i.imgur.com/sDPlD4Z.png'), linear-gradient(135deg, rgb(143, 207, 145) 0%, rgb(143, 207, 145) 100%);
+  border: 4px solid black;
+  left: -7px;
+  top: -17px;
+}
+
+input[type=checkbox]:hover:after {
+  border: 4px solid rgb(143, 207, 145);
+  left: -7px;
+  top: -17px;
+}
+
+/* input[type=checkbox]:checked:hover:after {
+  border: 4px solid black;
+  left: -7px;
+  top: -17px;
+} */
 
 .sizes {
   margin: 8px;
@@ -437,6 +500,11 @@ input[type=radio] {
   border: 2px solid black;
 }
 
+.sixty-four:hover {
+  margin: -2px;
+  border: 4px solid rgb(143, 207, 145)
+}
+
 .thirty-two {
   width: 32px;
   height: 32px;
@@ -444,11 +512,21 @@ input[type=radio] {
   border: 2px solid black;
 }
 
+.thirty-two:hover {
+  margin: -2px;
+  border: 4px solid rgb(143, 207, 145)
+}
+
 .sixteen {
   width: 16px;
   height: 16px;
   background-color: gray;
   border: 2px solid black;
+}
+
+.sixteen:hover {
+  margin: -2px;
+  border: 4px solid rgb(143, 207, 145)
 }
 
 .start-new input[type=submit] {

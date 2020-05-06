@@ -127,7 +127,6 @@ const ToolContainer = (props) => {
                 <h3 onClick={exportImage}>Export Image</h3>
             </span>
             <span className="tool-container">
-                <label htmlFor="tools">Tools</label>
                 <div className="tools" onChange={changeTool}>
                     <label className="tool" style={props.canvasInfo.tool === "pencil" ? {border: "4px solid black", margin: "0px", background: "url(https://i.imgur.com/dqP3kPw.png), rgb(143, 207, 145)", WebkitFilter: "grayscale(0%)"} : {background: "url(https://i.imgur.com/dqP3kPw.png), gray"}}>
                         <input type="radio" value="pencil" checked={props.canvasInfo.tool === "pencil"}/>
@@ -172,8 +171,9 @@ const ToolContainer = (props) => {
                     </div>
                 </div>
                 <div className="start-new">
-                    <label htmlFor="keep-palette" >
-                        <input type="checkbox" value={props.paletteInfo.keep} checked={props.paletteInfo.keep} onChange={changeKeepPalette}/>Keep Palette?
+                    <label className="keep-palette" >
+                        <input type="checkbox" value={props.paletteInfo.keep} checked={props.paletteInfo.keep} onChange={changeKeepPalette}/>
+                        <p>Keep Palette?</p>
                     </label>
                     <div value={props.canvasInfo.newSize} onChange={changeSize} className="sizes">
                         <div className="size-card">
