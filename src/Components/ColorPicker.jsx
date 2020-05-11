@@ -22,7 +22,15 @@ class ColorPicker extends React.Component {
             color: this.props.canvasInfo.currentColor,
             borderWidth: 4,
             borderColor: "#000000",
-            sliderSize: 20
+            sliderSize: 20,
+            // layout: [
+            //     { 
+            //         component: iro.ui.Slider,
+            //         options: {
+            //           sliderType: 'saturation' // can also be 'hue', 'saturation', 'value', 'alpha' or 'kelvin'
+            //         }
+            //     }
+            // ]
           });
         
         this.wheelPicker.on('color:change', this.colorChangeCB )
@@ -49,6 +57,7 @@ class ColorPicker extends React.Component {
         
 
         this.props.setColorDispatch(this.wheelPicker.color.hexString) 
+        this.props.toolDispatch("pencil")
     }
 
     mouseDown = (e) => {

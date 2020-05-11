@@ -146,11 +146,11 @@ const ToolContainer = (props) => {
                 canvasInfo={props.canvasInfo}
                 paletteInfo={props.paletteInfo}
                 setColorDispatch={props.setColorDispatch}
-                addColorDispatch={props.addColorDispatch}
                 updateColorDispatch={props.updateColorDispatch}
                 pickerDispatch={props.pickerDispatch}
                 pickerClickDispatch={props.pickerClickDispatch}
                 currentImageDispatch={props.currentImageDispatch}
+                toolDispatch={props.toolDispatch}
             />
             <div className="settings">
                 <div className="BG-container">
