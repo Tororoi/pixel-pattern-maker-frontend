@@ -24,7 +24,9 @@ const ToolContainer = (props) => {
                 image: props.canvasInfo.currentImage,
                 size: props.canvasInfo.imageSize
             },
-            colors: props.paletteInfo.colors
+            colors: props.paletteInfo.colors.map(c => {
+                return c.hex
+            })
         }
         props.createPattern(newPatternPOJO)
     }
@@ -37,7 +39,9 @@ const ToolContainer = (props) => {
                 image: props.canvasInfo.currentImage,
                 size: props.canvasInfo.imageSize
             },
-            colors: props.paletteInfo.colors,
+            colors: props.paletteInfo.colors.map(c => {
+                return c.hex
+            }),
             paletteID: props.currentPalette.id
         }
         props.updatePattern(newPatternPOJO)

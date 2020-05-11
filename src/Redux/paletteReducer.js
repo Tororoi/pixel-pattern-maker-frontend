@@ -24,7 +24,8 @@ let paletteReducer = (state = paletteInitialState, action) => {
             }
         case "ADD_COLOR":
 
-            let newColor = action.payload
+            let newHex = action.payload
+            let newColor = {number: state.colors.length+1, hex: newHex, rData: []}
             return {
                 ...state,
                 colors: [...state.colors, newColor]
