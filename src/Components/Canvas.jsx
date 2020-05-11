@@ -38,7 +38,6 @@ class Canvas extends React.Component {
         }
         // change old color to new color
         const replaceColor = () => {
-            console.log("hey")
             //crate offscreen canvas with image to reduce size of array to iterate over.
             let cvs = document.createElement('canvas');
             cvs.width = this.props.canvasInfo.imageSize;
@@ -90,8 +89,8 @@ class Canvas extends React.Component {
             this.props.replacingDispatch(false)
         }
 
-        // if (this.props.canvasInfo.replacing === true) {replaceColor()}
-        if (this.props.paletteInfo.pickerMouseDown) {replaceColor()}
+        if (this.props.canvasInfo.replacing === true) {replaceColor()}
+        // if (this.props.paletteInfo.pickerMouseDown) {replaceColor()}
         //Make object that allows access to indexes of pixels that need to be changed --- how?
         //iterate through image data of a version of canvas at pixel scale 1 to reduce strain from function
 
