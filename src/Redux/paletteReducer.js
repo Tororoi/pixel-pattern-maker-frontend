@@ -33,13 +33,13 @@ let paletteReducer = (state = paletteInitialState, action) => {
         case "UPDATE_COLOR":
             //don't change color but change which color belongs to palette
             let colorInfoPOJO = action.payload
-            function checkColor(color) {
-              return color.hex === colorInfoPOJO['oldColor']
-            }
-            let oldColor = state.colors.find(checkColor)
-            let colorIndex = state.colors.indexOf(oldColor)
+            // function checkColor(color) {
+            //   return color.number === colorInfoPOJO.oldColor.number
+            // }
+            // let oldColor = state.colors.find(checkColor)
+            // let colorIndex = state.colors.indexOf(colorInfoPOJO.oldColor)
             let updatedColorsArray = [...state.colors]
-            updatedColorsArray[colorIndex]['hex'] = colorInfoPOJO['newColor']
+            updatedColorsArray[colorInfoPOJO.oldColor.number-1]['hex'] = colorInfoPOJO['newColor']
 
             return {
                 ...state,

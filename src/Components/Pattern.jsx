@@ -15,8 +15,8 @@ const Pattern = (props) => {
             props.setImageDispatch(props.pattern.image),
             props.setImageSizeDispatch(props.pattern.size),
             props.setNameDispatch(props.pattern.name),
-            props.setPaletteColorsDispatch(props.pattern.palettes[0].colors),
-            props.setColorDispatch(props.pattern.palettes[0].colors[0])
+            props.setPaletteColorsDispatch(props.pattern.palettes[0].colors)
+            // props.setColorDispatch(props.pattern.palettes[0].colors[0])
         )
     }
 

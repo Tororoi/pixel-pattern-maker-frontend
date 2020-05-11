@@ -9,6 +9,7 @@ class Canvas extends React.Component {
     componentDidMount() {
         this.renderCanvas()
         this.props.setCanvasDispatch(this.canvasRef.current)
+        this.props.setColorDispatch(this.props.paletteInfo.colors[0])
     }
 
     componentDidUpdate() {
@@ -65,7 +66,7 @@ class Canvas extends React.Component {
                 } : null;
               }
 
-            const currentRGB = hexToRgb(this.props.canvasInfo.currentColor)
+            const currentRGB = hexToRgb(this.props.canvasInfo.currentColor.hex)
 
             for (let i=0;i<imageData.data.length;i+=4) {
                 if (rgbToHex(imageData.data[i],imageData.data[i+1],imageData.data[i+2]) === this.props.canvasInfo.oldColor) {
@@ -135,7 +136,7 @@ class Canvas extends React.Component {
         const squares = [{x: 0,y: 0},{x: b,y: 0},{x: b*2,y: 0},{x: 0,y: b},{x: b,y: b},{x: b*2,y: b},{x: 0,y: b*2},{x: b,y: b*2},{x: b*2,y: b*2}]
 
         if (this.props.canvasInfo.mouseDown === true) {
-            ctx.fillStyle=this.props.canvasInfo.currentColor
+            ctx.fillStyle=this.props.canvasInfo.currentColor.hex
             
             switch(this.props.canvasInfo.tool) {
                 case 'pencil':
@@ -176,7 +177,7 @@ class Canvas extends React.Component {
         const b = this.props.canvasInfo.boxSize
         const squares = [{x: 0,y: 0},{x: b,y: 0},{x: b*2,y: 0},{x: 0,y: b},{x: b,y: b},{x: b*2,y: b},{x: 0,y: b*2},{x: b,y: b*2},{x: b*2,y: b*2}]
 
-        ctx.fillStyle=this.props.canvasInfo.currentColor
+        ctx.fillStyle=this.props.canvasInfo.currentColor.hex
         //only thing different is lack of conditional here
         switch(this.props.canvasInfo.tool) {
             case 'pencil':

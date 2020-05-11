@@ -9,7 +9,7 @@ const Palette = (props) => {
     const paletteArray = props.paletteInfo.colors.map((color) => {
             return <Color 
                 key={props.paletteInfo.colors.number} 
-                color={color.hex} 
+                color={color} 
                 currentColor={props.currentColor}
                 setColorDispatch={props.setColorDispatch}
                 />
@@ -17,7 +17,7 @@ const Palette = (props) => {
     
     const handleClick = (e) => {
         props.addColorDispatch("#ffffff")
-        props.setColorDispatch("#ffffff")
+        // props.setColorDispatch("#ffffff")
         // props.addColorDispatch(props.currentColor)
         // props.setColorDispatch(props.currentColor)
     }

@@ -225,7 +225,7 @@ canvas:hover {
   image-rendering: pixelated;
   background-color: white;
   border: 2px solid black;
-  transition: 0.1s ease-out;
+  /* transition: 0.1s ease-out; */
 }
 
 .pattern:hover {

@@ -7,11 +7,6 @@ import {connect} from 'react-redux'
 //Parents: DrawContainer
 
 const ToolContainer = (props) => {
-//   console.log("PROPS OF CONTAINER", props.dispatchSetName )
-
-    // const initName = (e) => {
-    //     props.dispatchSetName(props.currentPattern.name)
-    // }
 
     const setName = (e) => {
         props.dispatchSetName(e.target.value)
@@ -54,8 +49,8 @@ const ToolContainer = (props) => {
         props.dispatchSetName("")
         props.setImageSizeDispatch(props.canvasInfo.newSize)
         if (!props.paletteInfo.keep) {
-            props.setPaletteColorsDispatch(["#ffffff"])
-            props.setColorDispatch("#ffffff")
+            props.setPaletteColorsDispatch([{number: 1, hex: "#ffffff", rData: []}])
+            props.setColorDispatch({number: 1, hex: "#ffffff", rData: []})
         }
     }
 
@@ -227,13 +222,6 @@ const setNewSize = (size) => {
     }
 }
 
-const setColor = (color) => {
-    return {
-        type: "SET_COLOR",
-        payload: color
-    }
-}
-
 const addColor = (color) => {
     return {
         type: "ADD_COLOR",
@@ -286,7 +274,6 @@ const mapDispatchToProps = {
     dispatchSetName: setName,
     setImageSizeDispatch: setImageSize,
     setNewSizeDispatch: setNewSize,
-    setColorDispatch: setColor,
     addColorDispatch: addColor,
     updateColorDispatch: updateColor,
     toolDispatch: setTool,

@@ -22,6 +22,7 @@ const DrawContainer = (props) => {
               setPaletteColorsDispatch={props.setPaletteColorsDispatch}
               clearCTXDispatch={props.clearCTXDispatch}
               currentImageDispatch={props.currentImageDispatch}
+              setColorDispatch={props.setColorDispatch}
           />
         </div>
         <div className="toolbox">
@@ -33,6 +34,7 @@ const DrawContainer = (props) => {
               setPaletteColorsDispatch={props.setPaletteColorsDispatch}
               clearCTXDispatch={props.clearCTXDispatch}
               currentImageDispatch={props.currentImageDispatch}
+              setColorDispatch={props.setColorDispatch}
           />
         </div>
       </div>
@@ -67,11 +69,19 @@ const setImage = (image) => {
   }
 }
 
+const setColor = (color) => {
+  return {
+      type: "SET_COLOR",
+      payload: color
+  }
+}
+
 const mapDispatchToProps = {
   resetPatternStateDispatch: resetPatternState,
   setPaletteColorsDispatch: setPaletteColors,
   clearCTXDispatch: clearContext,
-  currentImageDispatch: setImage
+  currentImageDispatch: setImage,
+  setColorDispatch: setColor
 }
 
 let mapStateToProps = (reduxState) => {

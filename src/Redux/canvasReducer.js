@@ -10,8 +10,8 @@ let canvasInitialState = {
     newSize: 64,
     boxSize: 256,
     background: "white",
-    currentColor: '#ffffff',
-    oldColor: '#ffffff'
+    currentColor: {number: 1, hex: "#ffffff", rData: []},
+    oldColor: {number: 1, hex: "#ffffff", rData: []}
 }
 
 let canvasReducer = (state = canvasInitialState, action) => {

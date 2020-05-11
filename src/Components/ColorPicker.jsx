@@ -19,7 +19,7 @@ class ColorPicker extends React.Component {
     componentDidMount() { 
         this.wheelPicker = new iro.ColorPicker(this.colorPicker.current, {
             width: 260,
-            color: this.props.canvasInfo.currentColor,
+            color: this.props.canvasInfo.currentColor.hex,
             borderWidth: 4,
             borderColor: "#000000",
             sliderSize: 20,
@@ -36,27 +36,21 @@ class ColorPicker extends React.Component {
         this.wheelPicker.on('color:change', this.colorChangeCB )
 
     }
-    
-    componentWillUnmount() {
-        // const c = this.props.paletteInfo.colors[0]
-        // this.wheelPicker.color = c
-        // this.props.setColorDispatch(c)
-    }
 
     componentDidUpdate() {
-        if (this.props.paletteInfo.insidePicker === false && !this.props.paletteInfo.pickerMouseDown) {this.wheelPicker.color.hexString = this.props.canvasInfo.currentColor}
+        if (this.props.paletteInfo.insidePicker === false && !this.props.paletteInfo.pickerMouseDown) {this.wheelPicker.color.hexString = this.props.canvasInfo.currentColor.hex}
     }
 
     colorChangeCB = () => { 
 
-        const colorToChange = this.props.paletteInfo.colors.find((c) => {return c.hex === this.props.canvasInfo.currentColor})
+        const colorToChange = this.props.paletteInfo.colors.find((c) => {return c.number === this.props.canvasInfo.currentColor.number})
 
         if (colorToChange) {
             this.props.updateColorDispatch({oldColor: this.props.canvasInfo.currentColor, newColor: this.wheelPicker.color.hexString})
             }
         
 
-        this.props.setColorDispatch(this.wheelPicker.color.hexString) 
+        this.props.setColorDispatch({number: this.props.canvasInfo.currentColor.number, hex: this.wheelPicker.color.hexString, rData: this.props.canvasInfo.currentColor.rData}) 
         this.props.toolDispatch("pencil")
     }
 
