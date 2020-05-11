@@ -108,7 +108,7 @@ class Canvas extends React.Component {
             squares.forEach((s) => {
                 ctx.drawImage(image,s.x,s.y,256,256)
             })
-            this.props.setPaletteColorsDispatch(this.props.paletteInfo.colors)
+            // this.props.setPaletteColorsDispatch(this.props.paletteInfo.colors)
         }
         this.props.currentImageDispatch(this.props.currentPattern.image)
     }

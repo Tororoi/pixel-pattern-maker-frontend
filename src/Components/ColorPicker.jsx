@@ -49,7 +49,7 @@ class ColorPicker extends React.Component {
 
     colorChangeCB = () => { 
 
-        const colorToChange = this.props.paletteInfo.colors.find((c) => {return c === this.props.canvasInfo.currentColor})
+        const colorToChange = this.props.paletteInfo.colors.find((c) => {return c.hex === this.props.canvasInfo.currentColor})
 
         if (colorToChange) {
             this.props.updateColorDispatch({oldColor: this.props.canvasInfo.currentColor, newColor: this.wheelPicker.color.hexString})

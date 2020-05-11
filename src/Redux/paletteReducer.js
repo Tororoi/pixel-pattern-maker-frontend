@@ -1,5 +1,5 @@
 let paletteInitialState = {
-    colors: ['#ffffff'],
+    colors: [{number: 1, hex: "#ffffff", rData: []}],
     insidePicker: false,
     pickerMouseDown: false,
     keep: false
@@ -12,9 +12,15 @@ let paletteReducer = (state = paletteInitialState, action) => {
         case "SET_PALETTE_COLORS":
 
             let newPalette = action.payload
+            let i = 0
+            let colorMap = newPalette.map(color => {
+                //rData is the indexes of r for each pixel in the image data of the canvas
+                i += 1
+                return {number: i, hex: color, rData: []}
+            })
             return {
                 ...state,
-                colors: newPalette
+                colors: colorMap
             }
         case "ADD_COLOR":
 
@@ -27,12 +33,12 @@ let paletteReducer = (state = paletteInitialState, action) => {
             //don't change color but change which color belongs to palette
             let colorInfoPOJO = action.payload
             function checkColor(color) {
-              return color === colorInfoPOJO['oldColor']
+              return color.hex === colorInfoPOJO['oldColor']
             }
             let oldColor = state.colors.find(checkColor)
             let colorIndex = state.colors.indexOf(oldColor)
             let updatedColorsArray = [...state.colors]
-            updatedColorsArray[colorIndex] = colorInfoPOJO['newColor']
+            updatedColorsArray[colorIndex]['hex'] = colorInfoPOJO['newColor']
 
             return {
                 ...state,
