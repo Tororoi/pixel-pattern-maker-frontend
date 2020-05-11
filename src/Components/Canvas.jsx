@@ -69,7 +69,7 @@ class Canvas extends React.Component {
             const currentRGB = hexToRgb(this.props.canvasInfo.currentColor.hex)
 
             for (let i=0;i<imageData.data.length;i+=4) {
-                if (rgbToHex(imageData.data[i],imageData.data[i+1],imageData.data[i+2]) === this.props.canvasInfo.oldColor) {
+                if (rgbToHex(imageData.data[i],imageData.data[i+1],imageData.data[i+2]) === this.props.canvasInfo.oldColor.hex) {
                    imageData.data[i]=currentRGB.r;
                     imageData.data[i+1]=currentRGB.g;
                     imageData.data[i+2]=currentRGB.b;
