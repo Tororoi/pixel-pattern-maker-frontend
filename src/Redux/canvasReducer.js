@@ -11,7 +11,8 @@ let canvasInitialState = {
     boxSize: 256,
     background: "white",
     currentColor: {number: 1, hex: "#ffffff", rData: []},
-    oldColor: {number: 1, hex: "#ffffff", rData: []}
+    oldColor: {number: 1, hex: "#ffffff", rData: []},
+    replacing: false
 }
 
 let canvasReducer = (state = canvasInitialState, action) => {
@@ -82,6 +83,11 @@ let canvasReducer = (state = canvasInitialState, action) => {
             return {
                 ...state,
                 canvas: newCanvas
+            }
+        case "REPLACING":
+            return {
+                ...state,
+                replacing: action.payload
             }
         default:
             return state

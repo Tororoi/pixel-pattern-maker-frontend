@@ -150,6 +150,7 @@ const ToolContainer = (props) => {
                 pickerClickDispatch={props.pickerClickDispatch}
                 currentImageDispatch={props.currentImageDispatch}
                 toolDispatch={props.toolDispatch}
+                replacingDispatch={props.replacingDispatch}
             />
             <div className="settings">
                 <div className="BG-container">

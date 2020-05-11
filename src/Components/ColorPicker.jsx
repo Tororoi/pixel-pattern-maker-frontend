@@ -43,15 +43,15 @@ class ColorPicker extends React.Component {
 
     colorChangeCB = () => { 
 
+        //-----*****BUG: Currently after adding a color, must click on color selector circle and drag. cannot simply click on another area of colorpicker*****-----//
         const colorToChange = this.props.paletteInfo.colors.find((c) => {return c.number === this.props.canvasInfo.currentColor.number})
-
         if (colorToChange) {
-            this.props.updateColorDispatch({oldColor: this.props.canvasInfo.currentColor, newColor: this.wheelPicker.color.hexString})
+            this.props.updateColorDispatch({oldColor: colorToChange, newColor: this.wheelPicker.color.hexString})
+            this.props.setColorDispatch({number: this.props.canvasInfo.currentColor.number, hex: this.wheelPicker.color.hexString, rData: this.props.canvasInfo.currentColor.rData})
             }
-        
-
-        this.props.setColorDispatch({number: this.props.canvasInfo.currentColor.number, hex: this.wheelPicker.color.hexString, rData: this.props.canvasInfo.currentColor.rData}) 
+         
         this.props.toolDispatch("pencil")
+        this.props.replacingDispatch(true)
     }
 
     mouseDown = (e) => {
@@ -59,7 +59,6 @@ class ColorPicker extends React.Component {
     }
 
     mouseUp = (e) => {
-        // this.props.pickerClickDispatch(false)
 
         let cvs = document.createElement('canvas');
         cvs.width = this.props.canvasInfo.imageSize; //pixel scale 1. Add a multiplier to export form.
