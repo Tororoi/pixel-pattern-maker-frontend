@@ -94,7 +94,6 @@ let canvasReducer = (state = canvasInitialState, action) => {
                 replacing: action.payload
             }
         case "ALLOW_REPLACEMENT":
-            console.log("ALLOW_REPLACEMENT", action.payload)
             return {
                 ...state,
                 replacementAllowed: action.payload
