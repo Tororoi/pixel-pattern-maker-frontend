@@ -9,6 +9,8 @@ let patternsInitialState = {
     switch (action.type) {
   
       case "SET_ALL_PATTERNS":
+        //Dispatch defined in App.js
+        //Called from App.js
         let theArrayOfPatterns = action.payload
         return {
           ...state,
@@ -17,6 +19,8 @@ let patternsInitialState = {
   
   
       case "ADD_ONE_PATTERN":
+        //Dispatch defined in App.js
+        //Called from App.js
         let thePatternIwantToAdd = action.payload
         let copyOfPatterns = [...state.patterns, thePatternIwantToAdd]
   
@@ -27,6 +31,8 @@ let patternsInitialState = {
   
 
       case "REPLACE_PATTERN":
+        //Dispatch defined in App.js
+        //Called from App.js
         let updatedPattern = action.payload
         function checkID(pattern) {
           return pattern.id === updatedPattern.id
@@ -42,6 +48,8 @@ let patternsInitialState = {
         }        
   
       case "REMOVE_PATTERN":
+        //Dispatch defined in App.js
+        //Called from App.js
         let thePatternID = action.payload
         let filteredPatterns = state.patterns.filter((pattern) => {
           return pattern.id !== thePatternID

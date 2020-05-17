@@ -7,10 +7,9 @@ import {connect} from 'react-redux'
 
 const Pattern = (props) => {
 
-
     const handleClick = (e) => {
         return (
-            props.patternDispatch(props.pattern),
+            props.setCurrentPatternDispatch(props.pattern),
             props.paletteDispatch(props.pattern.palettes[0]),
             props.setImageDispatch(props.pattern.image),
             props.setImageSizeDispatch(props.pattern.size),
@@ -55,13 +54,6 @@ const Pattern = (props) => {
     )
 }
 
-const setCurrentPattern = (pattern) => {
-    return {
-        type: "SET_CURRENT_PATTERN",
-        payload: pattern
-    }
-}
-
 const setCurrentPalette = (palette) => {
     return {
         type: "SET_CURRENT_PALETTE",
@@ -90,13 +82,6 @@ const setName = (name) => {
     }
 }
 
-let setPaletteColors = (palette) => {
-    return {
-      type: "SET_PALETTE_COLORS",
-      payload: palette
-    }
-}
-
 const setColor = (color) => {
     return {
         type: "SET_COLOR",
@@ -105,12 +90,10 @@ const setColor = (color) => {
 }
 
 const mapDispatchToProps = {
-    patternDispatch: setCurrentPattern,
     paletteDispatch: setCurrentPalette,
     setImageDispatch: setImage,
     setImageSizeDispatch: setImageSize,
     setNameDispatch: setName,
-    setPaletteColorsDispatch: setPaletteColors,
     setColorDispatch: setColor
   }
 

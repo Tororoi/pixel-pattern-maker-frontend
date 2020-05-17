@@ -12,16 +12,17 @@ const Palette = (props) => {
                 color={color} 
                 currentColor={props.currentColor}
                 setColorDispatch={props.setColorDispatch}
+                allowReplaceDispatch={props.allowReplaceDispatch}
                 />
         })
     
     const handleClick = (e) => {
-        // props.addColorDispatch("#ffffff")
-        // props.setColorDispatch("#ffffff")
         let newColor = {number: props.paletteInfo.colors.length+1, hex: props.currentColor.hex, rData: []}
 
         props.addColorDispatch(newColor)
         props.setColorDispatch(newColor)
+        //add an action that sets replacement allowed to false
+        props.allowReplaceDispatch(false)
     }
 
      return(

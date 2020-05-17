@@ -97,12 +97,16 @@ class App extends React.Component {
                 createPattern={this.props.createPattern}
                 updatePattern={this.props.updatePattern}
                 deletePattern={this.props.deletePattern}
+                pickerMouseDownDispatch={this.props.pickerMouseDown}
+                setPaletteColorsDispatch={this.props.setPaletteColors}
               /> </div>
               } />
             <Route path="/profile" exact render={() => 
               <div> <ProfileContainer 
                 favePattern={this.props.favePattern}
                 unFavePattern={this.props.unFavePattern}
+                setCurrentPatternDispatch={this.props.setCurrentPattern}
+                setPaletteColorsDispatch={this.props.setPaletteColors}
                 profileSwitch={this.props.profileSwitch}
               /> </div>
             } />
@@ -110,6 +114,8 @@ class App extends React.Component {
               <div> <PatternContainer 
                 favePattern={this.props.favePattern}
                 unFavePattern={this.props.unFavePattern}
+                setCurrentPatternDispatch={this.props.setCurrentPattern}
+                setPaletteColorsDispatch={this.props.setPaletteColors}
               /> </div>
             } />
           </Switch>
@@ -304,6 +310,13 @@ let setAllPatterns = (patternsArr) => {
   }
 }
 
+let setPaletteColors = (palette) => {
+  return {
+    type: "SET_PALETTE_COLORS",
+    payload: palette
+  }
+}
+
 let setUserInfo = (userInfo) => {
   return {
     type: "SET_USER_INFORMATION",
@@ -311,7 +324,21 @@ let setUserInfo = (userInfo) => {
   }
 }
 
-let sendThisInformation = { pickerMouseDown, setAllPatterns, setUserInfo, persistUser, createPattern, updatePattern, deletePattern, profileSwitch, favePattern, unFavePattern, getPatterns }
+let sendThisInformation = { 
+  pickerMouseDown, 
+  setAllPatterns, 
+  setUserInfo, 
+  persistUser, 
+  createPattern, 
+  updatePattern, 
+  deletePattern, 
+  profileSwitch, 
+  favePattern, 
+  unFavePattern, 
+  getPatterns,
+  setCurrentPattern,
+  setPaletteColors 
+}
 
 
 export default connect(null, sendThisInformation)(App);

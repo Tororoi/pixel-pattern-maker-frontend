@@ -47,7 +47,7 @@ class Canvas extends React.Component {
 
             const imageData = context.getImageData(0,0,this.props.canvasInfo.imageSize,this.props.canvasInfo.imageSize)
 
-            //helper functions
+            //color format helper functions
             const componentToHex = (c) => {
                 var hex = c.toString(16);
                 return hex.length === 1 ? "0" + hex : hex;
@@ -66,6 +66,7 @@ class Canvas extends React.Component {
                 } : null;
               }
 
+            //iterate through pixels and replace color data
             const currentRGB = hexToRgb(this.props.canvasInfo.currentColor.hex)
 
             for (let i=0;i<imageData.data.length;i+=4) {
@@ -89,7 +90,7 @@ class Canvas extends React.Component {
             this.props.replacingDispatch(false)
         }
 
-        if (this.props.canvasInfo.replacing === true) {replaceColor()}
+        if (this.props.canvasInfo.replacing === true && this.props.canvasInfo.replacementAllowed === true) {replaceColor()}
         // if (this.props.paletteInfo.pickerMouseDown) {replaceColor()}
         //Make object that allows access to indexes of pixels that need to be changed --- how?
         //iterate through image data of a version of canvas at pixel scale 1 to reduce strain from function
@@ -167,6 +168,8 @@ class Canvas extends React.Component {
 
     handleMouseDown = (e) => {
         this.props.mouseDownDispatch(true)
+        //add action that sets replacement allowed to true
+        this.props.allowReplaceDispatch(true)
 
         //repeat of draw function. needed here to get pixel drawn even if mouse doesn't move
         const mouseX=e.nativeEvent.offsetX;

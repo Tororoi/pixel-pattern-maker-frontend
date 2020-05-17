@@ -12,7 +12,8 @@ let canvasInitialState = {
     background: "white",
     currentColor: {number: 1, hex: "#ffffff", rData: []},
     oldColor: {number: 1, hex: "#ffffff", rData: []},
-    replacing: false
+    replacing: false,
+    replacementAllowed: true
 }
 
 let canvasReducer = (state = canvasInitialState, action) => {
@@ -55,9 +56,12 @@ let canvasReducer = (state = canvasInitialState, action) => {
             }
         case "SET_COLOR":
             let newColor = action.payload
+            //set state.currentColor to a new object for clearer assignment. 
+            //***Fixes bug where oldColor would sometimes be set incorrectly if set after currentColor was already set to newColor***//
+            let previousColor = Object.assign({}, state.currentColor)
             return {
                 ...state,
-                oldColor: state.currentColor,
+                oldColor: previousColor,
                 currentColor: newColor
             }
         case "SET_BACKGROUND":
@@ -88,6 +92,12 @@ let canvasReducer = (state = canvasInitialState, action) => {
             return {
                 ...state,
                 replacing: action.payload
+            }
+        case "ALLOW_REPLACEMENT":
+            console.log("ALLOW_REPLACEMENT", action.payload)
+            return {
+                ...state,
+                replacementAllowed: action.payload
             }
         default:
             return state

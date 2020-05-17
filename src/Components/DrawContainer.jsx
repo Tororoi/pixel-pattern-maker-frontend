@@ -24,6 +24,7 @@ const DrawContainer = (props) => {
               currentImageDispatch={props.currentImageDispatch}
               setColorDispatch={props.setColorDispatch}
               replacingDispatch={props.replacingDispatch}
+              allowReplaceDispatch={props.allowReplaceDispatch}
           />
         </div>
         <div className="toolbox">
@@ -31,12 +32,13 @@ const DrawContainer = (props) => {
               createPattern={props.createPattern}
               updatePattern={props.updatePattern}
               deletePattern={props.deletePattern}
-              resetPatternStateDispatch={props.resetPatternStateDispatch}
               setPaletteColorsDispatch={props.setPaletteColorsDispatch}
               clearCTXDispatch={props.clearCTXDispatch}
               currentImageDispatch={props.currentImageDispatch}
               setColorDispatch={props.setColorDispatch}
               replacingDispatch={props.replacingDispatch}
+              pickerMouseDownDispatch={props.pickerMouseDownDispatch}
+              allowReplaceDispatch={props.allowReplaceDispatch}
           />
         </div>
       </div>
@@ -44,18 +46,12 @@ const DrawContainer = (props) => {
   )
 };
 
-let resetPatternState = (pattern) => {
-  return {
-    type: "RESET_PATTERN_STATE"
-  }
-}
-
-let setPaletteColors = (palette) => {
-  return {
-    type: "SET_PALETTE_COLORS",
-    payload: palette
-  }
-}
+// let setPaletteColors = (palette) => {
+//   return {
+//     type: "SET_PALETTE_COLORS",
+//     payload: palette
+//   }
+// }
 
 let clearContext = (bool) => {
   return {
@@ -78,24 +74,30 @@ const setColor = (color) => {
   }
 }
 
-const replacing = (bool) => {
+const replacingColor = (bool) => {
   return {
     type: "REPLACING",
     payload: bool
   }
 }
 
+const allowColorReplace = (bool) => {
+  return {
+    type: "ALLOW_REPLACEMENT",
+    payload: bool
+  }
+}
+
 const mapDispatchToProps = {
-  resetPatternStateDispatch: resetPatternState,
-  setPaletteColorsDispatch: setPaletteColors,
+  // setPaletteColorsDispatch: setPaletteColors,
   clearCTXDispatch: clearContext,
   currentImageDispatch: setImage,
   setColorDispatch: setColor,
-  replacingDispatch: replacing
+  replacingDispatch: replacingColor,
+  allowReplaceDispatch: allowColorReplace
 }
 
 let mapStateToProps = (reduxState) => {
-  // console.log(reduxState.canvasInfo)
   return {
     canvasInfo: reduxState.canvasInfo,
     paletteInfo: reduxState.paletteInfo,

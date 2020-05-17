@@ -10,7 +10,8 @@ let paletteReducer = (state = paletteInitialState, action) => {
     switch (action.type) {
 
         case "SET_PALETTE_COLORS":
-
+            //Defined in App.js
+            //Called from Pattern.jsx, ToolContainer.jsx
             let newPalette = action.payload
             let i = 0
             let colorMap = newPalette.map(color => {
@@ -23,21 +24,19 @@ let paletteReducer = (state = paletteInitialState, action) => {
                 colors: colorMap
             }
         case "ADD_COLOR":
-
+            //Defined in ToolContainer.jsx
+            //Called from Palette.jsx
             let newColor = action.payload
-            // let newColor = {number: state.colors.length+1, hex: newHex, rData: []}
             return {
                 ...state,
                 colors: [...state.colors, newColor]
             }
         case "UPDATE_COLOR":
-            //don't change color but change which color belongs to palette
+            //Defined in ToolContainer.jsx
+            //Called from ColorPicker.jsx
             let colorInfoPOJO = action.payload
-            function checkColor(color) {
-              return color.number === colorInfoPOJO.oldColor.number
-            }
-            let oldColor = state.colors.find(checkColor)
-            let colorIndex = state.colors.indexOf(oldColor)
+
+            let colorIndex = state.colors.indexOf(colorInfoPOJO.previousColor)
             let updatedColorsArray = [...state.colors]
             updatedColorsArray[colorIndex]['hex'] = colorInfoPOJO['newColor']
 

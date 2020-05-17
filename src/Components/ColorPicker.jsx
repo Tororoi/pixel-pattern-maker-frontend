@@ -34,7 +34,6 @@ class ColorPicker extends React.Component {
           });
         
         this.wheelPicker.on('color:change', this.colorChangeCB )
-          console.log("mounted colorpicker")
     }
 
     componentDidUpdate() {
@@ -42,12 +41,12 @@ class ColorPicker extends React.Component {
     }
 
     colorChangeCB = () => { 
-        console.log(`color changed to ${this.wheelPicker.color.hexString}`)
+        // console.log(`color changed to ${this.wheelPicker.color.hexString}`, this.props.canvasInfo.replacing)
         //-----*****BUG: Currently after adding a color, must click on color selector circle and drag. cannot simply click on another area of colorpicker*****-----//
         const colorToChange = this.props.paletteInfo.colors.find((c) => {return c.number === this.props.canvasInfo.currentColor.number})
         if (colorToChange) {
-            this.props.updateColorDispatch({oldColor: colorToChange, newColor: this.wheelPicker.color.hexString})
             this.props.setColorDispatch({number: this.props.canvasInfo.currentColor.number, hex: this.wheelPicker.color.hexString, rData: this.props.canvasInfo.currentColor.rData})
+            this.props.updateColorDispatch({previousColor: colorToChange, newColor: this.wheelPicker.color.hexString})
             }
          
         this.props.toolDispatch("pencil")
@@ -55,7 +54,7 @@ class ColorPicker extends React.Component {
     }
 
     mouseDown = (e) => {
-        this.props.pickerClickDispatch(true)
+        this.props.pickerMouseDownDispatch(true)
     }
 
     mouseUp = (e) => {

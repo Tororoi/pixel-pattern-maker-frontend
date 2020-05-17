@@ -140,6 +140,7 @@ const ToolContainer = (props) => {
                 paletteInfo={props.paletteInfo}
                 setColorDispatch={props.setColorDispatch}
                 addColorDispatch={props.addColorDispatch}
+                allowReplaceDispatch={props.allowReplaceDispatch}
             />
             <ColorPicker
                 canvasInfo={props.canvasInfo}
@@ -147,7 +148,7 @@ const ToolContainer = (props) => {
                 setColorDispatch={props.setColorDispatch}
                 updateColorDispatch={props.updateColorDispatch}
                 pickerDispatch={props.pickerDispatch}
-                pickerClickDispatch={props.pickerClickDispatch}
+                pickerMouseDownDispatch={props.pickerMouseDownDispatch}
                 currentImageDispatch={props.currentImageDispatch}
                 toolDispatch={props.toolDispatch}
                 replacingDispatch={props.replacingDispatch}
@@ -258,18 +259,17 @@ const hoverPicker = (bool) => {
     }
 }
 
-const pickerMouseDown = (bool) => {
-    return {
-        type: "PICKER_MOUSE_DOWN",
-        payload: bool
-    }
-}
-
 const keepPalette = () => {
     return {
         type: "KEEP_PALETTE"
     }
 }
+
+const resetPatternState = () => {
+    return {
+      type: "RESET_PATTERN_STATE"
+    }
+  }
 
 const mapDispatchToProps = {
     dispatchSetName: setName,
@@ -280,8 +280,8 @@ const mapDispatchToProps = {
     toolDispatch: setTool,
     setBGDispatch: setBG,
     pickerDispatch: hoverPicker,
-    pickerClickDispatch: pickerMouseDown,
-    keepPaletteDispatch: keepPalette
+    keepPaletteDispatch: keepPalette,
+    resetPatternStateDispatch: resetPatternState
 }
 
 // the return value of mapStateToProps is an object that will be merged into DrawContainer's props

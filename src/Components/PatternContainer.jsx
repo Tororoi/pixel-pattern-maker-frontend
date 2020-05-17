@@ -14,6 +14,8 @@ const PatternContainer = (props) => {
                 favePattern={props.favePattern} 
                 unFavePattern={props.unFavePattern} 
                 userFaves={props.userFaves}
+                setCurrentPatternDispatch={props.setCurrentPatternDispatch}
+                setPaletteColorsDispatch={props.setPaletteColorsDispatch}
                 />
         })
     

@@ -6,6 +6,8 @@ const Color = (props) => {
 
     const handleClick = (e) => {
         props.setColorDispatch(props.color)
+        //add action that sets replacement allowed to true
+        props.allowReplaceDispatch(true)
     }
 
     return (
