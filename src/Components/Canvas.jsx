@@ -82,6 +82,7 @@ class Canvas extends React.Component {
             context.putImageData(imageData,0,0);
             // clear main canvas
             ctx.clearRect(0,0,768,768)
+            ctx.imageSmoothingEnabled = false;
             //draw onto the main canvas
             const b = this.props.canvasInfo.boxSize
             const squares = [{x: 0,y: 0},{x: b,y: 0},{x: b*2,y: 0},{x: 0,y: b},{x: b,y: b},{x: b*2,y: b},{x: 0,y: b*2},{x: b,y: b*2},{x: b*2,y: b*2}]
