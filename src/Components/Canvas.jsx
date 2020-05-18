@@ -10,6 +10,7 @@ class Canvas extends React.Component {
         this.renderCanvas()
         this.props.setCanvasDispatch(this.canvasRef.current)
         this.props.setColorDispatch(this.props.paletteInfo.colors[0])
+        this.props.allowReplaceDispatch(true)
     }
 
     componentDidUpdate() {
