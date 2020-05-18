@@ -24,7 +24,7 @@ class App extends React.Component {
   handleLoginSubmit = (userInfo) => {
     console.log("Login form has been submitted")
 
-    fetch("http://localhost:3000/login", {
+    fetch(`${props.backendSite}/login`, {
       method: "POST",
       headers: {
         'content-type': 'application/json'
@@ -39,7 +39,7 @@ class App extends React.Component {
   handleRegisterSubmit = (userInfo) => {
     console.log("Register form has been submitted")
 
-    fetch("http://localhost:3000/users", {
+    fetch(`${props.backendSite}/users`, {
       method: "POST",
       headers: {
         'content-type': 'application/json'
@@ -129,7 +129,7 @@ class App extends React.Component {
 // thunky Action Creators
 let persistUser = () => {
   return (dispatch) => {
-    fetch("http://localhost:3000/persist", {
+    fetch(`${props.backendSite}/persist`, {
       headers: {
         "Authorization": `bearer ${localStorage.token}`
       }
@@ -144,7 +144,7 @@ let persistUser = () => {
 
 let getPatterns = () => {
   return (dispatch) => {
-    fetch("http://localhost:3000/patterns")
+    fetch(`${props.backendSite}/patterns`)
     .then(r => r.json())
     .then((arrayOfPatterns) => {
       dispatch(setAllPatterns(arrayOfPatterns));
@@ -154,7 +154,7 @@ let getPatterns = () => {
 
 let createPattern = (newPattern) => {
   return (dispatch) => {
-    fetch("http://localhost:3000/patterns", {
+    fetch(`${props.backendSite}/patterns`, {
       method: "POST",
       headers: {
         'content-type': 'application/json',
@@ -174,7 +174,7 @@ let createPattern = (newPattern) => {
 
 let updatePattern = (newPattern) => {
   return (dispatch) => {
-    fetch(`http://localhost:3000/patterns/${newPattern.pattern.id}`, {
+    fetch(`${props.backendSite}/patterns/${newPattern.pattern.id}`, {
       method: "PATCH",
       headers: {
         'content-type': 'application/json',
@@ -193,7 +193,7 @@ let updatePattern = (newPattern) => {
 
 let deletePattern = (pattern) => {
   return (dispatch) => {
-    fetch(`http://localhost:3000/patterns/${pattern.id}`, {
+    fetch(`${props.backendSite}/patterns/${pattern.id}`, {
       method: "DELETE",
       headers: {
         'content-type': 'application/json',
@@ -210,7 +210,7 @@ let deletePattern = (pattern) => {
 
 let favePattern = (pat_id) => {
   return (dispatch) => {
-    fetch("http://localhost:3000/favorite", {
+    fetch(`${props.backendSite}/favorite`, {
       method: "POST",
       headers: {
         'content-type': 'application/json',
@@ -230,7 +230,7 @@ let favePattern = (pat_id) => {
 
 let unFavePattern = (favorite) => {
   return (dispatch) => {
-    fetch("http://localhost:3000/favorite", {
+    fetch(`${props.backendSite}/favorite`, {
       method: "DELETE",
       headers: {
         'content-type': 'application/json',
@@ -324,6 +324,8 @@ let setUserInfo = (userInfo) => {
   }
 }
 
+const backendSite = "https://pixel-pattern-maker.herokuapp.com"
+
 let sendThisInformation = { 
   pickerMouseDown, 
   setAllPatterns, 
@@ -337,7 +339,8 @@ let sendThisInformation = {
   unFavePattern, 
   getPatterns,
   setCurrentPattern,
-  setPaletteColors 
+  setPaletteColors,
+  backendSite
 }
 
 
