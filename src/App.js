@@ -24,7 +24,7 @@ class App extends React.Component {
   handleLoginSubmit = (userInfo) => {
     console.log("Login form has been submitted")
 
-    fetch(`${this.props.backendSite}/login`, {
+    fetch(`https://pixel-pattern-maker.herokuapp.com/login`, {
       method: "POST",
       headers: {
         'content-type': 'application/json'
@@ -39,7 +39,7 @@ class App extends React.Component {
   handleRegisterSubmit = (userInfo) => {
     console.log("Register form has been submitted")
 
-    fetch(`${this.props.backendSite}/users`, {
+    fetch(`https://pixel-pattern-maker.herokuapp.com/users`, {
       method: "POST",
       headers: {
         'content-type': 'application/json'
@@ -129,7 +129,7 @@ class App extends React.Component {
 // thunky Action Creators
 let persistUser = () => {
   return (dispatch) => {
-    fetch(`${this.props.backendSite}/persist`, {
+    fetch(`https://pixel-pattern-maker.herokuapp.com/persist`, {
       headers: {
         "Authorization": `bearer ${localStorage.token}`
       }
@@ -144,7 +144,7 @@ let persistUser = () => {
 
 let getPatterns = () => {
   return (dispatch) => {
-    fetch(`${this.props.backendSite}/patterns`)
+    fetch(`https://pixel-pattern-maker.herokuapp.com/patterns`)
     .then(r => r.json())
     .then((arrayOfPatterns) => {
       dispatch(setAllPatterns(arrayOfPatterns));
@@ -154,7 +154,7 @@ let getPatterns = () => {
 
 let createPattern = (newPattern) => {
   return (dispatch) => {
-    fetch(`${this.props.backendSite}/patterns`, {
+    fetch(`https://pixel-pattern-maker.herokuapp.com/patterns`, {
       method: "POST",
       headers: {
         'content-type': 'application/json',
@@ -174,7 +174,7 @@ let createPattern = (newPattern) => {
 
 let updatePattern = (newPattern) => {
   return (dispatch) => {
-    fetch(`${this.props.backendSite}/patterns/${newPattern.pattern.id}`, {
+    fetch(`https://pixel-pattern-maker.herokuapp.com/patterns/${newPattern.pattern.id}`, {
       method: "PATCH",
       headers: {
         'content-type': 'application/json',
@@ -193,7 +193,7 @@ let updatePattern = (newPattern) => {
 
 let deletePattern = (pattern) => {
   return (dispatch) => {
-    fetch(`${this.props.backendSite}/patterns/${pattern.id}`, {
+    fetch(`https://pixel-pattern-maker.herokuapp.com/patterns/${pattern.id}`, {
       method: "DELETE",
       headers: {
         'content-type': 'application/json',
@@ -210,7 +210,7 @@ let deletePattern = (pattern) => {
 
 let favePattern = (pat_id) => {
   return (dispatch) => {
-    fetch(`${this.props.backendSite}/favorite`, {
+    fetch(`https://pixel-pattern-maker.herokuapp.com/favorite`, {
       method: "POST",
       headers: {
         'content-type': 'application/json',
@@ -230,7 +230,7 @@ let favePattern = (pat_id) => {
 
 let unFavePattern = (favorite) => {
   return (dispatch) => {
-    fetch(`${this.props.backendSite}/favorite`, {
+    fetch(`https://pixel-pattern-maker.herokuapp.com/favorite`, {
       method: "DELETE",
       headers: {
         'content-type': 'application/json',
@@ -324,8 +324,6 @@ let setUserInfo = (userInfo) => {
   }
 }
 
-const backendSite = "https://pixel-pattern-maker.herokuapp.com"
-
 let sendThisInformation = { 
   pickerMouseDown, 
   setAllPatterns, 
@@ -339,8 +337,7 @@ let sendThisInformation = {
   unFavePattern, 
   getPatterns,
   setCurrentPattern,
-  setPaletteColors,
-  backendSite
+  setPaletteColors
 }
 
 
