@@ -120,7 +120,7 @@ const ToolContainer = (props) => {
             <span className="crud-container" >
                 <h3 className="create" onClick={createPattern} style={localStorage.token ? {display: "block"} : {display: "none"}}>Create</h3>
                 <h3 className="update" onClick={updatePattern} style={props.userInfo.user.id === props.currentPattern.user_id ? {display: "block"} : {display: "none"}}>Update</h3>
-                <h3 className="delete" onClick={deletePattern} style={props.userInfo.user.id === props.currentPattern.user_id ? {display: "block"} : {display: "block"}}>Delete</h3>
+                <h3 className="delete" onClick={deletePattern} style={props.userInfo.user.id === props.currentPattern.user_id ? {display: "block"} : {display: "none"}}>Delete</h3>
             </span>
             <span className="export-container">
                 <h3 onClick={exportImage}>Export Image</h3>
