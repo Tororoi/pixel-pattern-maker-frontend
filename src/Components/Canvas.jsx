@@ -82,6 +82,7 @@ class Canvas extends React.Component {
             context.putImageData(imageData,0,0);
             // clear main canvas
             ctx.clearRect(0,0,768,768)
+            // restate imageSmoothing to prevent rare bug where image is rendered blurry
             ctx.imageSmoothingEnabled = false;
             //draw onto the main canvas
             const b = this.props.canvasInfo.boxSize
