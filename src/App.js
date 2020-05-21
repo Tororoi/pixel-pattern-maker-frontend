@@ -10,6 +10,9 @@ import {connect} from 'react-redux'
 
 // Routing Stuff
 import {Switch, Route} from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+
+import { withAlert } from 'react-alert';
 
 class App extends React.Component {
 
@@ -64,9 +67,11 @@ class App extends React.Component {
   }
 
   handleResponse = (resp) => {  
+    console.log(resp)
     if (resp.jwt) {
       localStorage.token = resp.jwt
       this.props.setUserInfo(resp)
+      this.props.history.push("/profile")
     }
   }
 
@@ -341,4 +346,8 @@ let sendThisInformation = {
 }
 
 
-export default connect(null, sendThisInformation)(App);
+export default withAlert()(
+  withRouter(
+    connect(null, sendThisInformation)(App);
+  ))
+  
