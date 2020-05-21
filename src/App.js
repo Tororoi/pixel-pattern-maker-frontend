@@ -348,6 +348,6 @@ let sendThisInformation = {
 
 export default withAlert()(
   withRouter(
-    connect(null, sendThisInformation)(App);
+    connect(null, sendThisInformation)(App)
   ))
   
