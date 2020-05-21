@@ -12,7 +12,7 @@ import {connect} from 'react-redux'
 import {Switch, Route} from 'react-router-dom'
 import { withRouter } from 'react-router-dom';
 
-import { withAlert } from 'react-alert';
+// import { withAlert } from 'react-alert';
 
 class App extends React.Component {
 
@@ -346,8 +346,7 @@ let sendThisInformation = {
 }
 
 
-export default withAlert()(
-  withRouter(
+export default withRouter(
     connect(null, sendThisInformation)(App)
-  ))
+  )
   
