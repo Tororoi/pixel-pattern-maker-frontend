@@ -12,8 +12,6 @@ import {connect} from 'react-redux'
 import {Switch, Route} from 'react-router-dom'
 import { withRouter } from 'react-router-dom';
 
-// import { withAlert } from 'react-alert';
-
 class App extends React.Component {
 
   componentDidMount() {
@@ -67,7 +65,7 @@ class App extends React.Component {
   }
 
   handleResponse = (resp) => {  
-    console.log(resp)
+    console.log(`Welcome, ${resp.user.username}`)
     if (resp.jwt) {
       localStorage.token = resp.jwt
       this.props.setUserInfo(resp)
