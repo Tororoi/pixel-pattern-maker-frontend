@@ -45,20 +45,24 @@ let paletteReducer = (state = paletteInitialState, action) => {
                 colors: updatedColorsArray
             }
         case "HOVER_PICKER":
-
+            //Defined in ToolContainer.jsx
+            //Called from ColorPicker.jsx
             let hoverPicker = action.payload
             return {
                 ...state,
                 insidePicker: hoverPicker
             }
         case "PICKER_MOUSE_DOWN":
-
+            //Defined in App.js
+            //Called from App.js, ColorPicker.jsx
             let newPickerMouseDown = action.payload
             return {
                 ...state,
                 pickerMouseDown: newPickerMouseDown
             }
         case "KEEP_PALETTE":
+            //Defined in ToolContainer.jsx
+            //Called from ToolContainer.jsx
             return {
                 ...state,
                 keep: !state.keep

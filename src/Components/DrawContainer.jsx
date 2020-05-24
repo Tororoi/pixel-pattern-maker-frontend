@@ -46,13 +46,6 @@ const DrawContainer = (props) => {
   )
 };
 
-// let setPaletteColors = (palette) => {
-//   return {
-//     type: "SET_PALETTE_COLORS",
-//     payload: palette
-//   }
-// }
-
 let clearContext = (bool) => {
   return {
     type: "CLEAR_CONTEXT",
