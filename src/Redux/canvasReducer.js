@@ -91,7 +91,7 @@ let canvasReducer = (state = canvasInitialState, action) => {
             //Called from Canvas.jsx
             return {
                 ...state,
-                allowBGChange: payload.action
+                allowBGChange: action.payload
             }
         case "SET_TOOL":
             //Defined in ToolContainer.jsx
