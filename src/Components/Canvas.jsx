@@ -19,22 +19,6 @@ class Canvas extends React.Component {
         //change background color
         if (this.props.canvasInfo.allowBGChange === true) {
             cvs.style.backgroundColor = this.props.canvasInfo.background;
-            // switch(this.props.canvasInfo.background) {
-            //     case "white":
-            //         cvs.style.backgroundColor = "white"
-            //         break;
-            //     case "gray":
-            //         cvs.style.backgroundColor = "gray"
-            //         break;
-            //     case "black":
-            //         cvs.style.backgroundColor = "black"
-            //         break;
-            //     case "transparent":
-            //         cvs.style.backgroundColor = "transparent"
-            //         break;
-            //     default:
-            //         cvs.style.backgroundColor = "white"
-            // }
             this.props.allowBGChangeDispatch(false)
         }
         //clear canvas when button is pressed
@@ -106,6 +90,7 @@ class Canvas extends React.Component {
     }
 
     renderCanvas = () => {
+        //renders the initial canvas
         const cvs = this.canvasRef.current        
         const ctx = cvs.getContext('2d')
         cvs.style.backgroundColor = this.props.canvasInfo.background;
@@ -117,7 +102,7 @@ class Canvas extends React.Component {
 
         if (this.props.currentPattern.image) {
             squares.forEach((s) => {
-                ctx.drawImage(image,s.x,s.y,256,256)
+                ctx.drawImage(image,s.x,s.y,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize)
             })
             // this.props.setPaletteColorsDispatch(this.props.paletteInfo.colors)
         }
@@ -125,11 +110,12 @@ class Canvas extends React.Component {
     }
 
     imageToReduxState = (e) => {
-        let cvs = document.createElement('canvas');
-        cvs.width = this.props.canvasInfo.imageSize; //pixel scale 1. Add a multiplier to export form.
-        cvs.height = this.props.canvasInfo.imageSize;
-        cvs.getContext('2d').drawImage(this.canvasRef.current,0,0,256,256,0,0,this.props.canvasInfo.imageSize,this.props.canvasInfo.imageSize); // first four coords are the cropping area
-        this.props.currentImageDispatch(cvs.toDataURL()) //gets canceled out by componentDidMount
+        //pushes a minimum size version of the canvas image to the redux state
+        let offscreenCanvas = document.createElement('canvas');
+        offscreenCanvas.width = this.props.canvasInfo.imageSize; //pixel scale 1. ***** Add a multiplier to export form. *****
+        offscreenCanvas.height = this.props.canvasInfo.imageSize;
+        offscreenCanvas.getContext('2d').drawImage(this.canvasRef.current,0,0,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize,0,0,this.props.canvasInfo.imageSize,this.props.canvasInfo.imageSize); // first four coords are the cropping area
+        this.props.currentImageDispatch(offscreenCanvas.toDataURL()) //gets canceled out by componentDidMount
 
         // if (!localStorage.token) {localStorage.image = cvs.toDataURL()}
     }
