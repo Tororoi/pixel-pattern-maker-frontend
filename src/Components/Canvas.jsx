@@ -34,7 +34,7 @@ class Canvas extends React.Component {
             //         break;
             //     default:
             //         cvs.style.backgroundColor = "white"
-            }
+            // }
             this.props.allowBGChangeDispatch(false)
         }
         //clear canvas when button is pressed
