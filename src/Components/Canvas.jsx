@@ -17,24 +17,27 @@ class Canvas extends React.Component {
         const cvs = this.canvasRef.current  
         const ctx = cvs.getContext('2d')
         //change background color
-        switch(this.props.canvasInfo.background) {
-            case "white":
-                console.log("yikes")
-                cvs.style.backgroundColor = "white"
-                break;
-            case "gray":
-                cvs.style.backgroundColor = "gray"
-                break;
-            case "black":
-                cvs.style.backgroundColor = "black"
-                break;
-            case "transparent":
-                cvs.style.backgroundColor = "transparent"
-                break;
-            default:
-                cvs.style.backgroundColor = "white"
+        if (this.props.canvasInfo.allowBGChange === true) {
+            switch(this.props.canvasInfo.background) {
+                case "white":
+                    console.log("yikes")
+                    cvs.style.backgroundColor = "white"
+                    break;
+                case "gray":
+                    cvs.style.backgroundColor = "gray"
+                    break;
+                case "black":
+                    cvs.style.backgroundColor = "black"
+                    break;
+                case "transparent":
+                    cvs.style.backgroundColor = "transparent"
+                    break;
+                default:
+                    cvs.style.backgroundColor = "white"
+            }
+            this.props.allowBGChangeDispatch(false)
         }
-
+        //clear canvas when button is pressed
         if (this.props.canvasInfo.ctxClear === true) {
             ctx.clearRect(0,0,768,768)
             this.props.clearCTXDispatch(false)
@@ -244,9 +247,17 @@ const setCanvas = (canvas) => {
     }
 }
 
+const allowBGChange = (boolean) => {
+    return {
+        type: "ALLOW_BG_CHANGE",
+        payload: boolean
+    }
+}
+
 const mapDispatchToProps = {
     mouseDownDispatch: setMouseState,
-    setCanvasDispatch: setCanvas
+    setCanvasDispatch: setCanvas,
+    allowBGChangeDispatch: allowBGChange
   }
 
 export default connect(null, mapDispatchToProps)(Canvas);

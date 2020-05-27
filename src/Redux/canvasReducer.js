@@ -10,6 +10,7 @@ let canvasInitialState = {
     newSize: 64,
     boxSize: 256,
     background: "white",
+    allowBGChange: false,
     currentColor: {number: 1, hex: "#ffffff", rData: []},
     oldColor: {number: 1, hex: "#ffffff", rData: []},
     replacing: false,
@@ -82,7 +83,15 @@ let canvasReducer = (state = canvasInitialState, action) => {
             let newBackground = action.payload
             return {
                 ...state,
-                background: newBackground
+                background: newBackground,
+                allowBGChange: true
+            }
+        case "ALLOW_BG_CHANGE":
+            //Defined in Canvas.jsx
+            //Called from Canvas.jsx
+            return {
+                ...state,
+                allowBGChange: payload.action
             }
         case "SET_TOOL":
             //Defined in ToolContainer.jsx
