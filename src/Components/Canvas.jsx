@@ -16,8 +16,10 @@ class Canvas extends React.Component {
     componentDidUpdate() {
         const cvs = this.canvasRef.current  
         const ctx = cvs.getContext('2d')
+        //change background color
         switch(this.props.canvasInfo.background) {
             case "white":
+                console.log("yikes")
                 cvs.style.backgroundColor = "white"
                 break;
             case "gray":
@@ -39,13 +41,14 @@ class Canvas extends React.Component {
         }
         // change old color to new color
         const replaceColor = () => {
-            //crate offscreen canvas with image to reduce size of array to iterate over.
+            //create offscreen canvas with image to reduce size of array to iterate over.
             let offScreenCanvas = document.createElement('canvas');
             offScreenCanvas.width = this.props.canvasInfo.imageSize;
             offScreenCanvas.height = this.props.canvasInfo.imageSize;
-            const offScreenCtx = offScreenCanvas.getContext('2d')
-            offScreenCtx.drawImage(this.canvasRef.current,0,0,256,256,0,0,this.props.canvasInfo.imageSize,this.props.canvasInfo.imageSize); // first four coords are the cropping area
-
+            const offScreenCtx = offScreenCanvas.getContext('2d');
+            //draw the image onto the offscreen canvas at pixel scale 1.
+            offScreenCtx.drawImage(this.canvasRef.current,0,0,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize,0,0,this.props.canvasInfo.imageSize,this.props.canvasInfo.imageSize); 
+            //get the image data off the smaller, offscreen image.
             const imageData = offScreenCtx.getImageData(0,0,this.props.canvasInfo.imageSize,this.props.canvasInfo.imageSize)
 
             //color format helper functions
@@ -67,9 +70,9 @@ class Canvas extends React.Component {
                 } : null;
               }
 
-            //iterate through pixels and replace color data
+            //get current color in RGB format
             const currentRGB = hexToRgb(this.props.canvasInfo.currentColor.hex)
-
+            //iterate through pixels and replace color data
             for (let i=0;i<imageData.data.length;i+=4) {
                 if (rgbToHex(imageData.data[i],imageData.data[i+1],imageData.data[i+2]) === this.props.canvasInfo.oldColor.hex) {
                     imageData.data[i]=currentRGB.r;
@@ -78,11 +81,11 @@ class Canvas extends React.Component {
                 }
             }
 
-            // put the altered data back on the canvas  
+            //put the altered data back on the offscreen canvas
             offScreenCtx.putImageData(imageData,0,0);
-            // clear main canvas
+            //clear the main canvas
             ctx.clearRect(0,0,768,768)
-            // restate imageSmoothing to prevent rare bug where image is rendered blurry
+            //restate imageSmoothing to prevent rare bug where image is rendered blurry
             ctx.imageSmoothingEnabled = false;
             //draw onto the main canvas
             const b = this.props.canvasInfo.boxSize
@@ -90,6 +93,7 @@ class Canvas extends React.Component {
             squares.forEach(square => {
                 ctx.drawImage(offScreenCanvas,square.x,square.y,b,b)
             })
+            //After replacing color, disable replacement until the color is changed again.
             this.props.replacingDispatch(false)
         }
 
