@@ -18,22 +18,22 @@ class Canvas extends React.Component {
         const ctx = cvs.getContext('2d')
         //change background color
         if (this.props.canvasInfo.allowBGChange === true) {
-            switch(this.props.canvasInfo.background) {
-                case "white":
-                    console.log("yikes")
-                    cvs.style.backgroundColor = "white"
-                    break;
-                case "gray":
-                    cvs.style.backgroundColor = "gray"
-                    break;
-                case "black":
-                    cvs.style.backgroundColor = "black"
-                    break;
-                case "transparent":
-                    cvs.style.backgroundColor = "transparent"
-                    break;
-                default:
-                    cvs.style.backgroundColor = "white"
+            cvs.style.backgroundColor = this.props.canvasInfo.background;
+            // switch(this.props.canvasInfo.background) {
+            //     case "white":
+            //         cvs.style.backgroundColor = "white"
+            //         break;
+            //     case "gray":
+            //         cvs.style.backgroundColor = "gray"
+            //         break;
+            //     case "black":
+            //         cvs.style.backgroundColor = "black"
+            //         break;
+            //     case "transparent":
+            //         cvs.style.backgroundColor = "transparent"
+            //         break;
+            //     default:
+            //         cvs.style.backgroundColor = "white"
             }
             this.props.allowBGChangeDispatch(false)
         }
@@ -108,6 +108,7 @@ class Canvas extends React.Component {
     renderCanvas = () => {
         const cvs = this.canvasRef.current        
         const ctx = cvs.getContext('2d')
+        cvs.style.backgroundColor = this.props.canvasInfo.background;
         ctx.imageSmoothingEnabled = false;
         const b = this.props.canvasInfo.boxSize
         const squares = [{x: 0,y: 0},{x: b,y: 0},{x: b*2,y: 0},{x: 0,y: b},{x: b,y: b},{x: b*2,y: b},{x: 0,y: b*2},{x: b,y: b*2},{x: b*2,y: b*2}]
