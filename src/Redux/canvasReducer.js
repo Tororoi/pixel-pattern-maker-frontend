@@ -59,7 +59,7 @@ let canvasReducer = (state = canvasInitialState, action) => {
             //Defined in ToolContainer.jsx
             //Called from ToolContainer.jsx
             let newBoxSize = state.boxSize
-            if (action.payload === "+") {
+            if (action.payload === "+" && state.boxSize < 256) {
                 newBoxSize += 64
             } else if (action.payload === "-" && state.boxSize > 64) {
                 newBoxSize -= 64

@@ -119,7 +119,7 @@ class Canvas extends React.Component {
             offscreenCanvas.getContext('2d').drawImage(this.canvasRef.current,0,0,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize,0,0,this.props.canvasInfo.imageSize,this.props.canvasInfo.imageSize);
             const realImage = offscreenCanvas.toDataURL()
 
-            console.log(realImage, this.props.canvasInfo.currentImage, image.src) //*****/
+            console.log("ACTUAL IMAGE:", realImage, "IMAGE SRC FOR DRAWING:", image.src) //*****/
             if (realImage !== this.props.canvasInfo.currentImage) {
                 console.log("but why?")
                 squares.forEach((s) => {
@@ -127,7 +127,7 @@ class Canvas extends React.Component {
                     ctx.drawImage(image,s.x,s.y,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize)
                 })
             }
-            console.log(cvs.toDataURL()) //*****/
+            console.log("AFTER DRAWING:", cvs.toDataURL()) //*****/
     }
 
     renderInitialCanvas = () => {
