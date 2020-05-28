@@ -7,7 +7,7 @@ class Canvas extends React.Component {
     canvasRef = React.createRef();
 
     componentDidMount() {
-        this.renderCanvas()
+        this.renderInitialCanvas()
         this.props.setCanvasDispatch(this.canvasRef.current)
         this.props.setColorDispatch(this.props.paletteInfo.colors[0])
         this.props.allowReplaceDispatch(true)
@@ -95,7 +95,6 @@ class Canvas extends React.Component {
     }
 
     renderCanvas = () => {
-        console.log("hi")
         //renders the initial canvas
         const cvs = this.canvasRef.current        
         const ctx = cvs.getContext('2d')
@@ -113,9 +112,41 @@ class Canvas extends React.Component {
             squares.forEach((s) => {
                 ctx.drawImage(image,s.x,s.y,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize)
             })
-            // this.props.setPaletteColorsDispatch(this.props.paletteInfo.colors)
-        // }
-        // this.props.currentImageDispatch(this.props.currentPattern.image)
+
+            let offscreenCanvas = document.createElement('canvas');
+            offscreenCanvas.width = this.props.canvasInfo.imageSize;
+            offscreenCanvas.height = this.props.canvasInfo.imageSize;
+            offscreenCanvas.getContext('2d').drawImage(this.canvasRef.current,0,0,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize,0,0,this.props.canvasInfo.imageSize,this.props.canvasInfo.imageSize);
+            const realImage = offscreenCanvas.toDataURL()
+
+            console.log(realImage, this.props.canvasInfo.currentImage, image.src) //*****/
+            if (realImage !== this.props.canvasInfo.currentImage) {
+                console.log("but why?")
+                squares.forEach((s) => {
+                    console.log(image.src) //*****/
+                    ctx.drawImage(image,s.x,s.y,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize)
+                })
+            }
+            console.log(cvs.toDataURL()) //*****/
+    }
+
+    renderInitialCanvas = () => {
+        //renders the initial canvas
+        const cvs = this.canvasRef.current        
+        const ctx = cvs.getContext('2d')
+        cvs.width = this.props.canvasInfo.boxSize*3
+        cvs.height = this.props.canvasInfo.boxSize*3
+        cvs.style.backgroundColor = this.props.canvasInfo.background;
+        ctx.imageSmoothingEnabled = false;
+        const b = this.props.canvasInfo.boxSize
+        const squares = [{x: 0,y: 0},{x: b,y: 0},{x: b*2,y: 0},{x: 0,y: b},{x: b,y: b},{x: b*2,y: b},{x: 0,y: b*2},{x: b,y: b*2},{x: b*2,y: b*2}]
+        const image = new Image();
+        // image.src = this.props.currentPattern.image
+        image.src = this.props.canvasInfo.currentImage
+        
+        squares.forEach((s) => {
+            ctx.drawImage(image,s.x,s.y,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize)
+        })
     }
 
     imageToReduxState = (e) => {
