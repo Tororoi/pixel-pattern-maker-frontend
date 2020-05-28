@@ -82,6 +82,7 @@ const ToolContainer = (props) => {
         // win.document.body.appendChild(image)
 
         //Method 3
+        //No scaling, exports as original sized image (pixel scale 1)
         let win = window.open("")
         win.document.write(`<img style="image-rendering: pixelated; width: 512px; height: 512px;" src=${props.canvasInfo.currentImage}>`)
     }
@@ -93,6 +94,10 @@ const ToolContainer = (props) => {
 
     const changeBG = (e) => {
         props.setBGDispatch(e.target.value)
+    }
+
+    const changeZoom = (e) => {
+        props.zoomDispatch(e.target.innerText)
     }
 
     const changeTool = (e) => {
@@ -125,6 +130,17 @@ const ToolContainer = (props) => {
             <span className="export-container">
                 <h3 onClick={exportImage}>Export Image</h3>
             </span>
+            <div className="BG-container">
+                    <label htmlFor="box-size">Zoom</label>
+                    <div className="setBG" onClick={changeZoom}>
+                        <label className="bg-swatch" style={{border: "4px solid black", margin: "0px", backgroundColor: "red"}}>
+                            +
+                        </label>
+                        <label className="bg-swatch" style={{border: "4px solid black", margin: "0px", backgroundColor: "blue"}}>
+                            -
+                        </label>
+                    </div>
+            </div>
             <span className="tool-container">
                 <div className="tools" onChange={changeTool}>
                     <label className="tool" style={props.canvasInfo.tool === "pencil" ? {border: "4px solid black", margin: "0px", background: "url(https://i.imgur.com/dqP3kPw.png), rgb(143, 207, 145)", WebkitFilter: "grayscale(0%)"} : {background: "url(https://i.imgur.com/dqP3kPw.png), gray"}}>
@@ -271,6 +287,13 @@ const resetPatternState = () => {
     }
   }
 
+const setBoxSize = (plusminus) => {
+    return {
+        type: "SET_BOX_SIZE",
+        payload: plusminus
+    }
+}
+
 const mapDispatchToProps = {
     dispatchSetName: setName,
     setImageSizeDispatch: setImageSize,
@@ -281,7 +304,8 @@ const mapDispatchToProps = {
     setBGDispatch: setBG,
     pickerDispatch: hoverPicker,
     keepPaletteDispatch: keepPalette,
-    resetPatternStateDispatch: resetPatternState
+    resetPatternStateDispatch: resetPatternState,
+    zoomDispatch: setBoxSize
 }
 
 // the return value of mapStateToProps is an object that will be merged into DrawContainer's props

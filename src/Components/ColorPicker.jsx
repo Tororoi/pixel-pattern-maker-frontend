@@ -62,7 +62,7 @@ class ColorPicker extends React.Component {
         let cvs = document.createElement('canvas');
         cvs.width = this.props.canvasInfo.imageSize; //pixel scale 1. Add a multiplier to export form.
         cvs.height = this.props.canvasInfo.imageSize;
-        cvs.getContext('2d').drawImage(this.props.canvasInfo.canvas,0,0,256,256,0,0,this.props.canvasInfo.imageSize,this.props.canvasInfo.imageSize); // first four coords are the cropping area
+        cvs.getContext('2d').drawImage(this.props.canvasInfo.canvas,0,0,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize,0,0,this.props.canvasInfo.imageSize,this.props.canvasInfo.imageSize); // first four coords are the cropping area
         this.props.currentImageDispatch(cvs.toDataURL())
     }
 

@@ -16,6 +16,26 @@ class Canvas extends React.Component {
     componentDidUpdate() {
         const cvs = this.canvasRef.current  
         const ctx = cvs.getContext('2d')
+        //changed size of canvas
+        if (this.props.canvasInfo.sizeChanged) {
+            // //re-renders the canvas
+            // const cvs = this.canvasRef.current        
+            // const ctx = cvs.getContext('2d')
+            // cvs.style.backgroundColor = this.props.canvasInfo.background;
+            // ctx.imageSmoothingEnabled = false;
+            // const b = this.props.canvasInfo.boxSize
+            // const squares = [{x: 0,y: 0},{x: b,y: 0},{x: b*2,y: 0},{x: 0,y: b},{x: b,y: b},{x: b*2,y: b},{x: 0,y: b*2},{x: b,y: b*2},{x: b*2,y: b*2}]
+            // const image = new Image();
+            // image.src = this.props.canvasInfo.currentImage
+
+            // if (this.props.canvasInfo.currentImage) {
+            //     squares.forEach((s) => {
+            //         ctx.drawImage(image,s.x,s.y,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize)
+            //     })
+            //     // this.props.setPaletteColorsDispatch(this.props.paletteInfo.colors)
+            // }
+            this.props.sizeChangedDispatch(false)
+        }
         //change background color
         if (this.props.canvasInfo.allowBGChange === true) {
             cvs.style.backgroundColor = this.props.canvasInfo.background;
@@ -23,7 +43,7 @@ class Canvas extends React.Component {
         }
         //clear canvas when button is pressed
         if (this.props.canvasInfo.ctxClear === true) {
-            ctx.clearRect(0,0,768,768)
+            ctx.clearRect(0,0,this.props.canvasInfo.boxSize*3,this.props.canvasInfo.boxSize*3)
             this.props.clearCTXDispatch(false)
         }
         // change old color to new color
@@ -71,7 +91,7 @@ class Canvas extends React.Component {
             //put the altered data back on the offscreen canvas
             offScreenCtx.putImageData(imageData,0,0);
             //clear the main canvas
-            ctx.clearRect(0,0,768,768)
+            ctx.clearRect(0,0,this.props.canvasInfo.boxSize*3,this.props.canvasInfo.boxSize*3)
             //restate imageSmoothing to prevent rare bug where image is rendered blurry
             ctx.imageSmoothingEnabled = false;
             //draw onto the main canvas
@@ -106,7 +126,7 @@ class Canvas extends React.Component {
             })
             // this.props.setPaletteColorsDispatch(this.props.paletteInfo.colors)
         }
-        this.props.currentImageDispatch(this.props.currentPattern.image)
+        // this.props.currentImageDispatch(this.props.currentPattern.image)
     }
 
     imageToReduxState = (e) => {
@@ -207,8 +227,8 @@ class Canvas extends React.Component {
         return (
             <canvas
                 ref={this.canvasRef}
-                width={768}
-                height={768}
+                width={this.props.canvasInfo.boxSize*3}
+                height={this.props.canvasInfo.boxSize*3}
                 // onMouseEnter={renderPattern}
                 onClick={this.imageToReduxState}
                 onMouseMove={this.handleMouseMove}
@@ -241,10 +261,18 @@ const allowBGChange = (boolean) => {
     }
 }
 
+const sizeChanged = (boolean) => {
+    return {
+        type: "SIZE_CHANGED",
+        payload: boolean
+    }
+}
+
 const mapDispatchToProps = {
     mouseDownDispatch: setMouseState,
     setCanvasDispatch: setCanvas,
-    allowBGChangeDispatch: allowBGChange
+    allowBGChangeDispatch: allowBGChange,
+    sizeChangedDispatch: sizeChanged
   }
 
 export default connect(null, mapDispatchToProps)(Canvas);
