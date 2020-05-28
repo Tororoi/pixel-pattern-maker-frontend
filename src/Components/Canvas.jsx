@@ -18,22 +18,7 @@ class Canvas extends React.Component {
         const ctx = cvs.getContext('2d')
         //changed size of canvas
         if (this.props.canvasInfo.sizeChanged) {
-            // //re-renders the canvas
-            // const cvs = this.canvasRef.current        
-            // const ctx = cvs.getContext('2d')
-            // cvs.style.backgroundColor = this.props.canvasInfo.background;
-            // ctx.imageSmoothingEnabled = false;
-            // const b = this.props.canvasInfo.boxSize
-            // const squares = [{x: 0,y: 0},{x: b,y: 0},{x: b*2,y: 0},{x: 0,y: b},{x: b,y: b},{x: b*2,y: b},{x: 0,y: b*2},{x: b,y: b*2},{x: b*2,y: b*2}]
-            // const image = new Image();
-            // image.src = this.props.canvasInfo.currentImage
-
-            // if (this.props.canvasInfo.currentImage) {
-            //     squares.forEach((s) => {
-            //         ctx.drawImage(image,s.x,s.y,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize)
-            //     })
-            //     // this.props.setPaletteColorsDispatch(this.props.paletteInfo.colors)
-            // }
+            this.renderCanvas()
             this.props.sizeChangedDispatch(false)
         }
         //change background color
@@ -110,22 +95,26 @@ class Canvas extends React.Component {
     }
 
     renderCanvas = () => {
+        console.log("hi")
         //renders the initial canvas
         const cvs = this.canvasRef.current        
         const ctx = cvs.getContext('2d')
+        cvs.width = this.props.canvasInfo.boxSize*3
+        cvs.height = this.props.canvasInfo.boxSize*3
         cvs.style.backgroundColor = this.props.canvasInfo.background;
         ctx.imageSmoothingEnabled = false;
         const b = this.props.canvasInfo.boxSize
         const squares = [{x: 0,y: 0},{x: b,y: 0},{x: b*2,y: 0},{x: 0,y: b},{x: b,y: b},{x: b*2,y: b},{x: 0,y: b*2},{x: b,y: b*2},{x: b*2,y: b*2}]
         const image = new Image();
-        image.src = this.props.currentPattern.image
+        // image.src = this.props.currentPattern.image
+        image.src = this.props.canvasInfo.currentImage
 
-        if (this.props.currentPattern.image) {
+        // if (this.props.canvasInfo.currentImage) {
             squares.forEach((s) => {
                 ctx.drawImage(image,s.x,s.y,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize)
             })
             // this.props.setPaletteColorsDispatch(this.props.paletteInfo.colors)
-        }
+        // }
         // this.props.currentImageDispatch(this.props.currentPattern.image)
     }
 
@@ -227,9 +216,6 @@ class Canvas extends React.Component {
         return (
             <canvas
                 ref={this.canvasRef}
-                width={this.props.canvasInfo.boxSize*3}
-                height={this.props.canvasInfo.boxSize*3}
-                // onMouseEnter={renderPattern}
                 onClick={this.imageToReduxState}
                 onMouseMove={this.handleMouseMove}
                 onMouseDown={this.handleMouseDown}
