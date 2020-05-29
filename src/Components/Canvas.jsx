@@ -125,7 +125,6 @@ class Canvas extends React.Component {
         const b = this.props.canvasInfo.boxSize
         const squares = [{x: 0,y: 0},{x: b,y: 0},{x: b*2,y: 0},{x: 0,y: b},{x: b,y: b},{x: b*2,y: b},{x: 0,y: b*2},{x: b,y: b*2},{x: b*2,y: b*2}]
         const image = new Image();
-        // image.src = this.props.currentPattern.image
         image.src = this.props.canvasInfo.currentImage
         
         squares.forEach((s) => {
@@ -153,7 +152,7 @@ class Canvas extends React.Component {
         const x1 = Math.floor(mouseX/pixelSize)*pixelSize
         const y1 = Math.floor(mouseY/pixelSize)*pixelSize
         const b = this.props.canvasInfo.boxSize
-        const squares = [{x: 0,y: 0},{x: b,y: 0},{x: b*2,y: 0},{x: 0,y: b},{x: b,y: b},{x: b*2,y: b},{x: 0,y: b*2},{x: b,y: b*2},{x: b*2,y: b*2}]
+        const squares = [{x: 0,y: 0},{x: b,y: 0},{x: b*2,y: 0},{x: b*3,y: 0},{x: 0,y: b},{x: b,y: b},{x: b*2,y: b},{x: b*3,y: b},{x: 0,y: b*2},{x: b,y: b*2},{x: b*2,y: b*2},{x: b*3,y: b*2},{x: 0,y: b*3},{x: b,y: b*3},{x: b*2,y: b*3},{x: b*3,y: b*3},]
 
         if (this.props.canvasInfo.mouseDown === true) {
             ctx.fillStyle=this.props.canvasInfo.currentColor.hex
@@ -173,6 +172,18 @@ class Canvas extends React.Component {
                         ctx.clearRect(x1-square.x,y1-square.y,pixelSize,pixelSize) 
                         ctx.clearRect(x1-square.x,y1+square.y,pixelSize,pixelSize)
                         ctx.clearRect(x1+square.x,y1-square.y,pixelSize,pixelSize) 
+                    })
+                    break;
+                case 'drag':
+                    const image = new Image();
+                    image.src = this.props.canvasInfo.currentImage
+
+                    ctx.clearRect(0,0,b*3,b*3)
+                    squares.forEach(s => {
+                        ctx.drawImage(image,x1+s.x,y1+s.y,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize) 
+                        ctx.drawImage(image,x1-s.x,y1-s.y,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize)
+                        ctx.drawImage(image,x1-s.x,y1+s.y,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize)
+                        ctx.drawImage(image,x1+s.x,y1-s.y,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize)
                     })
                     break;
                 default:

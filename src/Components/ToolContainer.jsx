@@ -102,8 +102,8 @@ const ToolContainer = (props) => {
     }
 
     const changeTool = (e) => {
-        console.log(props.userInfo.user.id)
-        console.log(props.currentPattern.user_id)
+        // console.log(props.userInfo.user.id)
+        // console.log(props.currentPattern.user_id)
         props.toolDispatch(e.target.value)
     }
 
@@ -149,6 +149,9 @@ const ToolContainer = (props) => {
                     </label>
                     <label className="tool" style={props.canvasInfo.tool === "eraser" ? {border: "4px solid black", margin: "0px", background: "url(https://i.imgur.com/0FJeZYK.png), rgb(143, 207, 145)", WebkitFilter: "grayscale(0%)"} : {background: "url(https://i.imgur.com/0FJeZYK.png), gray"}}>
                         <input type="radio" value="eraser" checked={props.canvasInfo.tool === "eraser"}/>
+                    </label>
+                    <label className="tool" style={props.canvasInfo.tool === "drag" ? {border: "4px solid black", margin: "0px", background: "url(https://i.imgur.com/61n4tTU.png), rgb(143, 207, 145)", WebkitFilter: "grayscale(0%)"} : {background: "url(https://i.imgur.com/61n4tTU.png), gray"}}>
+                        <input type="radio" value="drag" checked={props.canvasInfo.tool === "drag"}/>
                     </label>
                 </div>
             </span>
