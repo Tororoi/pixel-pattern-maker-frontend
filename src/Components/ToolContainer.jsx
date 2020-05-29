@@ -83,6 +83,7 @@ const ToolContainer = (props) => {
 
         //Method 3
         //No scaling, exports as original sized image (pixel scale 1)
+        //IDEA: put image onto offscreen canvas at desired scale, then use that as the export source *****
         let win = window.open("")
         win.document.write(`<img style="image-rendering: pixelated; width: 512px; height: 512px;" src=${props.canvasInfo.currentImage}>`)
     }

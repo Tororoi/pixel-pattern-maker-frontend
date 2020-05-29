@@ -105,29 +105,13 @@ class Canvas extends React.Component {
         const b = this.props.canvasInfo.boxSize
         const squares = [{x: 0,y: 0},{x: b,y: 0},{x: b*2,y: 0},{x: 0,y: b},{x: b,y: b},{x: b*2,y: b},{x: 0,y: b*2},{x: b,y: b*2},{x: b*2,y: b*2}]
         const image = new Image();
-        // image.src = this.props.currentPattern.image
         image.src = this.props.canvasInfo.currentImage
 
-        // if (this.props.canvasInfo.currentImage) {
+        image.onload = () => {
             squares.forEach((s) => {
                 ctx.drawImage(image,s.x,s.y,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize)
             })
-
-            let offscreenCanvas = document.createElement('canvas');
-            offscreenCanvas.width = this.props.canvasInfo.imageSize;
-            offscreenCanvas.height = this.props.canvasInfo.imageSize;
-            offscreenCanvas.getContext('2d').drawImage(this.canvasRef.current,0,0,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize,0,0,this.props.canvasInfo.imageSize,this.props.canvasInfo.imageSize);
-            const realImage = offscreenCanvas.toDataURL()
-
-            console.log("ACTUAL IMAGE:", realImage, "IMAGE SRC FOR DRAWING:", image.src) //*****/
-            if (realImage !== this.props.canvasInfo.currentImage) {
-                console.log("but why?")
-                squares.forEach((s) => {
-                    console.log(image.src) //*****/
-                    ctx.drawImage(image,s.x,s.y,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize)
-                })
-            }
-            console.log("AFTER DRAWING:", cvs.toDataURL()) //*****/
+        }
     }
 
     renderInitialCanvas = () => {
