@@ -131,7 +131,7 @@ const ToolContainer = (props) => {
             <span className="export-container">
                 <h3 onClick={exportImage}>Export Image</h3>
             </span>
-            <div className="BG-container">
+            {/* <div className="BG-container">
                     <label htmlFor="box-size">Zoom</label>
                     <div className="setBG" onClick={changeZoom}>
                         <label className="bg-swatch" style={{border: "4px solid black", margin: "0px", backgroundColor: "red"}}>
@@ -141,7 +141,7 @@ const ToolContainer = (props) => {
                             -
                         </label>
                     </div>
-            </div>
+            </div> */}
             <span className="tool-container">
                 <div className="tools" onChange={changeTool}>
                     <label className="tool" style={props.canvasInfo.tool === "pencil" ? {border: "4px solid black", margin: "0px", background: "url(https://i.imgur.com/dqP3kPw.png), rgb(143, 207, 145)", WebkitFilter: "grayscale(0%)"} : {background: "url(https://i.imgur.com/dqP3kPw.png), gray"}}>
