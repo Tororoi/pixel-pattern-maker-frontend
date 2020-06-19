@@ -374,7 +374,7 @@ input[type=radio] {
   -webkit-filter: grayscale(0%);
 }
 
-/* Settings */
+/** Settings **/
 
 .settings {
   display: flex;
