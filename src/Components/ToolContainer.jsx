@@ -97,9 +97,9 @@ const ToolContainer = (props) => {
         props.setBGDispatch(e.target.value)
     }
 
-    const changeZoom = (e) => {
-        props.zoomDispatch(e.target.innerText)
-    }
+    // const changeZoom = (e) => {
+    //     props.zoomDispatch(e.target.innerText)
+    // }
 
     const changeTool = (e) => {
         // console.log(props.userInfo.user.id)
