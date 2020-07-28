@@ -16,6 +16,11 @@ class Canvas extends React.Component {
     componentDidUpdate() {
         const cvs = this.canvasRef.current  
         const ctx = cvs.getContext('2d')
+        //Re-render if undo button is clicked
+        if (this.props.canvasInfo.undo) {
+            this.renderCanvas()
+            this.props.stopUndoDispatch()
+        }
         //changed size of canvas
         if (this.props.canvasInfo.sizeChanged) {
             this.renderCanvas()
@@ -282,11 +287,19 @@ const sizeChanged = (boolean) => {
     }
 }
 
+const stopUndo = () => {
+    return {
+        type: "STOP_UNDO",
+        payload: "no payload necessary"
+    }
+}
+
 const mapDispatchToProps = {
     mouseDownDispatch: setMouseState,
     setCanvasDispatch: setCanvas,
     allowBGChangeDispatch: allowBGChange,
-    sizeChangedDispatch: sizeChanged
+    sizeChangedDispatch: sizeChanged,
+    stopUndoDispatch: stopUndo
   }
 
 export default connect(null, mapDispatchToProps)(Canvas);

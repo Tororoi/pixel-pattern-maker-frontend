@@ -2,6 +2,7 @@ let canvasInitialState = {
     currentName: '',
     currentImage: '',
     history: [],
+    undo: false,
     tool: 'pencil',
     canvas: '',
     ctxClear: false,
@@ -158,12 +159,17 @@ let canvasReducer = (state = canvasInitialState, action) => {
             //Called from ToolContainer.jsx
             let historyCopy = [...state.history]
             historyCopy.pop()
-            let prevImage = state.history[state.history.length-1]
-            console.log(prevImage)
+            let prevImage = historyCopy[historyCopy.length-1]
             return {
                 ...state,
                 currentImage: prevImage,
-                history: historyCopy
+                history: historyCopy,
+                undo: true
+            }
+        case "STOP_UNDO":
+            return {
+                ...state,
+                undo: false
             }
         default:
             return state
