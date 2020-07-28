@@ -178,13 +178,15 @@ class Canvas extends React.Component {
                     const image = new Image();
                     image.src = this.props.canvasInfo.currentImage
 
-                    ctx.clearRect(0,0,b*3,b*3)
-                    squares.forEach(s => {
-                        ctx.drawImage(image,x1+s.x,y1+s.y,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize) 
-                        ctx.drawImage(image,x1-s.x,y1-s.y,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize)
-                        ctx.drawImage(image,x1-s.x,y1+s.y,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize)
-                        ctx.drawImage(image,x1+s.x,y1-s.y,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize)
-                    })
+                    image.onload = () => {
+                        ctx.clearRect(0,0,b*3,b*3)
+                        squares.forEach(s => {
+                            ctx.drawImage(image,x1+s.x,y1+s.y,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize) 
+                            ctx.drawImage(image,x1-s.x,y1-s.y,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize)
+                            ctx.drawImage(image,x1-s.x,y1+s.y,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize)
+                            ctx.drawImage(image,x1+s.x,y1-s.y,this.props.canvasInfo.boxSize,this.props.canvasInfo.boxSize)
+                        })
+                    }
                     break;
                 default:
                     break;

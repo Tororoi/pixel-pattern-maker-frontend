@@ -130,6 +130,7 @@ const ToolContainer = (props) => {
             </span>
             <span className="export-container">
                 <h3 onClick={exportImage}>Export Image</h3>
+                <h3 onClick={props.undoDispatch}>Undo</h3>
             </span>
             {/* <div className="BG-container">
                     <label htmlFor="box-size">Zoom</label>
@@ -298,6 +299,13 @@ const setBoxSize = (plusminus) => {
     }
 }
 
+const undoButton = () => {
+    return {
+        type: "UNDO",
+        payload: "no payload necesssary"
+    }
+}
+
 const mapDispatchToProps = {
     dispatchSetName: setName,
     setImageSizeDispatch: setImageSize,
@@ -309,7 +317,8 @@ const mapDispatchToProps = {
     pickerDispatch: hoverPicker,
     keepPaletteDispatch: keepPalette,
     resetPatternStateDispatch: resetPatternState,
-    zoomDispatch: setBoxSize
+    zoomDispatch: setBoxSize,
+    undoDispatch: undoButton
 }
 
 // the return value of mapStateToProps is an object that will be merged into DrawContainer's props

@@ -1,6 +1,7 @@
 let canvasInitialState = {
     currentName: '',
     currentImage: '',
+    history: [],
     tool: 'pencil',
     canvas: '',
     ctxClear: false,
@@ -33,9 +34,11 @@ let canvasReducer = (state = canvasInitialState, action) => {
             //Defined in DrawContainer.jsx, Pattern.jsx *****REFACTOR*****
             //Called from Canvas.jsx, ColorPicker.jsx, Pattern.jsx
             let newImage = action.payload
+            let newHistory = [...state.history, newImage]
             return {
                 ...state,
-                currentImage: newImage
+                currentImage: newImage,
+                history: newHistory
             }
         case "SET_IMAGE_SIZE":
             //Defined in ToolContainer.jsx, Pattern.jsx *****REFACTOR*****
@@ -149,6 +152,18 @@ let canvasReducer = (state = canvasInitialState, action) => {
             return {
                 ...state,
                 replacementAllowed: action.payload
+            }
+        case "UNDO":
+            //Defined in ToolContainer.jsx
+            //Called from ToolContainer.jsx
+            let historyCopy = [...state.history]
+            historyCopy.pop()
+            let prevImage = state.history[state.history.length-1]
+            console.log(prevImage)
+            return {
+                ...state,
+                currentImage: prevImage,
+                history: historyCopy
             }
         default:
             return state

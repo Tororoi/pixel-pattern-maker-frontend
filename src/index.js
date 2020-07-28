@@ -35,7 +35,7 @@ let rootReducer = combineReducers({
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 let storeObject = createStore(rootReducer, composeEnhancers(applyMiddleware(ReduxThunk)))
-
+ 
 
 ReactDOM.render(
   <BrowserRouter>
