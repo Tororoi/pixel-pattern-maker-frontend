@@ -9,7 +9,7 @@ const NavBar = (props) => {
   return(
     <ul className="nav">
       <li>
-        <NavLink className="navlink" to="/">Browse</NavLink>
+        <NavLink className="navlink" to="/browse">Browse</NavLink>
       </li>
       <li>
         <NavLink className="navlink" to="/draw">Draw</NavLink>

@@ -113,7 +113,7 @@ class App extends React.Component {
                 profileSwitch={this.props.profileSwitch}
               /> </div>
             } />
-            <Route path="/" exact render={() => 
+            <Route path="/browse" exact render={() => 
               <div> <PatternContainer 
                 favePattern={this.props.favePattern}
                 unFavePattern={this.props.unFavePattern}
@@ -121,6 +121,15 @@ class App extends React.Component {
                 setPaletteColorsDispatch={this.props.setPaletteColors}
               /> </div>
             } />
+            <Route path="/" exact render={() => 
+              <div> <DrawContainer 
+                createPattern={this.props.createPattern}
+                updatePattern={this.props.updatePattern}
+                deletePattern={this.props.deletePattern}
+                pickerMouseDownDispatch={this.props.pickerMouseDown}
+                setPaletteColorsDispatch={this.props.setPaletteColors}
+              /> </div>
+              } />
           </Switch>
 
       </div>
